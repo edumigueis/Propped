@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+void main() {
+  runApp(MyApp());
+}
+
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
@@ -16,7 +20,7 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.pink,
+        primarySwatch: Colors.blue,
         // This makes the visual density adapt to the platform that you run
         // the app on. For desktop platforms, the controls will be smaller and
         // closer together (more dense) than on mobile platforms.
@@ -72,13 +76,10 @@ class _MyHomePageState extends State<MyHomePage> {
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
-        backgroundColor: Colors.pink,
       ),
-
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-
         child: Column(
           // Column is also a layout widget. It takes a list of children and
           // arranges them vertically. By default, it sizes itself to fit its
@@ -96,16 +97,8 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            /*Container(
-              child: new DecoratedBox(
-                  decoration: new BoxDecoration(
-                      image: new DecorationImage(
-                          image: new AssetImage(
-                              "assets/images/bg.jpg")))),
-            ),*/
             Text(
-              'Hello, welcome to this flutter app:',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+              'You have pushed the button this many times:',
             ),
             Text(
               '$_counter',
@@ -114,19 +107,11 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-          onPressed: _incrementCounter,
-          tooltip: 'Increment',
-          icon: Icon(
-            Icons.add,
-            size: 30,
-            color: Colors.white70,
-          ),
-          hoverColor: Colors.amber,
-          backgroundColor: Colors.pink,
-          label: Text("Clique Aqui")),
-      floatingActionButtonLocation: FloatingActionButtonLocation
-          .centerFloat, // This trailing comma makes auto-formatting nicer for build methods.
+      floatingActionButton: FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
+        child: Icon(Icons.add),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
