@@ -104,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               "assets/images/bg.jpg")))),
             ),*/
             Text(
-              'Hello, welcome to this flutter app:',
+              'Heyyyy, welcome to this flutter app:',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
             ),
             Text(
