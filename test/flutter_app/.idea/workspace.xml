@@ -87,22 +87,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="550" y="166" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1597444211150" />
-    <state width="1491" height="197" key="GridCell.Tab.0.bottom" timestamp="1597446764091">
+    <state width="1491" height="210" key="GridCell.Tab.0.bottom" timestamp="1597449690425">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="197" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1597446764091" />
-    <state width="1491" height="197" key="GridCell.Tab.0.center" timestamp="1597446764091">
+    <state width="1491" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1597449690425" />
+    <state width="1491" height="210" key="GridCell.Tab.0.center" timestamp="1597449690424">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="197" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1597446764091" />
-    <state width="1491" height="197" key="GridCell.Tab.0.left" timestamp="1597446764091">
+    <state width="1491" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1597449690424" />
+    <state width="1491" height="210" key="GridCell.Tab.0.left" timestamp="1597449690423">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="197" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1597446764091" />
-    <state width="1491" height="197" key="GridCell.Tab.0.right" timestamp="1597446764091">
+    <state width="1491" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1597449690423" />
+    <state width="1491" height="210" key="GridCell.Tab.0.right" timestamp="1597449690425">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="197" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1597446764091" />
+    <state width="1491" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1597449690425" />
     <state x="482" y="134" key="RollbackChangesDialog" timestamp="1597373956960">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -111,10 +111,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="55" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1597446019989" />
-    <state x="93" y="93" width="1350" height="638" key="com.android.tools.idea.avdmanager.AvdListDialog" timestamp="1597447342199">
+    <state x="118" y="129" width="1350" height="638" key="com.android.tools.idea.avdmanager.AvdListDialog" timestamp="1597449775212">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="93" y="93" width="1350" height="638" key="com.android.tools.idea.avdmanager.AvdListDialog/0.0.1536.824@0.0.1536.824" timestamp="1597447342199" />
+    <state x="118" y="129" width="1350" height="638" key="com.android.tools.idea.avdmanager.AvdListDialog/0.0.1536.824@0.0.1536.824" timestamp="1597449775212" />
     <state x="578" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1597373949950">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
