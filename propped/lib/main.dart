@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -72,46 +73,78 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
+      /*appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
-      ),
+      ),*/
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
+
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+            Row(
+              children: <Widget>[
+                Expanded(
+                  flex: 10, // 20%
+                  child: Image.asset('assets/images/main.jpg',
+                    fit: BoxFit.cover,
+                    height: MediaQuery.of(context).size.height * 0.50,
+                  ),
+                ),
+
+              ],
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+      Padding(
+        padding: const EdgeInsets.fromLTRB(8.0, 25.0, 8.0, 10.0),
+        child: Text(
+          "Welcome to Propped!",
+          style: TextStyle(fontSize: 25.0, fontFamily: 'Ubuntu', fontWeight: FontWeight.bold),
+        ),
+      ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8.0, 12.0, 8.0, 10.0),
+              child: Text(
+                "The biggest and most inclusive clothing e-commerce. Enjoy the amazing propped app, with everything you need.",
+                style: TextStyle(fontSize: 18.0, fontFamily: 'Ubuntu', fontWeight: FontWeight.bold, color: Color.fromRGBO(40, 40, 40, 1)),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8.0, 12.0, 8.0, 10.0),
+                    child: SizedBox(
+                      width: 150,
+                      height: 50,
+                      child: FlatButton(onPressed:  () {},
+                          color: Colors.transparent,
+                          shape: RoundedRectangleBorder(side: BorderSide(
+                              color: Color.fromARGB(255, 30, 30, 30),
+                              width: 3,
+                              style: BorderStyle.solid
+                          ), borderRadius: BorderRadius.circular(5)),
+                          child: Text('LOGIN', style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold, color: Color.fromRGBO(0, 0, 0, 10)))
+                      ),
+                    )),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8.0, 12.0, 8.0, 10.0),
+                    child: SizedBox(
+                      width: 150,
+                      height: 50,
+                      child: RaisedButton(onPressed:  () {},
+                          color: Color.fromARGB(255, 30, 30, 30),
+                          child: Text('REGISTER', style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold, color: Color.fromRGBO(240, 240, 240, 1)))
+                      ),
+                    ))
+              ],
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
