@@ -91,21 +91,21 @@ class _MyHomePageState extends State<MyHomePage> {
                   flex: 10, // 20%
                   child: Image.asset('assets/images/main.jpg',
                     fit: BoxFit.cover,
-                    height: MediaQuery.of(context).size.height * 0.50,
+                    height: MediaQuery.of(context).size.height * 0.56,
                   ),
                 ),
 
               ],
             ),
       Padding(
-        padding: const EdgeInsets.fromLTRB(8.0, 25.0, 8.0, 10.0),
+        padding: const EdgeInsets.fromLTRB(8.0, 30.0, 8.0, 10.0),
         child: Text(
           "Welcome to Propped!",
           style: TextStyle(fontSize: 25.0, fontFamily: 'Ubuntu', fontWeight: FontWeight.bold),
         ),
       ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(8.0, 12.0, 8.0, 10.0),
+              padding: const EdgeInsets.fromLTRB(8.0, 20.0, 8.0, 20.0),
               child: Text(
                 "The biggest and most inclusive clothing e-commerce. Enjoy the amazing propped app, with everything you need.",
                 style: TextStyle(fontSize: 18.0, fontFamily: 'Ubuntu', fontWeight: FontWeight.bold, color: Color.fromRGBO(40, 40, 40, 1)),
@@ -116,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(8.0, 12.0, 8.0, 10.0),
+                    padding: const EdgeInsets.fromLTRB(8.0, 20.0, 8.0, 10.0),
                     child: SizedBox(
                       width: 150,
                       height: 50,
@@ -127,17 +127,18 @@ class _MyHomePageState extends State<MyHomePage> {
                               width: 3,
                               style: BorderStyle.solid
                           ), borderRadius: BorderRadius.circular(5)),
-                          child: Text('LOGIN', style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold, color: Color.fromRGBO(0, 0, 0, 10)))
+                          child: Text('LOGIN', style: TextStyle(fontSize: 17, fontFamily: 'Ubuntu', fontWeight: FontWeight.bold, color: Color.fromRGBO(0, 0, 0, 10)))
                       ),
                     )),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(8.0, 12.0, 8.0, 10.0),
+                    padding: const EdgeInsets.fromLTRB(8.0, 20.0, 8.0, 10.0),
                     child: SizedBox(
                       width: 150,
                       height: 50,
                       child: RaisedButton(onPressed:  () {},
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                           color: Color.fromARGB(255, 30, 30, 30),
-                          child: Text('REGISTER', style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold, color: Color.fromRGBO(240, 240, 240, 1)))
+                          child: Text('REGISTER', style: TextStyle(fontSize: 17, fontFamily: 'Ubuntu',fontWeight: FontWeight.bold, color: Color.fromRGBO(240, 240, 240, 1)))
                       ),
                     ))
               ],
