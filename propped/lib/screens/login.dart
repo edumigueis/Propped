@@ -80,13 +80,15 @@ class _MyLoginState extends State<MyLogin> {
                   TextField(
                     decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Color.fromRGBO(30, 30, 30, 1), width: 4.0),
-                        ),
+                            borderSide: BorderSide(
+                                color: Color.fromRGBO(30, 30, 30, 1),
+                                width: 4.0),
+                            borderRadius: BorderRadius.zero),
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Color.fromRGBO(30, 30, 30, 1), width: 3.0),
-                        ),
+                            borderSide: BorderSide(
+                                color: Color.fromRGBO(30, 30, 30, 1),
+                                width: 3.0),
+                            borderRadius: BorderRadius.zero),
                         hintText: 'Enter your email'),
                   ),
                 ],
@@ -111,22 +113,27 @@ class _MyLoginState extends State<MyLogin> {
                   TextField(
                     decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Color.fromRGBO(30, 30, 30, 1), width: 4.0),
-                        ),
+                            borderSide: BorderSide(
+                                color: Color.fromRGBO(30, 30, 30, 1),
+                                width: 4.0),
+                            borderRadius: BorderRadius.zero),
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Color.fromRGBO(30, 30, 30, 1), width: 3.0),
-                        ),
+                            borderSide: BorderSide(
+                                color: Color.fromRGBO(30, 30, 30, 1),
+                                width: 3.0),
+                            borderRadius: BorderRadius.zero),
                         hintText: 'Enter your password'),
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 10.0),
                     alignment: Alignment(1, 0),
-                    child: Text("Forgot your password?", style: TextStyle(fontSize: 14.0,
-                        fontFamily: 'Ubuntu',
-                        fontWeight: FontWeight.w600,
-                        color: Color.fromRGBO(40, 40, 40, 1)), textAlign: TextAlign.right),
+                    child: Text("Forgot your password?",
+                        style: TextStyle(
+                            fontSize: 14.0,
+                            fontFamily: 'Ubuntu',
+                            fontWeight: FontWeight.w600,
+                            color: Color.fromRGBO(40, 40, 40, 1)),
+                        textAlign: TextAlign.right),
                   )
                 ],
               )),
@@ -138,7 +145,7 @@ class _MyLoginState extends State<MyLogin> {
               child: RaisedButton(
                   onPressed: () {},
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5)),
+                      borderRadius: BorderRadius.circular(6)),
                   color: Color.fromARGB(255, 30, 30, 30),
                   child: Text('LOGIN',
                       style: TextStyle(
