@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:propped/screens/login.dart';
 
 void main() {
   runApp(MyApp());
@@ -82,64 +83,88 @@ class _MyHomePageState extends State<MyHomePage> {
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
         child: Column(
-
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Row(
               children: <Widget>[
                 Expanded(
                   flex: 10, // 20%
-                  child: Image.asset('assets/images/main.jpg',
+                  child: Image.asset(
+                    'assets/images/main.jpg',
                     fit: BoxFit.cover,
                     height: MediaQuery.of(context).size.height * 0.56,
                   ),
                 ),
-
               ],
             ),
-      Padding(
-        padding: const EdgeInsets.fromLTRB(8.0, 30.0, 8.0, 10.0),
-        child: Text(
-          "Welcome to Propped!",
-          style: TextStyle(fontSize: 25.0, fontFamily: 'Ubuntu', fontWeight: FontWeight.bold),
-        ),
-      ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8.0, 30.0, 8.0, 10.0),
+              child: Text(
+                "Welcome to Propped!",
+                style: TextStyle(
+                    fontSize: 25.0,
+                    fontFamily: 'Ubuntu',
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.fromLTRB(8.0, 20.0, 8.0, 20.0),
               child: Text(
                 "The biggest and most inclusive clothing e-commerce. Enjoy the amazing propped app, with everything you need.",
-                style: TextStyle(fontSize: 18.0, fontFamily: 'Ubuntu', fontWeight: FontWeight.bold, color: Color.fromRGBO(40, 40, 40, 1)),
+                style: TextStyle(
+                    fontSize: 18.0,
+                    fontFamily: 'Ubuntu',
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromRGBO(40, 40, 40, 1)),
                 textAlign: TextAlign.center,
               ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                  Padding(
+                Padding(
                     padding: const EdgeInsets.fromLTRB(8.0, 20.0, 8.0, 10.0),
                     child: SizedBox(
                       width: 150,
                       height: 50,
-                      child: FlatButton(onPressed:  () {},
+                      child: FlatButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MyLogin()),
+                            );
+                          },
                           color: Colors.transparent,
-                          shape: RoundedRectangleBorder(side: BorderSide(
-                              color: Color.fromARGB(255, 30, 30, 30),
-                              width: 3,
-                              style: BorderStyle.solid
-                          ), borderRadius: BorderRadius.circular(5)),
-                          child: Text('LOGIN', style: TextStyle(fontSize: 17, fontFamily: 'Ubuntu', fontWeight: FontWeight.bold, color: Color.fromRGBO(0, 0, 0, 10)))
-                      ),
+                          shape: RoundedRectangleBorder(
+                              side: BorderSide(
+                                  color: Color.fromARGB(255, 30, 30, 30),
+                                  width: 3,
+                                  style: BorderStyle.solid),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: Text('LOGIN',
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  fontFamily: 'Ubuntu',
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromRGBO(0, 0, 0, 10)))),
                     )),
-                  Padding(
+                Padding(
                     padding: const EdgeInsets.fromLTRB(8.0, 20.0, 8.0, 10.0),
                     child: SizedBox(
                       width: 150,
                       height: 50,
-                      child: RaisedButton(onPressed:  () {},
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                      child: RaisedButton(
+                          onPressed: () {},
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
                           color: Color.fromARGB(255, 30, 30, 30),
-                          child: Text('REGISTER', style: TextStyle(fontSize: 17, fontFamily: 'Ubuntu',fontWeight: FontWeight.bold, color: Color.fromRGBO(240, 240, 240, 1)))
-                      ),
+                          child: Text('REGISTER',
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  fontFamily: 'Ubuntu',
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromRGBO(240, 240, 240, 1)))),
                     ))
               ],
             ),
