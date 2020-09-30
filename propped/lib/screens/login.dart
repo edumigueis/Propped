@@ -123,6 +123,7 @@ class _MyLoginState extends State<MyLogin> {
                                 width: 3.0),
                             borderRadius: BorderRadius.zero),
                         hintText: 'Enter your password'),
+                        obscureText: true
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 10.0),
