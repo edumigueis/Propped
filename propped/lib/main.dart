@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:propped/screens/login.dart';
+import 'package:propped/screens/register.dart';
 
 void main() {
   runApp(MyApp());
@@ -155,7 +156,13 @@ class _MyHomePageState extends State<MyHomePage> {
                       width: 150,
                       height: 50,
                       child: RaisedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MyRegister()),
+                            );
+                          },
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5)),
                           color: Color.fromARGB(255, 30, 30, 30),

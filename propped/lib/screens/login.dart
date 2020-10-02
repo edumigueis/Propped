@@ -48,7 +48,7 @@ class _MyLoginState extends State<MyLogin> {
           Row(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.fromLTRB(10.0, 50.0, 10.0, 20.0),
+                padding: const EdgeInsets.fromLTRB(15.0, 50.0, 15.0, 20.0),
                 child: Text(
                   "Login",
                   style: TextStyle(
@@ -61,7 +61,7 @@ class _MyLoginState extends State<MyLogin> {
             ],
           ),
           Padding(
-              padding: const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
+              padding: const EdgeInsets.fromLTRB(15.0, 20.0, 15.0, 20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -94,7 +94,7 @@ class _MyLoginState extends State<MyLogin> {
                 ],
               )),
           Padding(
-              padding: const EdgeInsets.fromLTRB(10.0, 12.0, 10.0, 20.0),
+              padding: const EdgeInsets.fromLTRB(15.0, 12.0, 15.0, 20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -139,7 +139,7 @@ class _MyLoginState extends State<MyLogin> {
                 ],
               )),
           Padding(
-            padding: const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
+            padding: const EdgeInsets.fromLTRB(15.0, 20.0, 15.0, 20.0),
             child: SizedBox(
               width: double.infinity,
               height: 50,
