@@ -111,20 +111,19 @@ class _MyLoginState extends State<MyLogin> {
                     ),
                   ),
                   TextField(
-                    decoration: InputDecoration(
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Color.fromRGBO(30, 30, 30, 1),
-                                width: 4.0),
-                            borderRadius: BorderRadius.zero),
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Color.fromRGBO(30, 30, 30, 1),
-                                width: 3.0),
-                            borderRadius: BorderRadius.zero),
-                        hintText: 'Enter your password'),
-                        obscureText: true
-                  ),
+                      decoration: InputDecoration(
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color.fromRGBO(30, 30, 30, 1),
+                                  width: 4.0),
+                              borderRadius: BorderRadius.zero),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color.fromRGBO(30, 30, 30, 1),
+                                  width: 3.0),
+                              borderRadius: BorderRadius.zero),
+                          hintText: 'Enter your password'),
+                      obscureText: true),
                   Container(
                     margin: const EdgeInsets.only(top: 10.0),
                     alignment: Alignment(1, 0),
