@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:propped/screens/preference.dart';
 
 class MyRegister extends StatefulWidget {
   MyRegister({Key key, this.title}) : super(key: key);
@@ -164,7 +165,13 @@ class _MyRegisterState extends State<MyRegister> {
               width: double.infinity,
               height: 50,
               child: RaisedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MyPreference()),
+                    );
+                  },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(6)),
                   color: Color.fromARGB(255, 30, 30, 30),
