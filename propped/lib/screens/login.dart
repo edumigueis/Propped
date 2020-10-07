@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:propped/screens/wishlist.dart';
 
 class MyLogin extends StatefulWidget {
   MyLogin({Key key, this.title}) : super(key: key);
@@ -143,7 +144,13 @@ class _MyLoginState extends State<MyLogin> {
               width: double.infinity,
               height: 50,
               child: RaisedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MyWishlist()),
+                    );
+                  },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(6)),
                   color: Color.fromARGB(255, 30, 30, 30),
