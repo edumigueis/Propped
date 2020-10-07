@@ -14,6 +14,7 @@ class _MyPreferenceState extends State<MyPreference> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Padding(
         padding: EdgeInsets.fromLTRB(15.0, 0, 15.0, 0),
         child: Center(

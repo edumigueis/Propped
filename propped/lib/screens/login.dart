@@ -43,6 +43,7 @@ class _MyLoginState extends State<MyLogin> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
           child: Column(
         children: <Widget>[

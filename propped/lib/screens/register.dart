@@ -31,6 +31,7 @@ class _MyRegisterState extends State<MyRegister> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
           child: ListView(
         children: <Widget>[
