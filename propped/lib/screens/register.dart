@@ -14,11 +14,16 @@ class MyRegister extends StatefulWidget {
 class _MyRegisterState extends State<MyRegister> {
   // Initially password is obscure
   bool _obscureText = true;
+  IconData _iconEye = Icons.visibility_off;
 
   // Toggles the password show status
   void _toggle() {
     setState(() {
       _obscureText = !_obscureText;
+      if (_obscureText == true)
+        _iconEye = Icons.visibility_off;
+      else
+        _iconEye = Icons.visibility;
     });
   }
 
@@ -151,7 +156,7 @@ class _MyRegisterState extends State<MyRegister> {
                               hintText: 'Enter your password'),
                           obscureText: _obscureText),
                       IconButton(
-                        icon: Icon(Icons.remove_red_eye),
+                        icon: Icon(_iconEye),
                         onPressed: () {
                           _toggle();
                         },

@@ -45,7 +45,7 @@ class _MyLoginState extends State<MyLogin> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-          child: Column(
+          child: ListView(
         children: <Widget>[
           Row(
             children: <Widget>[

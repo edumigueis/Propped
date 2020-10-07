@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:propped/widgets/customAppBar.dart';
 
 class MyWishlist extends StatefulWidget {
   MyWishlist({Key key, this.title}) : super(key: key);
@@ -21,6 +22,8 @@ class _MyWishlistState extends State<MyWishlist> {
     final double itemWidth = size.width / 2;
     return Scaffold(
         backgroundColor: Colors.white,
+        extendBodyBehindAppBar: true,
+        appBar: CustomAppBar(),
         body: Padding(
             padding: EdgeInsets.fromLTRB(7.5, 0, 7.5, 0),
             child: Column(
@@ -28,7 +31,7 @@ class _MyWishlistState extends State<MyWishlist> {
                 Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(7.5, 40.0, 7.5, 20.0),
+                      padding: const EdgeInsets.fromLTRB(7.5, 40.0, 7.5, 0.0),
                       child: Text(
                         "Wishlist",
                         style: TextStyle(
