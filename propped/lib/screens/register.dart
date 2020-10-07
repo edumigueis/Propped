@@ -169,8 +169,7 @@ class _MyRegisterState extends State<MyRegister> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => MyPreference()),
+                      MaterialPageRoute(builder: (context) => MyPreference()),
                     );
                   },
                   shape: RoundedRectangleBorder(
