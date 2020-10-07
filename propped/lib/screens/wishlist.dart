@@ -48,13 +48,12 @@ class _MyWishlistState extends State<MyWishlist> {
                     children: List.generate(10, (index) {
                       return Padding(
                           padding: const EdgeInsets.fromLTRB(7.5, 0, 7.5, 15),
-                          child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
+                          child:
+                              Column(mainAxisSize: MainAxisSize.min, children: <
+                                  Widget>[
                             Container(
                                 margin: const EdgeInsets.only(bottom: 10),
-                                height:
-                                    MediaQuery.of(context).size.height / 3,
+                                height: MediaQuery.of(context).size.height / 3,
                                 width: MediaQuery.of(context).size.width / 2,
                                 child: Stack(
                                   children: <Widget>[
@@ -98,7 +97,6 @@ class _MyWishlistState extends State<MyWishlist> {
                                       color: Color.fromRGBO(40, 40, 40, 1)),
                                   textAlign: TextAlign.center),
                             )
-
                           ]));
                     }),
                   ),

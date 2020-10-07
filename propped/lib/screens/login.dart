@@ -148,8 +148,7 @@ class _MyLoginState extends State<MyLogin> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => MyWishlist()),
+                      MaterialPageRoute(builder: (context) => MyWishlist()),
                     );
                   },
                   shape: RoundedRectangleBorder(
