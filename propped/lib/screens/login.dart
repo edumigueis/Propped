@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:propped/screens/home.dart';
 import 'package:propped/screens/wishlist.dart';
 
 class MyLogin extends StatefulWidget {
@@ -148,7 +149,7 @@ class _MyLoginState extends State<MyLogin> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => MyWishlist()),
+                      MaterialPageRoute(builder: (context) => MyHome()),
                     );
                   },
                   shape: RoundedRectangleBorder(
