@@ -41,7 +41,7 @@ class _MyHomeState extends State<MyHome> {
             new SliderItem("The shirt", "shirts", 4.00),
             new SliderItem("The shirt", "shirts", 5.00)
           ].map((i) {
-            // guardar objetos json em cada uma das posições do vetor e fazer o map para acessar os campos no builder
+            // guardar objetos em cada uma das posições do vetor e acessar os campos no builder
             return Builder(
               builder: (BuildContext context) {
                 return Container(
@@ -80,9 +80,22 @@ class _MyHomeState extends State<MyHome> {
         Container(
           margin: const EdgeInsets.only(
               left: 15.0, top: 15.0, bottom: 15.0, right: 15.0),
-          child: Text("Holiday sale",
-              style: TextStyle(
-                  fontSize: 20.0, height: 1.35, fontWeight: FontWeight.bold)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Text("Holiday sale",
+                  style: TextStyle(
+                      fontSize: 20.0,
+                      height: 1.35,
+                      fontWeight: FontWeight.bold)),
+              Text("SEE ALL",
+                  style: TextStyle(
+                      fontSize: 13.0,
+                      height: 1.35,
+                      fontWeight: FontWeight.bold)),
+            ],
+          ),
         ),
         Container(
           height: 200,
@@ -125,10 +138,8 @@ class _MyHomeState extends State<MyHome> {
                             image: DecorationImage(
                                 image: NetworkImage(
                                     "https://cache.net-a-porter.com/images/products/1074114/1074114_ou_2000_q80.jpg"),
-                              fit: BoxFit.cover,
-                              repeat: ImageRepeat.noRepeat
-                            )
-                        ),
+                                fit: BoxFit.cover,
+                                repeat: ImageRepeat.noRepeat)),
                       ),
                       Container(
                         height: 110,
@@ -137,10 +148,14 @@ class _MyHomeState extends State<MyHome> {
                           children: <Widget>[
                             Text("BALENCIAGA",
                                 style: TextStyle(
-                                    fontSize: 21.0, height: 2, fontWeight: FontWeight.bold)),
+                                    fontSize: 21.0,
+                                    height: 2,
+                                    fontWeight: FontWeight.bold)),
                             Text("New York style, but fresh-minded.",
                                 style: TextStyle(
-                                    fontSize: 17.0, height: 1.7, fontWeight: FontWeight.w500)),
+                                    fontSize: 17.0,
+                                    height: 1.7,
+                                    fontWeight: FontWeight.w500)),
                           ],
                         ),
                       )
@@ -149,9 +164,7 @@ class _MyHomeState extends State<MyHome> {
                 );
               }),
         ),
-        Container(
-
-        )
+        Container()
       ],
     ));
   }
