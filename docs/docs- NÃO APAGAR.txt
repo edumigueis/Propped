@@ -1,0 +1,2 @@
+https://pub.dev/packages/carousel_slider
+https://medium.com/flutter-community/fetching-data-in-flutter-and-displaying-in-listview-ec1bb72af22c
