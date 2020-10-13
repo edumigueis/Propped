@@ -78,45 +78,25 @@ class _MyHomeState extends State<MyHome> {
           }).toList(),
         ),
         Container(
-          margin: const EdgeInsets.only(left: 15.0, top: 15.0, bottom: 15.0, right: 15.0),
+          margin: const EdgeInsets.only(
+              left: 15.0, top: 15.0, bottom: 15.0, right: 15.0),
           child: Text("Holiday sale",
               style: TextStyle(
                   fontSize: 20.0, height: 1.35, fontWeight: FontWeight.bold)),
         ),
         Container(
           height: 200,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            physics: new BouncingScrollPhysics(),
-            children: <Widget>[
-              Container(
-                width: 200.0,
-                margin: const EdgeInsets.only(left: 15.0),
-                color: Colors.red,
-              ),
-              Container(
-                width: 200.0,
-                margin: const EdgeInsets.only(left: 15.0),
-                color: Colors.blue,
-              ),
-              Container(
-                width: 200.0,
-                margin: const EdgeInsets.only(left: 15.0),
-                color: Colors.green,
-              ),
-              Container(
-                width: 200.0,
-                margin: const EdgeInsets.only(left: 15.0),
-                color: Colors.green,
-              ),
-              Container(
-                width: 200.0,
-                margin: const EdgeInsets.only(left: 15.0),
-                color: Colors.green,
-              ),
-
-            ],
-          ),
+          child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              physics: new BouncingScrollPhysics(),
+              itemCount: 9,
+              itemBuilder: (BuildContext context, int index) {
+                return new Container(
+                  width: 200.0,
+                  margin: const EdgeInsets.only(left: 15.0),
+                  color: Colors.red,
+                );
+              }),
         )
       ],
     ));
