@@ -97,6 +97,54 @@ class _MyHomeState extends State<MyHome> {
                   color: Colors.red,
                 );
               }),
+        ),
+        Container(
+          margin: const EdgeInsets.only(
+              left: 15.0, top: 50.0, bottom: 15.0, right: 15.0),
+          child: Text("This week's highlight",
+              style: TextStyle(
+                  fontSize: 20.0, height: 1.35, fontWeight: FontWeight.bold)),
+        ),
+        Container(
+          height: 390,
+          child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              physics: new BouncingScrollPhysics(),
+              itemCount: 9,
+              itemBuilder: (BuildContext context, int index) {
+                return new Container(
+                  width: MediaQuery.of(context).size.width - 60,
+                  margin: const EdgeInsets.only(left: 15.0),
+                  color: Colors.white,
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        height: 340,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: NetworkImage(
+                                    "https://cache.net-a-porter.com/images/products/1074114/1074114_ou_2000_q80.jpg"),
+                              fit: BoxFit.cover,
+                              repeat: ImageRepeat.noRepeat
+                            )
+                        ),
+                      ),
+                      Container(
+                        height: 50,
+                        width: double.infinity,
+                        child: Column(
+                          children: <Widget>[
+                            Text("Thyg Collection",
+                                style: TextStyle(
+                                    fontSize: 20.0, height: 1.35, fontWeight: FontWeight.bold)),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              }),
         )
       ],
     ));
