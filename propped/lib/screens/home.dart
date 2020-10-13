@@ -28,7 +28,7 @@ class _MyHomeState extends State<MyHome> {
             enableInfiniteScroll: true,
             reverse: false,
             autoPlay: true,
-            autoPlayInterval: Duration(milliseconds: 15000),
+            autoPlayInterval: Duration(milliseconds: 14000),
             autoPlayAnimationDuration: Duration(milliseconds: 800),
             autoPlayCurve: Curves.fastOutSlowIn,
             enlargeCenterPage: true,
@@ -87,20 +87,34 @@ class _MyHomeState extends State<MyHome> {
           height: 200,
           child: ListView(
             scrollDirection: Axis.horizontal,
+            physics: new BouncingScrollPhysics(),
             children: <Widget>[
               Container(
-                width: 160.0,
+                width: 200.0,
                 margin: const EdgeInsets.only(left: 15.0),
                 color: Colors.red,
               ),
               Container(
-                width: 160.0,
+                width: 200.0,
+                margin: const EdgeInsets.only(left: 15.0),
                 color: Colors.blue,
               ),
               Container(
-                width: 160.0,
+                width: 200.0,
+                margin: const EdgeInsets.only(left: 15.0),
                 color: Colors.green,
               ),
+              Container(
+                width: 200.0,
+                margin: const EdgeInsets.only(left: 15.0),
+                color: Colors.green,
+              ),
+              Container(
+                width: 200.0,
+                margin: const EdgeInsets.only(left: 15.0),
+                color: Colors.green,
+              ),
+
             ],
           ),
         )

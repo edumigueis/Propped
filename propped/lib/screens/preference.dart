@@ -19,6 +19,7 @@ class _MyPreferenceState extends State<MyPreference> {
         padding: EdgeInsets.fromLTRB(15.0, 0, 15.0, 0),
         child: Center(
           child: ListView(
+            physics: new BouncingScrollPhysics(),
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 40.0, 0, 20.0),

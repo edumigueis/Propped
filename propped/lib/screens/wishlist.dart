@@ -43,6 +43,7 @@ class _MyWishlistState extends State<MyWishlist> {
                     )),
                 Expanded(
                   child: GridView.count(
+                    physics: new BouncingScrollPhysics(),
                     // Create a grid with 2 columns. If you change the scrollDirection to
                     // horizontal, this produces 2 rows.
                     crossAxisCount: 2,
