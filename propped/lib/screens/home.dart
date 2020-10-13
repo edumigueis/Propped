@@ -106,7 +106,7 @@ class _MyHomeState extends State<MyHome> {
                   fontSize: 20.0, height: 1.35, fontWeight: FontWeight.bold)),
         ),
         Container(
-          height: 390,
+          height: 480,
           child: ListView.builder(
               scrollDirection: Axis.horizontal,
               physics: new BouncingScrollPhysics(),
@@ -119,7 +119,7 @@ class _MyHomeState extends State<MyHome> {
                   child: Column(
                     children: <Widget>[
                       Container(
-                        height: 340,
+                        height: 370,
                         width: double.infinity,
                         decoration: BoxDecoration(
                             image: DecorationImage(
@@ -131,13 +131,16 @@ class _MyHomeState extends State<MyHome> {
                         ),
                       ),
                       Container(
-                        height: 50,
+                        height: 110,
                         width: double.infinity,
                         child: Column(
                           children: <Widget>[
-                            Text("Thyg Collection",
+                            Text("BALENCIAGA",
                                 style: TextStyle(
-                                    fontSize: 20.0, height: 1.35, fontWeight: FontWeight.bold)),
+                                    fontSize: 21.0, height: 2, fontWeight: FontWeight.bold)),
+                            Text("New York style, but fresh-minded.",
+                                style: TextStyle(
+                                    fontSize: 17.0, height: 1.7, fontWeight: FontWeight.w500)),
                           ],
                         ),
                       )
@@ -145,6 +148,9 @@ class _MyHomeState extends State<MyHome> {
                   ),
                 );
               }),
+        ),
+        Container(
+
         )
       ],
     ));
