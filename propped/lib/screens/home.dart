@@ -77,30 +77,33 @@ class _MyHomeState extends State<MyHome> {
             );
           }).toList(),
         ),
-      Container(
-        child: Text("Holiday sale"),
-      ),
-      Container(
-        height: 200,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: <Widget>[
-            Container(
-              width: 160.0,
-              color: Colors.red,
-            ),
-            Container(
-              width: 160.0,
-              color: Colors.blue,
-            ),
-            Container(
-              width: 160.0,
-              color: Colors.green,
-            ),
-          ],
+        Container(
+          margin: const EdgeInsets.only(left: 15.0, top: 15.0, bottom: 15.0, right: 15.0),
+          child: Text("Holiday sale",
+              style: TextStyle(
+                  fontSize: 20.0, height: 1.35, fontWeight: FontWeight.bold)),
         ),
-      )
-
+        Container(
+          height: 200,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: <Widget>[
+              Container(
+                width: 160.0,
+                margin: const EdgeInsets.only(left: 15.0),
+                color: Colors.red,
+              ),
+              Container(
+                width: 160.0,
+                color: Colors.blue,
+              ),
+              Container(
+                width: 160.0,
+                color: Colors.green,
+              ),
+            ],
+          ),
+        )
       ],
     ));
   }
