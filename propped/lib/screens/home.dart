@@ -327,13 +327,14 @@ class _MyHomeState extends State<MyHome> {
                       new Positioned(
                         top: top,
                         child: new ConstrainedBox(
-                          constraints: new BoxConstraints(
-                              minWidth: MediaQuery.of(context).size.width, minHeight: 500),
-                          child: new Center(
-                            child: Image.network(
-                            'https://images.pexels.com/photos/3620411/pexels-photo-3620411.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260',
-                          ),)
-                        ),
+                            constraints: new BoxConstraints(
+                                minWidth: MediaQuery.of(context).size.width,
+                                minHeight: 500),
+                            child: new Center(
+                              child: Image.network(
+                                'https://images.pexels.com/photos/3620411/pexels-photo-3620411.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260',
+                              ),
+                            )),
                       ),
                       /*Container(
                     width: MediaQuery.of(context).size.width,
