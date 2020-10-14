@@ -1,7 +1,9 @@
 
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:propped/screens/home.dart';
+import 'package:propped/screens/wishlist.dart';
 
 class Menu extends StatelessWidget {
   BuildContext ctx;
@@ -21,6 +23,20 @@ class Menu extends StatelessWidget {
         );
       }
       break;
+      case 2:{
+        Navigator.push(
+          ctx,
+          MaterialPageRoute(builder: (context) => MyWishlist()),
+        );
+      }
+      break;
+      case 3:{
+        Navigator.push(
+          ctx,
+          MaterialPageRoute(builder: (context) => MyHome()),
+        );
+      }
+      break;
     }
   }
 
@@ -28,18 +44,23 @@ class Menu extends StatelessWidget {
   Widget build(BuildContext context) {
     ctx = context;
     return BottomNavigationBar(
+      unselectedItemColor: CupertinoColors.black,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
-          title: Text('School'),
+          title: Text('Home'),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.business),
-          title: Text('School'),
+          icon: Icon(Icons.search),
+          title: Text('Search'),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.school),
-          title: Text('School', ),
+          icon: Icon(Icons.star_border),
+          title: Text('Wishlist'),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person),
+          title: Text('Me'),
         ),
       ],
       selectedItemColor: Colors.amber[800],
