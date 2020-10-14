@@ -22,8 +22,19 @@ class _MyWishlistState extends State<MyWishlist> {
     final double itemWidth = size.width / 2;
     return Scaffold(
         backgroundColor: Colors.white,
-        extendBodyBehindAppBar: true,
-        appBar: CustomAppBar(),
+        floatingActionButton: FloatingActionButton(
+            backgroundColor: Colors.transparent,
+            splashColor: Colors.transparent,
+            elevation: 0.0,
+            foregroundColor: Colors.black,
+            child: Container(
+              margin: EdgeInsets.only(top: 70),
+              child: Icon(
+                Icons.shopping_basket, size: 36,
+              ),
+            )
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
         body: Padding(
             padding: EdgeInsets.fromLTRB(7.5, 0, 7.5, 0),
             child: Column(
