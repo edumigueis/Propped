@@ -17,6 +17,7 @@ class _MyHomeState extends State<MyHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
         body: ListView(
       children: <Widget>[
         CarouselSlider(
@@ -79,7 +80,7 @@ class _MyHomeState extends State<MyHome> {
         ),
         Container(
           margin: const EdgeInsets.only(
-              left: 15.0, top: 15.0, bottom: 15.0, right: 15.0),
+              left: 15.0, top: 25.0, bottom: 15.0, right: 15.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -98,16 +99,63 @@ class _MyHomeState extends State<MyHome> {
           ),
         ),
         Container(
-          height: 200,
+          height: 310,
           child: ListView.builder(
               scrollDirection: Axis.horizontal,
               physics: new BouncingScrollPhysics(),
               itemCount: 9,
               itemBuilder: (BuildContext context, int index) {
                 return new Container(
-                  width: 200.0,
+                  width: 230.0,
                   margin: const EdgeInsets.only(left: 15.0),
-                  color: Colors.red,
+                  color: Colors.white,
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                          height: 230,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: NetworkImage(
+                                      "https://images.asos-media.com/products/converse-x-tyler-the-creator-golf-le-fleur-one-star-trainers-in-green/9323779-1-green"),
+                                  fit: BoxFit.cover,
+                                  repeat: ImageRepeat.noRepeat
+                              )
+                          ),
+                        child: Stack(
+                          children: <Widget>[
+                            Positioned(
+                              right: 10,
+                              top: 10,
+                              child: Icon(Icons.star_border, size: 30,),
+                            ),
+                          ]
+                        )
+                      ),
+                      Container(
+                        height: 80,
+                        width: double.infinity,
+                        child: Column(
+                          children: <Widget>[
+                            Text("Golf La Fleur x Converse",
+                                style: TextStyle(
+                                    fontSize: 16.0,
+                                    height: 1.7,
+                                    fontWeight: FontWeight.bold)),
+                            Text("Strain Sneekers",
+                                style: TextStyle(
+                                    fontSize: 18.0,
+                                    height: 1.4,
+                                    fontWeight: FontWeight.w500)),
+                            Text("\$50.00",
+                                style: TextStyle(
+                                    fontSize: 17.0,
+                                    height: 1.4,
+                                    fontWeight: FontWeight.w500)),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 );
               }),
         ),
