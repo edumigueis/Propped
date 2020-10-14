@@ -23,7 +23,7 @@ class _MyHomeState extends State<MyHome> {
         body: NotificationListener(
             onNotification: (v) {
               if (v is ScrollUpdateNotification)
-                setState(() => top -= v.scrollDelta / 2);
+                setState(() => top -= v.scrollDelta / 2.9);
               return true;
             },
             child: ListView(
@@ -326,15 +326,12 @@ class _MyHomeState extends State<MyHome> {
                     children: <Widget>[
                       new Positioned(
                         top: top,
-                        child: new ConstrainedBox(
-                            constraints: new BoxConstraints(
-                                minWidth: MediaQuery.of(context).size.width,
-                                minHeight: 500),
-                            child: new Center(
-                              child: Image.network(
-                                'https://images.pexels.com/photos/3620411/pexels-photo-3620411.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260',
-                              ),
-                            )),
+                        child: new FittedBox(
+                          fit: BoxFit.cover,
+                          child: Image.asset(
+                            'assets/images/home-edit-section.jpg',
+                          ),
+                        ),
                       ),
                       /*Container(
                     width: MediaQuery.of(context).size.width,
