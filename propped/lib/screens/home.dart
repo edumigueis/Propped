@@ -23,7 +23,7 @@ class _MyHomeState extends State<MyHome> {
         body: NotificationListener(
             onNotification: (v) {
               if (v is ScrollUpdateNotification)
-                setState(() => top -= v.scrollDelta / 2.9);
+                setState(() => top -= v.scrollDelta / 3.6);
               return true;
             },
             child: ListView(
