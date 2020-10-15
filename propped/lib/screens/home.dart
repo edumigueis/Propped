@@ -22,7 +22,7 @@ class _MyHomeState extends State<MyHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: CustomAppBar(),
+      appBar: CustomAppBar(showArrow: false),
       backgroundColor: Colors.white,
       body: NotificationListener(
           onNotification: (v) {
