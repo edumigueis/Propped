@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:propped/utils/sliderItem.dart';
 import 'package:propped/utils/stringExtension.dart';
+import 'package:propped/widgets/customAppBar.dart';
 import 'package:propped/widgets/menu.dart';
 
 class MyHome extends StatefulWidget {
@@ -20,28 +21,17 @@ class _MyHomeState extends State<MyHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.transparent,
-        splashColor: Colors.transparent,
-        elevation: 0.0,
-        foregroundColor: Colors.black,
-        child: Container(
-          margin: EdgeInsets.only(top: 70),
-          child: Icon(
-              Icons.shopping_basket, size: 36,
-          ),
-        )
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+      extendBodyBehindAppBar: true,
+      appBar: CustomAppBar(),
       backgroundColor: Colors.white,
       body: NotificationListener(
           onNotification: (v) {
-
             if (v is ScrollUpdateNotification)
               setState(() => top -= v.scrollDelta/ 3);
             return true;
           },
           child: ListView(
+            padding: EdgeInsets.only(top: 0.0),
             children: <Widget>[
               CarouselSlider(
                 options: CarouselOptions(

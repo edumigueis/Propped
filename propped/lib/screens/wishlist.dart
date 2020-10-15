@@ -22,27 +22,16 @@ class _MyWishlistState extends State<MyWishlist> {
     final double itemWidth = size.width / 2;
     return Scaffold(
         backgroundColor: Colors.white,
-        floatingActionButton: FloatingActionButton(
-            backgroundColor: Colors.transparent,
-            splashColor: Colors.transparent,
-            elevation: 0.0,
-            foregroundColor: Colors.black,
-            child: Container(
-              margin: EdgeInsets.only(top: 70),
-              child: Icon(
-                Icons.shopping_basket, size: 36,
-              ),
-            )
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+        extendBodyBehindAppBar: true,
+        appBar: CustomAppBar(),
         body: Padding(
-            padding: EdgeInsets.fromLTRB(7.5, 0, 7.5, 0),
+            padding: EdgeInsets.fromLTRB(7.5, 50, 7.5, 0),
             child: Column(
               children: <Widget>[
                 Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(7.5, 40.0, 7.5, 0.0),
+                      padding: const EdgeInsets.fromLTRB(7.5, 40.0, 7.5, 10.0),
                       child: Text(
                         "Wishlist",
                         style: TextStyle(
@@ -54,6 +43,7 @@ class _MyWishlistState extends State<MyWishlist> {
                     )),
                 Expanded(
                   child: GridView.count(
+                    padding: const EdgeInsets.only(top: 20),
                     physics: new BouncingScrollPhysics(),
                     // Create a grid with 2 columns. If you change the scrollDirection to
                     // horizontal, this produces 2 rows.
