@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:propped/widgets/customAppBar.dart';
+import 'package:propped/widgets/menu.dart';
 
 class MyWishlist extends StatefulWidget {
   MyWishlist({Key key, this.title}) : super(key: key);
@@ -107,6 +108,13 @@ class _MyWishlistState extends State<MyWishlist> {
                   ),
                 )
               ],
-            )));
+            )
+        ),
+      bottomNavigationBar: MyMenu(
+        meIcon: CupertinoIcons.person,
+        searchIcon: CupertinoIcons.search,
+        homeIcon: CupertinoIcons.home,
+        wishlistIcon: Icons.star,),
+    );
   }
 }

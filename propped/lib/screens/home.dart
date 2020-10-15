@@ -59,7 +59,10 @@ class _MyHomeState extends State<MyHome> {
                   return Builder(
                     builder: (BuildContext context) {
                       return Container(
-                          width: MediaQuery.of(context).size.width,
+                          width: MediaQuery
+                              .of(context)
+                              .size
+                              .width,
                           decoration: BoxDecoration(
                             image: DecorationImage(
                                 image: NetworkImage(
@@ -69,7 +72,7 @@ class _MyHomeState extends State<MyHome> {
                           ),
                           child: Container(
                             margin:
-                                const EdgeInsets.only(left: 30.0, top: 90.0),
+                            const EdgeInsets.only(left: 30.0, top: 90.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
@@ -198,7 +201,10 @@ class _MyHomeState extends State<MyHome> {
                     itemCount: 9,
                     itemBuilder: (BuildContext context, int index) {
                       return new Container(
-                        width: MediaQuery.of(context).size.width - 60,
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width - 60,
                         margin: const EdgeInsets.only(left: 15.0),
                         color: Colors.white,
                         child: Column(
@@ -474,7 +480,11 @@ class _MyHomeState extends State<MyHome> {
               ),
             ],
           )),
-      bottomNavigationBar: Menu(),
+      bottomNavigationBar: MyMenu(
+        meIcon: CupertinoIcons.person,
+        searchIcon: CupertinoIcons.search,
+        homeIcon: CupertinoIcons.home,
+        wishlistIcon: Icons.star_border,),
     );
   }
 }
