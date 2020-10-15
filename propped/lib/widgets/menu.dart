@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:propped/screens/home.dart';
+import 'package:propped/screens/product.dart';
 import 'package:propped/screens/wishlist.dart';
 
 class MyMenu extends StatelessWidget {
@@ -57,7 +58,7 @@ class MyMenu extends StatelessWidget {
         {
           Navigator.push(
             ctx,
-            MaterialPageRoute(builder: (context) => MyHome()),
+            MaterialPageRoute(builder: (context) => MyProduct()),
           );
         }
         break;

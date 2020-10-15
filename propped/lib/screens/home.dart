@@ -27,7 +27,7 @@ class _MyHomeState extends State<MyHome> {
       body: NotificationListener(
           onNotification: (v) {
             if (v is ScrollUpdateNotification)
-              setState(() => top -= v.scrollDelta / 3);
+              setState(() => top -= v.scrollDelta / 3.6);
             return true;
           },
           child: ListView(
@@ -483,7 +483,7 @@ class _MyHomeState extends State<MyHome> {
       bottomNavigationBar: MyMenu(
         meIcon: CupertinoIcons.person,
         searchIcon: CupertinoIcons.search,
-        homeIcon: CupertinoIcons.home,
+        homeIcon: Icons.home,
         wishlistIcon: Icons.star_border,),
     );
   }
