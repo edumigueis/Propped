@@ -44,7 +44,8 @@ class Menu extends StatelessWidget {
   Widget build(BuildContext context) {
     ctx = context;
     return BottomNavigationBar(
-      unselectedItemColor: CupertinoColors.black,
+      unselectedItemColor: Color.fromRGBO(35, 35, 35, 1),
+      type: BottomNavigationBarType.fixed,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
@@ -61,9 +62,11 @@ class Menu extends StatelessWidget {
         BottomNavigationBarItem(
           icon: Icon(Icons.person),
           title: Text('Me'),
-        ),
+        )
       ],
-      selectedItemColor: Colors.amber[800],
+      selectedItemColor: Colors.black,
+      selectedIconTheme: IconThemeData(opacity: 1,size: 30),
+      unselectedIconTheme: IconThemeData(opacity: 1,size: 28),
       onTap: _onItemTapped,
     );
   }

@@ -36,8 +36,9 @@ class _MyHomeState extends State<MyHome> {
       backgroundColor: Colors.white,
       body: NotificationListener(
           onNotification: (v) {
+
             if (v is ScrollUpdateNotification)
-              setState(() => top -= v.scrollDelta / 3.6);
+              setState(() => top -= v.scrollDelta/ 3);
             return true;
           },
           child: ListView(
