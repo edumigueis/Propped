@@ -27,7 +27,7 @@ class _MyHomeState extends State<MyHome> {
       body: NotificationListener(
           onNotification: (v) {
             if (v is ScrollUpdateNotification)
-              setState(() => top -= v.scrollDelta/ 3);
+              setState(() => top -= v.scrollDelta / 3);
             return true;
           },
           child: ListView(
@@ -113,7 +113,7 @@ class _MyHomeState extends State<MyHome> {
                 ),
               ),
               Container(
-                height: 310,
+                height: 325,
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     physics: new BouncingScrollPhysics(),
@@ -154,7 +154,7 @@ class _MyHomeState extends State<MyHome> {
                                   ),
                                 ])),
                             Container(
-                              height: 80,
+                              height: 95,
                               width: double.infinity,
                               child: Column(
                                 children: <Widget>[
@@ -257,7 +257,7 @@ class _MyHomeState extends State<MyHome> {
                 ),
               ),
               Container(
-                height: 310,
+                height: 325,
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     physics: new BouncingScrollPhysics(),
@@ -298,7 +298,7 @@ class _MyHomeState extends State<MyHome> {
                                   ),
                                 ])),
                             Container(
-                              height: 80,
+                              height: 95,
                               width: double.infinity,
                               child: Column(
                                 children: <Widget>[
@@ -404,7 +404,7 @@ class _MyHomeState extends State<MyHome> {
                 ),
               ),
               Container(
-                height: 310,
+                height: 325,
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     physics: new BouncingScrollPhysics(),
@@ -445,7 +445,7 @@ class _MyHomeState extends State<MyHome> {
                                   ),
                                 ])),
                             Container(
-                              height: 80,
+                              height: 95,
                               width: double.infinity,
                               child: Column(
                                 children: <Widget>[
@@ -473,8 +473,7 @@ class _MyHomeState extends State<MyHome> {
                     }),
               ),
             ],
-          )
-      ),
+          )),
       bottomNavigationBar: Menu(),
     );
   }
