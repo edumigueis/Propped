@@ -143,8 +143,8 @@ class _MyProductState extends State<MyProduct> {
                     EdgeInsets.only(top: 2, bottom: 2, left: 16, right: 16),
                 child: DropdownButton<String>(
                   value: dropdownValue,
-                  icon: Icon(Icons.arrow_downward),
-                  iconSize: 24,
+                  icon: Icon(Icons.keyboard_arrow_down),
+                  iconSize: 30,
                   elevation: 16,
                   style: TextStyle(
                       color: Color.fromRGBO(30, 30, 30, 1), fontSize: 18),
@@ -153,11 +153,11 @@ class _MyProductState extends State<MyProduct> {
                       dropdownValue = newValue;
                     });
                   },
-                  items: <String>['Select your size', 'GG', 'XG', 'Four']
-                      .map<DropdownMenuItem<String>>((String value) {
+                  items: <String>['Select your size', 'Two', 'Free', 'Four']
+                      .map<DropdownMenuItem<String>>((String v) {
                     return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
+                      value: v,
+                      child: Text(v),
                     );
                   }).toList(),
                 ),
