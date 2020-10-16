@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:propped/screens/home.dart';
 import 'package:propped/widgets/customAppBar.dart';
 import 'package:propped/widgets/menu.dart';
 
@@ -18,23 +19,31 @@ class _MyProductState extends State<MyProduct> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: RawMaterialButton(
-        child: Container(
-          color: Color.fromARGB(255, 30, 30, 30),
-          margin: EdgeInsets.only(left: 15, right: 15),
-          height: 50,
-          width: MediaQuery.of(context).size.width - 60,
-          child: Center(
-            child: Text(
-              "ADD TO BAG",
-              style: new TextStyle(
-                  fontSize: 15,
-                  fontFamily: 'Ubuntu',
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromRGBO(240, 240, 240, 1)),
-              textAlign: TextAlign.center,
-            ),
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        onPressed: () => {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => MyHome()),
           )
-        ),
+        },
+        child: Container(
+            decoration: new BoxDecoration(
+                borderRadius: BorderRadius.circular(6),
+                color: Color.fromARGB(255, 30, 30, 30)),
+            margin: EdgeInsets.only(left: 15, right: 15),
+            height: 50,
+            width: MediaQuery.of(context).size.width - 60,
+            child: Center(
+              child: Text(
+                "ADD TO BAG",
+                style: new TextStyle(
+                    fontSize: 15,
+                    fontFamily: 'Ubuntu',
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromRGBO(240, 240, 240, 1)),
+                textAlign: TextAlign.center,
+              ),
+            )),
       ),
       extendBodyBehindAppBar: true,
       appBar: CustomAppBar(showArrow: true),
