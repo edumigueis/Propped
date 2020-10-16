@@ -14,6 +14,7 @@ class MyProduct extends StatefulWidget {
 
 class _MyProductState extends State<MyProduct> {
   int _activeMeterIndex;
+  String dropdownValue = 'Select your size';
 
   @override
   Widget build(BuildContext context) {
@@ -125,8 +126,44 @@ class _MyProductState extends State<MyProduct> {
               ],
             ),
           ),
+          Container(
+              decoration: ShapeDecoration(
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(
+                      width: 1.0,
+                      style: BorderStyle.solid,
+                      color: Colors.black26),
+                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                ),
+              ),
+              margin: EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 30),
+              child: DropdownButtonHideUnderline(
+                  child: Padding(
+                padding:
+                    EdgeInsets.only(top: 2, bottom: 2, left: 16, right: 16),
+                child: DropdownButton<String>(
+                  value: dropdownValue,
+                  icon: Icon(Icons.arrow_downward),
+                  iconSize: 24,
+                  elevation: 16,
+                  style: TextStyle(
+                      color: Color.fromRGBO(30, 30, 30, 1), fontSize: 18),
+                  onChanged: (String newValue) {
+                    setState(() {
+                      dropdownValue = newValue;
+                    });
+                  },
+                  items: <String>['Select your size', 'GG', 'XG', 'Four']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+              ))),
           ListView.builder(
-              padding: EdgeInsets.only(top: 0),
+              padding: EdgeInsets.only(top: 0, bottom: 100),
               shrinkWrap: true,
               physics: ClampingScrollPhysics(),
               itemCount: 4,
