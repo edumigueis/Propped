@@ -12,30 +12,50 @@ class MyProduct extends StatefulWidget {
 }
 
 class _MyProductState extends State<MyProduct> {
+  int _activeMeterIndex;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: RawMaterialButton(
+        child: Container(
+          color: Color.fromARGB(255, 30, 30, 30),
+          margin: EdgeInsets.only(left: 15, right: 15),
+          height: 50,
+          width: MediaQuery.of(context).size.width - 60,
+          child: Center(
+            child: Text(
+              "ADD TO BAG",
+              style: new TextStyle(
+                  fontSize: 15,
+                  fontFamily: 'Ubuntu',
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromRGBO(240, 240, 240, 1)),
+              textAlign: TextAlign.center,
+            ),
+          )
+        ),
+      ),
       extendBodyBehindAppBar: true,
       appBar: CustomAppBar(showArrow: true),
       backgroundColor: Colors.white,
       body: ListView(
-        padding: const EdgeInsets.only(top: 0),
+        padding: const EdgeInsets.all(0),
         children: <Widget>[
           CarouselSlider(
             options: CarouselOptions(
-              height: 500,
-              aspectRatio: 16 / 9,
-              viewportFraction: 1,
-              initialPage: 0,
-              enableInfiniteScroll: true,
-              reverse: false,
-              autoPlay: true,
-              autoPlayInterval: Duration(milliseconds: 14000),
-              autoPlayAnimationDuration: Duration(milliseconds: 800),
-              autoPlayCurve: Curves.fastOutSlowIn,
-              enlargeCenterPage: true,
-              scrollDirection: Axis.horizontal
-            ),
+                height: 500,
+                aspectRatio: 16 / 9,
+                viewportFraction: 1,
+                initialPage: 0,
+                enableInfiniteScroll: true,
+                reverse: false,
+                autoPlay: true,
+                autoPlayInterval: Duration(milliseconds: 14000),
+                autoPlayAnimationDuration: Duration(milliseconds: 800),
+                autoPlayCurve: Curves.fastOutSlowIn,
+                enlargeCenterPage: true,
+                scrollDirection: Axis.horizontal),
             items: [
               "https://cdn-images.farfetch-contents.com/15/57/78/62/15577862_28040975_1000.jpg",
               "https://cdn-images.farfetch-contents.com/15/57/78/62/15577862_28040977_1000.jpg",
@@ -46,14 +66,14 @@ class _MyProductState extends State<MyProduct> {
               return Builder(
                 builder: (BuildContext context) {
                   return Container(
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: NetworkImage(
-                                "$i"),
-                            fit: BoxFit.cover,
-                            repeat: ImageRepeat.noRepeat),
-                      ),);
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: NetworkImage("$i"),
+                          fit: BoxFit.cover,
+                          repeat: ImageRepeat.noRepeat),
+                    ),
+                  );
                 },
               );
             }).toList(),
@@ -79,7 +99,7 @@ class _MyProductState extends State<MyProduct> {
                 ),
                 Text(
                   "R\$15.096",
-                    style: TextStyle(
+                  style: TextStyle(
                       fontSize: 19.0,
                       fontFamily: 'Ubuntu',
                       height: 2.2,
@@ -95,14 +115,96 @@ class _MyProductState extends State<MyProduct> {
                 )
               ],
             ),
-          )
+          ),
+          ListView.builder(
+              padding: EdgeInsets.only(top: 0),
+              shrinkWrap: true,
+              physics: ClampingScrollPhysics(),
+              itemCount: 4,
+              itemBuilder: (BuildContext context, int i) {
+                return Container(
+                  color: Colors.white,
+                  /*decoration: new BoxDecoration(
+                    border: Border(
+                        top: BorderSide(width: 1, color: Colors.white70),
+                        bottom: BorderSide(width: 1, color: Colors.white70)),
+                  ),*/
+                  margin: const EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 0.0),
+                  child: new ExpansionPanelList(
+                    expansionCallback: (int index, bool status) {
+                      setState(() {
+                        _activeMeterIndex = _activeMeterIndex == i ? null : i;
+                      });
+                    },
+                    children: [
+                      new ExpansionPanel(
+                        canTapOnHeader: true,
+                        isExpanded: _activeMeterIndex == i,
+                        headerBuilder:
+                            (BuildContext context, bool isExpanded) =>
+                                new Container(
+                                    padding: const EdgeInsets.only(left: 15.0),
+                                    alignment: Alignment.centerLeft,
+                                    child: new Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 5.0,
+                                          right: 5.0,
+                                          top: 15,
+                                          bottom: 15),
+                                      child: Text(
+                                        (() {
+                                          switch (i) {
+                                            case 0:
+                                              return "Description";
+                                              break;
+                                            case 1:
+                                              return "Size & Fit";
+                                              break;
+                                            case 2:
+                                              return "Composition & Care";
+                                              break;
+                                            case 3:
+                                              return "Designer - Balmain";
+                                              break;
+                                          }
+                                          return "Description";
+                                        })(),
+                                        style: new TextStyle(
+                                            fontSize: 22.0,
+                                            fontFamily: 'Ubuntu',
+                                            height: 1.6,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    )),
+                        body: new Container(
+                          child: new Container(
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 0, bottom: 20),
+                              child: Text(
+                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ex lorem, elementum eu maximus et, accumsan eget sapien. Ut commodo eu dolor nec suscipit.',
+                                style: new TextStyle(
+                                    fontSize: 16.0,
+                                    fontFamily: 'Ubuntu',
+                                    height: 1,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }),
         ],
       ),
       bottomNavigationBar: MyMenu(
         meIcon: CupertinoIcons.person,
         searchIcon: CupertinoIcons.search,
         homeIcon: CupertinoIcons.home,
-        wishlistIcon: Icons.star_border,),
+        wishlistIcon: Icons.star_border,
+      ),
     );
   }
 }
