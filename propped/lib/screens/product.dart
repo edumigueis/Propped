@@ -8,8 +8,6 @@ import 'package:propped/widgets/customAppBar.dart';
 import 'package:propped/widgets/menu.dart';
 
 class MyProduct extends StatefulWidget {
-  MyProduct({Key key}) : super(key: key);
-
   @override
   _MyProductState createState() => _MyProductState();
 }
@@ -18,18 +16,59 @@ class _MyProductState extends State<MyProduct> {
   int _activeMeterIndex;
   String sizeOption = 'Select your size';
   var availableSizes = ["XL", "GG"];
+  int selectedSize = 2;
+
+  _closeModal(int index) {
+    Navigator.of(context).pop();
+    debugPrint(index.toString());
+  }
 
   void _showModal() {
     showMaterialModalBottomSheet(
-      expand: false,
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (context, ScrollController sc) => ModalFit()
-    );
-  }
-
-  _changeSelectedSize(int i) {
-    debugPrint("alo");
+        expand: false,
+        context: context,
+        backgroundColor: Colors.transparent,
+        builder: (context, ScrollController sc) => Material(
+                child: SafeArea(
+              top: false,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  ListTile(
+                    title: Text('XXS'),
+                    leading: Icon(CupertinoIcons.minus_circled),
+                    onTap: () => _closeModal(0),
+                  ),
+                  ListTile(
+                    title: Text('XS'),
+                    leading: Icon(Icons.content_copy),
+                    onTap: () => _closeModal(1),
+                  ),
+                  ListTile(
+                    title: Text('S'),
+                    onTap: () => _closeModal(2),
+                  ),
+                  ListTile(
+                    title: Text('M'),
+                    onTap: () => _closeModal(3),
+                  ),
+                  ListTile(
+                    title: Text('L'),
+                    onTap: () => _closeModal(4),
+                  ),
+                  ListTile(
+                    title: Text('XL'),
+                    leading: Icon(CupertinoIcons.add),
+                    onTap: () => _closeModal(5),
+                  ),
+                  ListTile(
+                    title: Text('XXL'),
+                    leading: Icon(CupertinoIcons.add_circled),
+                    onTap: () => _closeModal(6),
+                  )
+                ],
+              ),
+            )));
   }
 
   @override
