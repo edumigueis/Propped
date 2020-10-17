@@ -14,7 +14,7 @@ class MyProduct extends StatefulWidget {
 
 class _MyProductState extends State<MyProduct> {
   int _activeMeterIndex;
-  String dropdownValue = 'Select your size';
+  String sizeOption = 'Select your size';
 
   @override
   Widget build(BuildContext context) {
@@ -137,14 +137,19 @@ class _MyProductState extends State<MyProduct> {
                 ),
               ),
               margin: EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 30),
-              child: Container(
-                  child: Padding(
-                padding:
-                    EdgeInsets.only(top: 2, bottom: 2, left: 16, right: 16),
-                child: Row(
-
-                )
-              ))),
+              child: GestureDetector(
+                child: Container(
+                    child: Padding(
+                        padding: EdgeInsets.only(
+                            top: 10, bottom: 10, left: 16, right: 16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text("$sizeOption"),
+                            Icon(CupertinoIcons.down_arrow)
+                          ],
+                        ))),
+              )),
           ListView.builder(
               padding: EdgeInsets.only(top: 0, bottom: 100),
               shrinkWrap: true,
