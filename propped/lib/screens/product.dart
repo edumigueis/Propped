@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:propped/screens/home.dart';
+import 'package:propped/utils/modal.dart';
 import 'package:propped/widgets/customAppBar.dart';
 import 'package:propped/widgets/menu.dart';
 
@@ -16,45 +17,19 @@ class MyProduct extends StatefulWidget {
 class _MyProductState extends State<MyProduct> {
   int _activeMeterIndex;
   String sizeOption = 'Select your size';
-  var availableSizes = ["XL","GG"];
+  var availableSizes = ["XL", "GG"];
 
   void _showModal() {
-    showCupertinoModalBottomSheet(
+    showMaterialModalBottomSheet(
       expand: false,
       context: context,
-      builder: (context, scrollController) => Container(
-        height: 300,
-        child: ListView.builder(
-            itemCount: availableSizes.length,
-            itemBuilder: (BuildContext context, int i) {
-              return Container(
-                  height: 50,
-                  alignment: Alignment.centerLeft,
-                  decoration: BoxDecoration(
-                      border: new Border(
-                          top: BorderSide(
-                              color: Color.fromRGBO(210, 210, 215, 1)))),
-                  child: GestureDetector(
-                    onTap: _changeSelectedSize(i),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: Text(
-                        () {
-                          return availableSizes[i]+ "";
-                        }(),
-                        style: TextStyle(
-                            fontSize: 19,
-                            color: Color.fromARGB(255, 30, 30, 30)),
-                      ),
-                    ),
-                  ));
-            }),
-      ),
+      backgroundColor: Colors.transparent,
+      builder: (context, ScrollController sc) => ModalFit()
     );
   }
 
-  _changeSelectedSize(int i){
-
+  _changeSelectedSize(int i) {
+    debugPrint("alo");
   }
 
   @override
