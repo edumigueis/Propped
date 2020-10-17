@@ -137,30 +137,13 @@ class _MyProductState extends State<MyProduct> {
                 ),
               ),
               margin: EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 30),
-              child: DropdownButtonHideUnderline(
+              child: Container(
                   child: Padding(
                 padding:
                     EdgeInsets.only(top: 2, bottom: 2, left: 16, right: 16),
-                child: DropdownButton<String>(
-                  value: dropdownValue,
-                  icon: Icon(Icons.keyboard_arrow_down),
-                  iconSize: 30,
-                  elevation: 16,
-                  style: TextStyle(
-                      color: Color.fromRGBO(30, 30, 30, 1), fontSize: 18),
-                  onChanged: (String newValue) {
-                    setState(() {
-                      dropdownValue = newValue;
-                    });
-                  },
-                  items: <String>['Select your size', 'Two', 'Free', 'Four']
-                      .map<DropdownMenuItem<String>>((String v) {
-                    return DropdownMenuItem<String>(
-                      value: v,
-                      child: Text(v),
-                    );
-                  }).toList(),
-                ),
+                child: Row(
+
+                )
               ))),
           ListView.builder(
               padding: EdgeInsets.only(top: 0, bottom: 100),
