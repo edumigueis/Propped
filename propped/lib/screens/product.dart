@@ -15,12 +15,52 @@ class MyProduct extends StatefulWidget {
 class _MyProductState extends State<MyProduct> {
   int _activeMeterIndex;
   String sizeOption = 'Select your size';
-  var availableSizes = ["XL", "GG"];
-  int selectedSize = 2;
+  var _availableSizeColor = Colors.black38;
 
   _closeModal(int index) {
     Navigator.of(context).pop();
     debugPrint(index.toString());
+
+    setState(() {
+      switch (index) {
+        case 0:
+          {
+            sizeOption = "XXS";
+          }
+          break;
+        case 1:
+          {
+            sizeOption = "XS";
+          }
+          break;
+        case 2:
+          {
+            sizeOption = "S";
+          }
+          break;
+        case 3:
+          {
+            sizeOption = "M";
+          }
+          break;
+        case 4:
+          {
+            sizeOption = "L";
+          }
+          break;
+        case 5:
+          {
+            sizeOption = "XL";
+          }
+          break;
+        case 6:
+          {
+            sizeOption = "XXL";
+          }
+          break;
+      }
+      _availableSizeColor = Color.fromRGBO(30, 30, 30, 1);
+    });
   }
 
   void _showModal() {
@@ -201,8 +241,16 @@ class _MyProductState extends State<MyProduct> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Text("$sizeOption"),
-                            Icon(CupertinoIcons.down_arrow)
+                            Text("$sizeOption",
+                                style: TextStyle(
+                                    fontSize: 19.0,
+                                    fontFamily: 'Ubuntu',
+                                    fontWeight: FontWeight.w500,
+                                    color: _availableSizeColor)),
+                            Icon(
+                              CupertinoIcons.down_arrow,
+                              color: Colors.black87,
+                            )
                           ],
                         ))),
               )),
