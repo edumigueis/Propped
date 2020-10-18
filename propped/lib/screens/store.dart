@@ -15,14 +15,7 @@ class _MyStoreState extends State<MyStore> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(15.0, 0, 15.0, 0),
-        child: Column(
-            children: <Widget>[
-              
-            ],
-        ),
-      ),
+      body: Column()
     );
   }
 }

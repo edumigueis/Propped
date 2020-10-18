@@ -259,82 +259,71 @@ class _MyProductState extends State<MyProduct> {
               shrinkWrap: true,
               physics: ClampingScrollPhysics(),
               itemCount: 4,
-              itemBuilder: (BuildContext context, int i) {
+              itemBuilder: (BuildContext context, index) {
                 return Container(
-                  color: Colors.white,
-                  /*decoration: new BoxDecoration(
-                    border: Border(
-                        top: BorderSide(width: 1, color: Colors.white70),
-                        bottom: BorderSide(width: 1, color: Colors.white70)),
-                  ),*/
-                  margin: const EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 0.0),
-                  child: new ExpansionPanelList(
-                    expansionCallback: (int index, bool status) {
-                      setState(() {
-                        _activeMeterIndex = _activeMeterIndex == i ? null : i;
-                      });
-                    },
-                    children: [
-                      new ExpansionPanel(
-                        canTapOnHeader: true,
-                        isExpanded: _activeMeterIndex == i,
-                        headerBuilder:
-                            (BuildContext context, bool isExpanded) =>
-                                new Container(
-                                    padding: const EdgeInsets.only(left: 15.0),
-                                    alignment: Alignment.centerLeft,
-                                    child: new Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 5.0,
-                                          right: 5.0,
-                                          top: 15,
-                                          bottom: 15),
-                                      child: Text(
-                                        (() {
-                                          switch (i) {
-                                            case 0:
-                                              return "Description";
-                                              break;
-                                            case 1:
-                                              return "Size & Fit";
-                                              break;
-                                            case 2:
-                                              return "Composition & Care";
-                                              break;
-                                            case 3:
-                                              return "Designer - Balmain";
-                                              break;
-                                          }
-                                          return "Description";
-                                        })(),
-                                        style: new TextStyle(
-                                            fontSize: 22.0,
-                                            fontFamily: 'Ubuntu',
-                                            height: 1.6,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    )),
-                        body: new Container(
-                          child: new Container(
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 20, right: 20, top: 0, bottom: 20),
-                              child: Text(
-                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ex lorem, elementum eu maximus et, accumsan eget sapien. Ut commodo eu dolor nec suscipit.',
-                                style: new TextStyle(
-                                    fontSize: 16.0,
-                                    fontFamily: 'Ubuntu',
-                                    height: 1,
-                                    fontWeight: FontWeight.normal),
-                              ),
-                            ),
-                          ),
-                        ),
+                    decoration: new BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(width: 1, color: Colors.black26),
                       ),
-                    ],
-                  ),
-                );
-              }),
+                    ),
+                    margin: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+                    child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: Theme(
+                          data: ThemeData(
+                              dividerColor: Colors.transparent,
+                              accentColor: Color.fromRGBO(30, 30, 30, 1)),
+                          child: ExpansionTile(
+                            title: Text(
+                              (() {
+                                switch (index) {
+                                  case 0:
+                                    return "Description";
+                                    break;
+                                  case 1:
+                                    return "Size & Fit";
+                                    break;
+                                  case 2:
+                                    return "Composition & Care";
+                                    break;
+                                  case 3:
+                                    return "Designer - Balmain";
+                                    break;
+                                }
+                                return "Description";
+                              })(),
+                              style: new TextStyle(
+                                  fontSize: 22.0,
+                                  fontFamily: 'Ubuntu',
+                                  height: 1.6,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            trailing: Icon(
+                              Icons.keyboard_arrow_down,
+                              color: Color.fromRGBO(30, 30, 30, 1),
+                              size: 35,
+                            ),
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 17, vertical: 10),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ex lorem, elementum eu maximus et, accumsan eget sapien. Ut commodo eu dolor nec suscipit.',
+                                      style: new TextStyle(
+                                          fontSize: 17.0,
+                                          fontFamily: 'Ubuntu',
+                                          height: 1.1,
+                                          fontWeight: FontWeight.normal),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        )));
+              })
         ],
       ),
       bottomNavigationBar: MyMenu(
