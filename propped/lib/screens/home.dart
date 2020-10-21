@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +28,16 @@ class _MyHomeState extends State<MyHome> {
       backgroundColor: Colors.white,
       body: NotificationListener(
           onNotification: (v) {
-            if (v is ScrollUpdateNotification)
-              setState(() => top -= v.scrollDelta / 3.6);
+            if (v is ScrollUpdateNotification) {
+              DragUpdateDetails dd = v.dragDetails;
+              if (dd != null) {
+                if (dd.delta.dx == 0) {
+                  if ((v.scrollDelta < 15 && v.scrollDelta > 0) ||
+                      (v.scrollDelta < 0 && v.scrollDelta > -15))
+                    setState(() => top -= v.scrollDelta / 5);
+                }
+              }
+            }
             return true;
           },
           child: ListView(
@@ -59,10 +69,7 @@ class _MyHomeState extends State<MyHome> {
                   return Builder(
                     builder: (BuildContext context) {
                       return Container(
-                          width: MediaQuery
-                              .of(context)
-                              .size
-                              .width,
+                          width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
                             image: DecorationImage(
                                 image: NetworkImage(
@@ -72,7 +79,7 @@ class _MyHomeState extends State<MyHome> {
                           ),
                           child: Container(
                             margin:
-                            const EdgeInsets.only(left: 30.0, top: 90.0),
+                                const EdgeInsets.only(left: 30.0, top: 90.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
@@ -201,10 +208,7 @@ class _MyHomeState extends State<MyHome> {
                     itemCount: 9,
                     itemBuilder: (BuildContext context, int index) {
                       return new Container(
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width - 60,
+                        width: MediaQuery.of(context).size.width - 60,
                         margin: const EdgeInsets.only(left: 15.0),
                         color: Colors.white,
                         child: Column(
@@ -332,30 +336,31 @@ class _MyHomeState extends State<MyHome> {
                     }),
               ),
               Container(
-                margin: const EdgeInsets.only(top: 60),
+                margin: const EdgeInsets.only(top: 40),
                 child: Stack(
                   children: <Widget>[
                     new Positioned(
-                      top: top,
-                      child: new FittedBox(
-                        fit: BoxFit.cover,
-                        child: Image.asset(
-                          'assets/images/home-edit-section.jpg',
-                        ),
+                      top: 0,
+                      child: Container(
+                        height: 600,
+                        width: MediaQuery.of(context).size.width,
+                        child: OverflowBox(
+                            minHeight: 100,
+                            maxWidth: MediaQuery.of(context).size.width,
+                            child: Transform.translate(
+                              offset: Offset(0.0, top),
+                              child: Container(
+                                height: 600,
+                                width: MediaQuery.of(context).size.width,
+                                decoration: new BoxDecoration(
+                                    image: new DecorationImage(
+                                        image: AssetImage(
+                                            'assets/images/home-edit-section.jpg'),
+                                        fit: BoxFit.cover)),
+                              ),
+                            )),
                       ),
                     ),
-                    /*Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 500,
-                    decoration: new BoxDecoration(
-                      image: new DecorationImage(
-                        image: new NetworkImage(
-                          'https://images.pexels.com/photos/1848471/pexels-photo-1848471.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-                        ),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),*/
                     Container(
                       height: 500,
                       child: Column(
@@ -484,7 +489,8 @@ class _MyHomeState extends State<MyHome> {
         meIcon: CupertinoIcons.person,
         searchIcon: CupertinoIcons.search,
         homeIcon: Icons.home,
-        wishlistIcon: Icons.star_border,),
+        wishlistIcon: Icons.star_border,
+      ),
     );
   }
 }

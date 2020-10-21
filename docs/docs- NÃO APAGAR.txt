@@ -1,2 +1,5 @@
 https://pub.dev/packages/carousel_slider
 https://medium.com/flutter-community/fetching-data-in-flutter-and-displaying-in-listview-ec1bb72af22c
+
+SOLUÇÃO PARALLAX
+https://stackoverflow.com/questions/61656889/how-to-change-background-image-position-and-rotation-in-flutter
