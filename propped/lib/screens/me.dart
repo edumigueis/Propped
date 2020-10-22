@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:propped/widgets/customAppBar.dart';
+import 'package:propped/widgets/footer.dart';
 
 class Me extends StatefulWidget {
   @override
@@ -279,7 +280,8 @@ class _Me extends State<Me> {
                       )
                     ],
                   ),
-                )
+                ),
+                Footer()
               ],
             )));
   }
