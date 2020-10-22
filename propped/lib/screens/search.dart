@@ -9,7 +9,7 @@ class MySearch extends StatefulWidget {
 
 class _Search extends State<MySearch> {
   var _controller = TextEditingController();
-  var _visibleRemove = Colors.black38;
+  var _visibleRemove = Colors.transparent;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +36,9 @@ class _Search extends State<MySearch> {
             data: ThemeData(primaryColor: Color.fromRGBO(30, 30, 30, 1)),
             isMaterialAppTheme: false,
             child: TextField(
+              onSubmitted: (String key) => {
+                if (key.trim() == "") {} else {debugPrint(key)}
+              },
               onChanged: (String str) => {
                 if (str == "")
                   setState(() => {_visibleRemove = Colors.transparent})
