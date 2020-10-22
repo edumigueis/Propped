@@ -30,13 +30,20 @@ class _MyHomeState extends State<MyHome> {
           onNotification: (v) {
             if (v is ScrollUpdateNotification) {
               DragUpdateDetails dd = v.dragDetails;
-              if (dd != null) {
-                if (dd.delta.dx == 0) {
-                  if ((v.scrollDelta < 15 && v.scrollDelta > 0) ||
-                      (v.scrollDelta < 0 && v.scrollDelta > -15))
-                    setState(() => top -= v.scrollDelta / 5);
+              debugPrint(top.toString());
+              if (top > -100 && top < 100) {
+                if (dd != null) {
+                  if (dd.delta.dx == 0) {
+                    if ((v.scrollDelta < 15 && v.scrollDelta > 0) ||
+                        (v.scrollDelta < 0 && v.scrollDelta > -15))
+                      setState(() => top -= v.scrollDelta / 5);
+                  }
                 }
               }
+              if(top > 100)
+                top -= 60;
+              if(top < -100)
+                top += 60;
             }
             return true;
           },
