@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:propped/screens/home.dart';
 import 'package:propped/screens/me.dart';
 import 'package:propped/screens/product.dart';
+import 'package:propped/screens/search.dart';
 import 'package:propped/screens/store.dart';
 import 'package:propped/screens/wishlist.dart';
 
@@ -60,7 +61,7 @@ class MyMenu extends StatelessWidget {
         {
           Navigator.push(
             ctx,
-            MaterialPageRoute(builder: (context) => MyStore()),
+            MaterialPageRoute(builder: (context) => MySearch()),
           );
         }
         break;
@@ -92,19 +93,19 @@ class MyMenu extends StatelessWidget {
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(homeIcon),
-          title: Text('Home'),
+          label: 'Home',
         ),
         BottomNavigationBarItem(
           icon: Icon(searchIcon),
-          title: Text('Search'),
+          label: 'Search',
         ),
         BottomNavigationBarItem(
           icon: Icon(wishlistIcon),
-          title: Text('Wishlist'),
+          label: 'Wishlist',
         ),
         BottomNavigationBarItem(
           icon: Icon(meIcon),
-          title: Text('Me'),
+          label: 'Me',
         )
       ],
       selectedItemColor: Colors.black,
