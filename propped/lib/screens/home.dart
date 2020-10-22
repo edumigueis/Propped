@@ -30,7 +30,6 @@ class _MyHomeState extends State<MyHome> {
           onNotification: (v) {
             if (v is ScrollUpdateNotification) {
               DragUpdateDetails dd = v.dragDetails;
-              debugPrint(top.toString());
               if (top > -100 && top < 100) {
                 if (dd != null) {
                   if (dd.delta.dx == 0) {
@@ -40,10 +39,8 @@ class _MyHomeState extends State<MyHome> {
                   }
                 }
               }
-              if(top > 100)
-                top -= 60;
-              if(top < -100)
-                top += 60;
+              if (top > 100) top -= 60;
+              if (top < -100) top += 60;
             }
             return true;
           },
