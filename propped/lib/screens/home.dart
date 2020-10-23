@@ -45,6 +45,7 @@ class _MyHomeState extends State<MyHome> {
             return true;
           },
           child: ListView(
+            physics: BouncingScrollPhysics(),
             padding: EdgeInsets.only(top: 0.0),
             children: <Widget>[
               CarouselSlider(

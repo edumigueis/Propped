@@ -69,7 +69,7 @@ class MyMenu extends StatelessWidget {
         {
           Navigator.push(
             ctx,
-            MaterialPageRoute(builder: (context) => MyWishlist()),
+            MaterialPageRoute(builder: (context) => MyStore()),
           );
         }
         break;
