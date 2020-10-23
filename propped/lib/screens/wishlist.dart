@@ -24,7 +24,7 @@ class _MyWishlistState extends State<MyWishlist> {
     return Scaffold(
       backgroundColor: Colors.white,
       extendBodyBehindAppBar: true,
-      appBar: CustomAppBar(showArrow: true),
+      appBar: CustomAppBar(showArrow: false),
       body: Padding(
           padding: EdgeInsets.fromLTRB(7.5, 50, 7.5, 0),
           child: Column(

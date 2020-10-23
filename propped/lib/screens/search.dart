@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:propped/screens/categories.dart';
+import 'package:propped/screens/home.dart';
 import 'package:propped/widgets/customAppBar.dart';
+import 'package:propped/widgets/menu.dart';
 
 class MySearch extends StatefulWidget {
   @override
@@ -16,7 +19,7 @@ class _Search extends State<MySearch> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: CustomAppBar(
-        showArrow: true,
+        showArrow: false,
       ),
       body: ListView(
         padding: EdgeInsets.symmetric(vertical: 0, horizontal: 15),
@@ -69,8 +72,88 @@ class _Search extends State<MySearch> {
                       borderRadius: BorderRadius.zero),
                   hintText: 'Products, designers and all'),
             ),
-          )
+          ),
+          GestureDetector(
+            onTap: () => {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MyCategories()),
+              )
+            },
+            child: Container(
+              margin: EdgeInsets.only(top: 25),
+              height: 90,
+              decoration: new BoxDecoration(
+                  border: Border(
+                      bottom: BorderSide(
+                          width: 1.0,
+                          style: BorderStyle.solid,
+                          color: Colors.black26))),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 0.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "Categories",
+                      style: TextStyle(
+                          fontSize: 21.0,
+                          fontFamily: 'Ubuntu',
+                          fontWeight: FontWeight.w600,
+                          color: Color.fromRGBO(40, 40, 40, 1)),
+                    ),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      color: Color.fromRGBO(30, 30, 30, 1),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+              onTap: () => {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MyHome()),
+                    )
+                  },
+              child: Container(
+                height: 70,
+                decoration: new BoxDecoration(
+                    border: Border(
+                        bottom: BorderSide(
+                            width: 1.0,
+                            style: BorderStyle.solid,
+                            color: Colors.black26))),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 0.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        "Designers",
+                        style: TextStyle(
+                            fontSize: 21.0,
+                            fontFamily: 'Ubuntu',
+                            fontWeight: FontWeight.w600,
+                            color: Color.fromRGBO(40, 40, 40, 1)),
+                      ),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        color: Color.fromRGBO(30, 30, 30, 1),
+                      )
+                    ],
+                  ),
+                ),
+              ))
         ],
+      ),
+      bottomNavigationBar: MyMenu(
+        meIcon: CupertinoIcons.person,
+        searchIcon: CupertinoIcons.search,
+        homeIcon: Icons.home,
+        wishlistIcon: Icons.star_border,
       ),
     );
   }
