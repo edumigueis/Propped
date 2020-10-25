@@ -32,7 +32,7 @@ class _MyWishlistState extends State<MyWishlist> {
               Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(7.5, 40.0, 7.5, 10.0),
+                    padding: const EdgeInsets.fromLTRB(7.5, 40.0, 7.5, 20.0),
                     child: Text(
                       "Wishlist",
                       style: TextStyle(

@@ -17,6 +17,7 @@ class _Search extends State<MySearch> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       extendBodyBehindAppBar: true,
       appBar: CustomAppBar(
         showArrow: false,

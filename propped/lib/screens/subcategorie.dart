@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:propped/screens/SearchCategoryResult.dart';
 import 'package:propped/utils/Category.dart';
+import 'package:propped/utils/Subcategory.dart';
 import 'package:propped/widgets/customAppBar.dart';
 
-class Subcategorie extends StatelessWidget{
-  Subcategorie({Key key, @required Category categorie})
-      : this.cat = categorie,
+class Subcategories extends StatelessWidget {
+  Subcategories({Key key, @required Category category})
+      : this.cat = category,
         super(key: key);
 
-  Category cat;
-  List subcategories = ["Backpacks", "Totes", "Trunks"];
-    @override
-    Widget build(BuildContext context) {
+  final Category cat;
+  final List subcategories = [
+    new Subcategory(1, "ajajaja", "Backpacks"),
+    new Subcategory(1, "ajajaja", "Totes"),
+    new Subcategory(1, "ajajaja", "Trunks")
+  ];
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.white,
         extendBodyBehindAppBar: true,
         appBar: CustomAppBar(showArrow: true),
         body: Container(
@@ -37,6 +45,12 @@ class Subcategorie extends StatelessWidget{
                     itemCount: 3,
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
+                          onTap: () => {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => SearchCategoryResult(category: this.cat, subcategory: this.subcategories[index])),
+                            )
+                          },
                           child: Container(
                             height: 60,
                             decoration: new BoxDecoration(
@@ -46,12 +60,14 @@ class Subcategorie extends StatelessWidget{
                                         style: BorderStyle.solid,
                                         color: Colors.black26))),
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 2.0),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Text(
-                                    subcategories[index],
+                                    subcategories[index].getName(),
                                     style: TextStyle(fontSize: 17),
                                   ),
                                   Icon(

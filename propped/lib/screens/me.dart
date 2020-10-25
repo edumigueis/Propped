@@ -24,6 +24,7 @@ class _Me extends State<Me> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       extendBodyBehindAppBar: true,
       appBar: CustomAppBar(showArrow: false),
       body: Container(

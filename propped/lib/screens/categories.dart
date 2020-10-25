@@ -15,6 +15,7 @@ class _MyCategoriesState extends State<MyCategories> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.white,
         extendBodyBehindAppBar: true,
         appBar: CustomAppBar(showArrow: true),
         body: Container(
@@ -43,7 +44,7 @@ class _MyCategoriesState extends State<MyCategories> {
                         onTap: () => {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => Subcategorie(categorie: categories[index])),
+                            MaterialPageRoute(builder: (context) => Subcategories(category: categories[index])),
                           )
                         },
                           child: Container(
