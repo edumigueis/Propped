@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:propped/utils/Category.dart';
 import 'package:propped/utils/Subcategory.dart';
 import 'package:propped/widgets/customAppBar.dart';
@@ -30,11 +31,27 @@ class _SearchCategoryResultState extends State<SearchCategoryResult> {
   }
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     debugPrint(this.cat.getName());
 
     //Fetch from api and set values in list to be built.
+  }
+
+  void _showRefineModal() {
+    showMaterialModalBottomSheet(
+        expand: false,
+        backgroundColor: Colors.transparent,
+        context: context,
+        builder: (context, ScrollController sc) => Material(
+              child: SafeArea(
+                top: false,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [Text("aaa")],
+                ),
+              ),
+            ));
   }
 
   @override
@@ -74,6 +91,41 @@ class _SearchCategoryResultState extends State<SearchCategoryResult> {
                         color: Color.fromRGBO(40, 40, 40, 1)),
                   ),
                 )),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 7.5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "1201 items found",
+                    style: TextStyle(
+                        color: Color.fromRGBO(30, 30, 30, 1), fontSize: 16),
+                  ),
+                  OutlinedButton(
+                    onPressed: () => {_showRefineModal()},
+                    child: Row(
+                      // Replace with a Row for horizontal icon + text
+                      children: <Widget>[
+                        Icon(
+                          Icons.reorder_rounded,
+                          color: Color.fromRGBO(30, 30, 30, 1),
+                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 8, top: 8, bottom: 8),
+                          child: Text(
+                            "Order by",
+                            style: TextStyle(
+                                color: Color.fromRGBO(30, 30, 30, 1),
+                                fontSize: 16),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
             Expanded(
               child: GridView.count(
                 padding: const EdgeInsets.only(top: 20),
