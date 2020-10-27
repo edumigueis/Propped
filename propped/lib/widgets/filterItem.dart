@@ -7,21 +7,20 @@ class FilterItem extends StatelessWidget{
       this.filter = filterName,
       super(key: key);
 
-  String filter;
+  final String filter;
 
   @override
   Widget build(BuildContext context){
     return CupertinoPageScaffold(
         navigationBar:
         CupertinoNavigationBar(
+          actionsForegroundColor: Color.fromRGBO(30, 30, 30, 1),
           middle: Text(
               this.filter),
         ),
         child: Stack(
-          fit: StackFit
-              .expand,
-          children: <
-              Widget>[],
+          fit: StackFit.expand,
+          children: <Widget>[],
         ));
   }
 }
