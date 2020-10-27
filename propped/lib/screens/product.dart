@@ -64,7 +64,7 @@ class _MyProductState extends State<MyProduct> {
   }
 
   void _showModal() {
-    showMaterialModalBottomSheet(
+    showCupertinoModalBottomSheet(
         expand: false,
         context: context,
         backgroundColor: Colors.transparent,
