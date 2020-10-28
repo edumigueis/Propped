@@ -32,8 +32,7 @@ class _SearchCategoryResultState extends State<SearchCategoryResult> {
     "Color",
     "Sizes",
     "Price Range",
-    "Occasion",
-    "Sale Discount"
+    "Occasion"
   ];
 
   _SearchCategoryResultState(Category category, Subcategory subcategory) {

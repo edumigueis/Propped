@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:propped/utils/FiltersCollection.dart';
 import 'package:propped/widgets/colorFilter.dart';
+import 'package:propped/widgets/occasionFilter.dart';
 
 class FilterItem extends StatelessWidget {
   FilterItem({Key key, @required String filterName})
@@ -17,9 +18,28 @@ class FilterItem extends StatelessWidget {
         case "COLOR":
           {
             return new ColorFilter(
-              callback: (val) => {
-                  filterValues.setColor(val)
-              },
+              callback: (val) => {filterValues.setColor(val), debugPrint(val)},
+            );
+          }
+          break;
+        case "SIZES":
+          {
+            return new ColorFilter(
+              callback: (val) => {filterValues.setColor(val), debugPrint(val)},
+            );
+          }
+          break;
+        case "PRICE RANGE":
+          {
+            return new ColorFilter(
+              callback: (val) => {filterValues.setColor(val), debugPrint(val)},
+            );
+          }
+          break;
+        case "OCCASION":
+          {
+            return new OccasionFilter(
+              callback: (val) => { debugPrint(val)},
             );
           }
           break;

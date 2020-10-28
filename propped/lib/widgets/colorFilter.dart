@@ -4,10 +4,19 @@ import 'package:propped/utils/AdvancedColor.dart';
 
 typedef void ValueRetriever(String val);
 
-class ColorFilter extends StatelessWidget {
+class ColorFilter extends StatefulWidget {
+  ColorFilter({Key ky, this.callback});
+
   final ValueRetriever callback;
 
-  ColorFilter({this.callback});
+  @override
+  ColorFilterState createState() => ColorFilterState(callback);
+}
+
+class ColorFilterState extends State<ColorFilter> {
+  final ValueRetriever cb;
+
+  ColorFilterState(this.cb);
 
   List<AdvancedColor> colors = [
     new AdvancedColor(Color.fromRGBO(228, 140, 115, 1), "Abricot"),
@@ -23,19 +32,25 @@ class ColorFilter extends StatelessWidget {
     new AdvancedColor(Color.fromRGBO(255, 150, 0, 1), "Orange"),
     new AdvancedColor(Color.fromRGBO(160, 32, 240, 1), "Purple"),
     new AdvancedColor(Colors.red, "Red"),
-    new AdvancedColor(Colors.cyanAccent, "Red"),
+    new AdvancedColor(Colors.cyanAccent, "Turquoise"),
     new AdvancedColor(Colors.white70, "White"),
     new AdvancedColor(Colors.yellow, "Yellow"),
   ];
 
+  int selected = 1;
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 60),
       itemCount: colors.length,
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
             onTap: () {
-              callback("str");
+              setState(() {
+                selected = index;
+              });
+              cb(colors[index].colorName);
             },
             child: Container(
               height: 60,
@@ -50,17 +65,28 @@ class ColorFilter extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Container(
-                      width: 20,
-                      height: 20,
-                      color: colors[index].getColor(),
-                    ),
-                    Text(
-                      colors[index].getName(),
-                      style: TextStyle(fontSize: 17),
-                    ),
+                    Row(children: <Widget>[
+                      Container(
+                        decoration: new BoxDecoration(
+                          border: new Border.all(color: Colors.black12),
+                          color: colors[index].getColor(),
+                        ),
+                        margin: EdgeInsets.only(right: 15),
+                        width: 20,
+                        height: 20,
+                      ),
+                      Text(
+                        colors[index].getName(),
+                        style: TextStyle(fontSize: 17),
+                      ),
+                    ]),
                     Icon(
-                      Icons.arrow_forward_ios,
+                      () {
+                        if (selected == index)
+                          return Icons.check;
+                        else
+                          return null;
+                      }(),
                       color: Color.fromRGBO(30, 30, 30, 1),
                     )
                   ],

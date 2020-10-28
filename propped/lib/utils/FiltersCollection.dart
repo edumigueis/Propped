@@ -1,14 +1,13 @@
-class FiltersCollection{
+class FiltersCollection {
   String color;
 
-  FiltersCollection(){}
+  FiltersCollection() {}
 
-
-  String getColor(){
+  String getColor() {
     return this.color;
   }
 
-  void setColor(String color){
+  void setColor(String color) {
     this.color = color;
   }
 }
