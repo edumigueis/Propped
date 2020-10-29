@@ -17,7 +17,7 @@ class OccasionFilterState extends State<OccasionFilter> {
 
   OccasionFilterState(this.cb);
 
-  List<String> colors = ["Formal", "Informal", "Intimate"];
+  List<String> occasions = ["Formal", "Informal", "Intimate"];
 
   int selected = 1;
 
@@ -25,14 +25,14 @@ class OccasionFilterState extends State<OccasionFilter> {
   Widget build(BuildContext context) {
     return ListView.builder(
       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 60),
-      itemCount: colors.length,
+      itemCount: occasions.length,
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
             onTap: () {
               setState(() {
                 selected = index;
               });
-              cb(colors[index]);
+              cb(occasions[index]);
             },
             child: Container(
               height: 60,
@@ -48,7 +48,7 @@ class OccasionFilterState extends State<OccasionFilter> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                       Text(
-                        colors[index],
+                        occasions[index],
                         style: TextStyle(fontSize: 17),
                       ),
                     Icon(

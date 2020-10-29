@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:propped/utils/FiltersCollection.dart';
 import 'package:propped/widgets/colorFilter.dart';
 import 'package:propped/widgets/occasionFilter.dart';
+import 'package:propped/widgets/priceRangeFilter.dart';
 
 class FilterItem extends StatelessWidget {
   FilterItem({Key key, @required String filterName})
@@ -31,8 +32,8 @@ class FilterItem extends StatelessWidget {
           break;
         case "PRICE RANGE":
           {
-            return new ColorFilter(
-              callback: (val) => {filterValues.setColor(val), debugPrint(val)},
+            return new PriceRangeFilter(
+              callback: (val) => {debugPrint(val.toString())},
             );
           }
           break;
