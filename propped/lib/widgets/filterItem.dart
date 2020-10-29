@@ -4,6 +4,7 @@ import 'package:propped/utils/FiltersCollection.dart';
 import 'package:propped/widgets/colorFilter.dart';
 import 'package:propped/widgets/occasionFilter.dart';
 import 'package:propped/widgets/priceRangeFilter.dart';
+import 'package:propped/widgets/sizeFilter.dart';
 
 class FilterItem extends StatelessWidget {
   FilterItem({Key key, @required String filterName})
@@ -25,7 +26,7 @@ class FilterItem extends StatelessWidget {
           break;
         case "SIZES":
           {
-            return new ColorFilter(callback: (val) => {filterValues.setColor(val), debugPrint(val)});
+            return new SizeFilter(callback: (val) => {filterValues.setSize(val), debugPrint(val)});
           }
           break;
         case "PRICE RANGE":
