@@ -26,7 +26,7 @@ class PriceRangeFilterState extends State<PriceRangeFilter> {
     return Container(
       child: Row(
         children: [
-          Icon(Icons.money),
+          Icon(CupertinoIcons.money_dollar),
           TextField(
             decoration: InputDecoration(
                 focusedBorder: OutlineInputBorder(
@@ -39,7 +39,7 @@ class PriceRangeFilterState extends State<PriceRangeFilter> {
                         color: Color.fromRGBO(30, 30, 30, 1),
                         width: 3.0),
                     borderRadius: BorderRadius.zero),
-                hintText: 'Enter your email'),
+                hintText: 'Min'),
             keyboardType: TextInputType.number,
             inputFormatters: <TextInputFormatter>[
               FilteringTextInputFormatter.digitsOnly
@@ -58,7 +58,7 @@ class PriceRangeFilterState extends State<PriceRangeFilter> {
                         color: Color.fromRGBO(30, 30, 30, 1),
                         width: 3.0),
                     borderRadius: BorderRadius.zero),
-                hintText: 'Enter your email'),
+                hintText: 'Max'),
             keyboardType: TextInputType.number,
             inputFormatters: <TextInputFormatter>[
               FilteringTextInputFormatter.digitsOnly
