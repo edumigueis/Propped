@@ -33,7 +33,7 @@ class FilterItem extends StatelessWidget {
         case "PRICE RANGE":
           {
             return new PriceRangeFilter(
-              callback: (val) => {debugPrint(val.toString())},
+              callback: (val) => {debugPrint(val.getStart().toString()), debugPrint(val.getEnd().toString())},
             );
           }
           break;
