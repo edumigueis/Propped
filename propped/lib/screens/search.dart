@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:propped/screens/categories.dart';
+import 'package:propped/screens/designers.dart';
 import 'package:propped/screens/home.dart';
 import 'package:propped/widgets/customAppBar.dart';
 import 'package:propped/widgets/menu.dart';
@@ -116,7 +117,7 @@ class _Search extends State<MySearch> {
               onTap: () => {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => MyHome()),
+                      MaterialPageRoute(builder: (context) => MyDesigners()),
                     )
                   },
               child: Container(

@@ -24,6 +24,7 @@ class SizeFilterState extends State<SizeFilter> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      physics: new BouncingScrollPhysics(),
       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 60),
       itemCount: sizes.length,
       itemBuilder: (BuildContext context, int index) {
@@ -66,7 +67,6 @@ class SizeFilterState extends State<SizeFilter> {
             ));
       },
       shrinkWrap: true,
-      physics: ClampingScrollPhysics(),
     );
   }
 }

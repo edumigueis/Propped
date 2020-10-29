@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:propped/screens/SearchCategoryResult.dart';
+import 'package:propped/screens/searchCategoryResult.dart';
 import 'package:propped/utils/Category.dart';
 import 'package:propped/utils/Subcategory.dart';
 import 'package:propped/widgets/customAppBar.dart';

@@ -96,7 +96,7 @@ class ColorFilterState extends State<ColorFilter> {
             ));
       },
       shrinkWrap: true,
-      physics: ClampingScrollPhysics(),
+      physics: BouncingScrollPhysics(),
     );
   }
 }
