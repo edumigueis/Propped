@@ -19,6 +19,7 @@ class ColorFilterState extends State<ColorFilter> {
   ColorFilterState(this.cb);
 
   List<AdvancedColor> colors = [
+    new AdvancedColor(Colors.transparent, "All"),
     new AdvancedColor(Color.fromRGBO(228, 140, 115, 1), "Abricot"),
     new AdvancedColor(Colors.black, "Black"),
     new AdvancedColor(Colors.blue, "Blue"),
@@ -37,7 +38,7 @@ class ColorFilterState extends State<ColorFilter> {
     new AdvancedColor(Colors.yellow, "Yellow"),
   ];
 
-  int selected = 1;
+  int selected = 0;
 
   @override
   Widget build(BuildContext context) {

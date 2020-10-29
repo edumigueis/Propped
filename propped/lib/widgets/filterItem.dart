@@ -25,9 +25,7 @@ class FilterItem extends StatelessWidget {
           break;
         case "SIZES":
           {
-            return new ColorFilter(
-              callback: (val) => {filterValues.setColor(val), debugPrint(val)},
-            );
+            return new ColorFilter(callback: (val) => {filterValues.setColor(val), debugPrint(val)});
           }
           break;
         case "PRICE RANGE":
@@ -46,6 +44,7 @@ class FilterItem extends StatelessWidget {
           break;
       }
     }
+    return Container();
   }
 
   @override

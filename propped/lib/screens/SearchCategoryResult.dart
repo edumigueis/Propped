@@ -28,12 +28,7 @@ class _SearchCategoryResultState extends State<SearchCategoryResult> {
   Category cat;
   Subcategory subCat;
   Sorting _character = Sorting.Recommended;
-  List filterItems = [
-    "Color",
-    "Sizes",
-    "Price Range",
-    "Occasion"
-  ];
+  List filterItems = ["Color", "Sizes", "Price Range", "Occasion"];
 
   _SearchCategoryResultState(Category category, Subcategory subcategory) {
     this.cat = category;
@@ -194,6 +189,7 @@ class _SearchCategoryResultState extends State<SearchCategoryResult> {
                               ),
                               Expanded(
                                 child: ListView(
+                                  physics: new BouncingScrollPhysics(),
                                   padding: EdgeInsets.symmetric(horizontal: 15),
                                   shrinkWrap: true,
                                   children: ListTile.divideTiles(
@@ -247,6 +243,29 @@ class _SearchCategoryResultState extends State<SearchCategoryResult> {
                                               ),
                                             )),
                                   ).toList(),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                    15.0, 20.0, 15.0, 20.0),
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  height: 50,
+                                  child: RaisedButton(
+                                      onPressed: () {
+                                          debugPrint("results to be shown");
+                                      },
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(6)),
+                                      color: Color.fromARGB(255, 30, 30, 30),
+                                      child: Text('SHOW RESULTS',
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontFamily: 'Ubuntu',
+                                              fontWeight: FontWeight.bold,
+                                              color: Color.fromRGBO(
+                                                  240, 240, 240, 1)))),
                                 ),
                               )
                             ],
