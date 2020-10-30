@@ -4,6 +4,7 @@ import 'package:propped/utils/Designers.dart';
 import 'package:propped/widgets/customAppBar.dart';
 
 class MyDesigners extends StatefulWidget {
+  @override
   MyDesignersState createState() => MyDesignersState();
 }
 
@@ -20,11 +21,55 @@ class MyDesignersState extends State<MyDesigners> {
 
   @override
   Widget build(BuildContext context) {
+    var _controller = TextEditingController();
+    var _visibleRemove = Colors.transparent;
     return Scaffold(
-      appBar: CustomAppBar(showArrow: true),
+      appBar: CustomAppBar(showArrow: true, title: "Designers",),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
+            child: Theme(
+              data: ThemeData(primaryColor: Color.fromRGBO(30, 30, 30, 1)),
+              isMaterialAppTheme: false,
+              child: TextField(
+                onSubmitted: (String key) => {
+                  if (key.trim() == "") {} else {debugPrint(key)}
+                },
+                onChanged: (String str) => {
+                  if (str == "")
+                    setState(() => {_visibleRemove = Colors.transparent})
+                  else
+                    setState(
+                        () => {_visibleRemove = Color.fromRGBO(30, 30, 30, 1)})
+                },
+                controller: _controller,
+                decoration: InputDecoration(
+                  filled: true,
+                    fillColor: CupertinoColors.systemGrey5,
+                    suffixIcon: IconButton(
+                      onPressed: () => {
+                        _controller.clear(),
+                        setState(() => {_visibleRemove = Colors.transparent})
+                      },
+                      icon: Icon(
+                        Icons.clear,
+                        color: _visibleRemove,
+                      ),
+                    ),
+                    prefixIcon: Icon(Icons.search),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Color.fromRGBO(150, 150, 150, 1), width: 2.0)),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.transparent ),
+                        borderRadius: BorderRadius.all(Radius.circular(7))),
+                    hintText: 'Search designers and stores'),
+              ),
+            ),
+          ),
           Expanded(
               child: ListView.builder(
             physics: new BouncingScrollPhysics(),

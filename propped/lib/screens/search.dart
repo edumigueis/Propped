@@ -53,6 +53,8 @@ class _Search extends State<MySearch> {
               },
               controller: _controller,
               decoration: InputDecoration(
+                  filled: true,
+                  fillColor: CupertinoColors.systemGrey5,
                   suffixIcon: IconButton(
                     onPressed: () => {
                       _controller.clear(),
@@ -66,13 +68,12 @@ class _Search extends State<MySearch> {
                   prefixIcon: Icon(Icons.search),
                   focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                          color: Color.fromRGBO(30, 30, 30, 1), width: 4.0),
-                      borderRadius: BorderRadius.zero),
+                          color: Color.fromRGBO(190, 190, 190, 1), width: 2.0)),
                   enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                          color: Color.fromRGBO(30, 30, 30, 1), width: 3.0),
-                      borderRadius: BorderRadius.zero),
-                  hintText: 'Products, designers and all'),
+                          color: Colors.transparent ),
+                      borderRadius: BorderRadius.all(Radius.circular(7))),
+                  hintText: "Clothes, accessories and all"),
             ),
           ),
           GestureDetector(
@@ -83,7 +84,7 @@ class _Search extends State<MySearch> {
               )
             },
             child: Container(
-              margin: EdgeInsets.only(top: 25),
+              margin: EdgeInsets.only(top: 20),
               height: 90,
               decoration: new BoxDecoration(
                   border: Border(
