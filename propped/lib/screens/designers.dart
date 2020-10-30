@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:propped/screens/store.dart';
 import 'package:propped/utils/Designers.dart';
 import 'package:propped/widgets/customAppBar.dart';
 
@@ -81,7 +82,7 @@ class MyDesignersState extends State<MyDesigners> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => MyDesigners()),
+                              builder: (context) => MyStore(code: designers[index].getCode())),
                         )
                       },
                   child: () {

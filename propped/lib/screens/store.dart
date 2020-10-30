@@ -24,12 +24,17 @@ class _MyStoreState extends State<MyStore> {
 }*/
 
 class MyStore extends StatefulWidget {
+  MyStore({Key key, String code})
+      : this.code = code,
+        super(key: key);
+
+  final String code;
+
   @override
   _MyStoreState createState() => _MyStoreState();
 }
 
 class _MyStoreState extends State<MyStore> {
-
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -38,35 +43,13 @@ class _MyStoreState extends State<MyStore> {
     because the grid parent has vertical scroll behaviour.*/
     final double itemHeight = size.height / 2;
     final double itemWidth = size.width / 2;
+
     return Scaffold(
-      appBar: CustomAppBar(
-        showArrow: true,
-      ),
+      backgroundColor: Colors.white,
       extendBodyBehindAppBar: true,
-      body:
-          /*ListView(
-        padding: EdgeInsets.symmetric(vertical: 20),
-        children: [
-          Text("Alo alo"),
-          Text("Alo alo"),
-          Text("Alo alo"),
-          Text("Alo alo"),
-        ],
-      ),*/
-          /*Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-            Text("Alo alo"),
-            Text("Alo alo"),
-            Text("Alo alo"),
-            Text("Alo alo"),
-          ],
-        ),
-      ),*/
-          Container(
-        margin: EdgeInsets.symmetric(horizontal: 15, vertical: 70),
-        width: double.infinity,
+      appBar: CustomAppBar(showArrow: true),
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(7.5, 50, 7.5, 0),
         child: Column(
           children: [
             GestureDetector(
@@ -120,8 +103,7 @@ class _MyStoreState extends State<MyStore> {
                           children: <Widget>[
                             Container(
                                 margin: const EdgeInsets.only(bottom: 10),
-                                height:
-                                MediaQuery.of(context).size.height / 3,
+                                height: MediaQuery.of(context).size.height / 3,
                                 width: MediaQuery.of(context).size.width / 2,
                                 child: Stack(
                                   children: <Widget>[
@@ -172,6 +154,27 @@ class _MyStoreState extends State<MyStore> {
           ],
         ),
       ),
+      /*ListView(
+        padding: EdgeInsets.symmetric(vertical: 20),
+        children: [
+          Text("Alo alo"),
+          Text("Alo alo"),
+          Text("Alo alo"),
+          Text("Alo alo"),
+        ],
+      ),*/
+      /*Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          children: [
+            Text("Alo alo"),
+            Text("Alo alo"),
+            Text("Alo alo"),
+            Text("Alo alo"),
+          ],
+        ),
+      ),*/
+      /**/
       bottomNavigationBar: MyMenu(
         meIcon: CupertinoIcons.person,
         searchIcon: CupertinoIcons.search,

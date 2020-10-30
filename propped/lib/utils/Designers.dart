@@ -10,4 +10,8 @@ class Designers{
   String getName(){
     return this.name;
   }
+
+  String getCode(){
+    return this.code;
+  }
 }
