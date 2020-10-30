@@ -297,9 +297,9 @@ class _Me extends State<Me> {
             ],
           )),
       bottomNavigationBar: MyMenu(
-        meIcon: CupertinoIcons.person,
+        meIcon: CupertinoIcons.person_solid,
         searchIcon: CupertinoIcons.search,
-        homeIcon: Icons.home,
+        homeIcon: CupertinoIcons.home,
         wishlistIcon: Icons.star_border,
       ),
     );

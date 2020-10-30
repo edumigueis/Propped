@@ -17,7 +17,7 @@ class OccasionFilterState extends State<OccasionFilter> {
 
   OccasionFilterState(this.cb);
 
-  List<String> occasions = ["Formal", "Informal", "Intimate"];
+  List<String> occasions = ["All","Formal", "Informal", "Intimate"];
 
   int selected = 1;
 

@@ -4,27 +4,8 @@ import 'package:propped/screens/home.dart';
 import 'package:propped/widgets/customAppBar.dart';
 import 'package:propped/widgets/menu.dart';
 
-/*class MyStore extends StatefulWidget {
-  MyStore({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyStoreState createState() => _MyStoreState();
-}
-
-class _MyStoreState extends State<MyStore> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Column()
-    );
-  }
-}*/
-
 class MyStore extends StatefulWidget {
-  MyStore({Key key, String code})
+  MyStore({Key key, @required String code})
       : this.code = code,
         super(key: key);
 
@@ -35,6 +16,11 @@ class MyStore extends StatefulWidget {
 }
 
 class _MyStoreState extends State<MyStore> {
+  @override
+  void initState(){
+    //fetch da api com o cod
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -174,7 +160,6 @@ class _MyStoreState extends State<MyStore> {
           ],
         ),
       ),*/
-      /**/
       bottomNavigationBar: MyMenu(
         meIcon: CupertinoIcons.person,
         searchIcon: CupertinoIcons.search,

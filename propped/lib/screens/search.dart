@@ -160,8 +160,8 @@ class _Search extends State<MySearch> {
       ),
       bottomNavigationBar: MyMenu(
         meIcon: CupertinoIcons.person,
-        searchIcon: CupertinoIcons.search,
-        homeIcon: Icons.home,
+        searchIcon: Icons.search,
+        homeIcon: CupertinoIcons.home,
         wishlistIcon: Icons.star_border,
       ),
     );
