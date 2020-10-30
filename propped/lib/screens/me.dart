@@ -44,7 +44,7 @@ class _Me extends State<Me> {
                 ),
               ),
               Container(
-                color: Colors.black12,
+                color: CupertinoColors.systemGrey5,
                 margin: EdgeInsets.symmetric(vertical: 20),
                 height: 100,
                 width: double.infinity,

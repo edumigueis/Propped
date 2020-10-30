@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:propped/screens/categories.dart';
 import 'package:propped/screens/designers.dart';
 import 'package:propped/screens/home.dart';
+import 'package:propped/screens/searchResult.dart';
 import 'package:propped/widgets/customAppBar.dart';
 import 'package:propped/widgets/menu.dart';
 
@@ -42,7 +43,12 @@ class _Search extends State<MySearch> {
             isMaterialAppTheme: false,
             child: TextField(
               onSubmitted: (String key) => {
-                if (key.trim() == "") {} else {debugPrint(key)}
+                if (key.trim() != "") {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MySearchResult(keyword: key,)),
+                  )
+                }
               },
               onChanged: (String str) => {
                 if (str == "")
