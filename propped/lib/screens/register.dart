@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:propped/screens/preference.dart';
+import 'package:propped/utils/User.dart';
 
 class MyRegister extends StatefulWidget {
   MyRegister({Key key, this.title}) : super(key: key);
@@ -16,6 +17,11 @@ class _MyRegisterState extends State<MyRegister> {
   bool _obscureText = true;
   IconData _iconEye = Icons.visibility_off;
 
+  bool isButtonEnabled = false;
+  final nameCtr = TextEditingController();
+  final passCtr = TextEditingController();
+  final emailCtr = TextEditingController();
+
   // Toggles the password show status
   void _toggle() {
     setState(() {
@@ -25,6 +31,21 @@ class _MyRegisterState extends State<MyRegister> {
       else
         _iconEye = Icons.visibility;
     });
+  }
+
+  bool isEmpty() {
+    if (nameCtr.text.trim() == "" ||
+        emailCtr.text.trim() == "" ||
+        passCtr.text.trim() == "")
+      setState(() {
+        isButtonEnabled = false;
+      });
+    else
+      setState(() {
+        isButtonEnabled = true;
+      });
+
+    return isButtonEnabled;
   }
 
   @override
@@ -73,6 +94,8 @@ class _MyRegisterState extends State<MyRegister> {
                     ),
                   ),
                   TextField(
+                    onChanged: (val) => {isEmpty()},
+                    controller: nameCtr,
                     decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -106,6 +129,8 @@ class _MyRegisterState extends State<MyRegister> {
                     ),
                   ),
                   TextField(
+                    onChanged: (val) => {isEmpty()},
+                    controller: emailCtr,
                     decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -142,6 +167,8 @@ class _MyRegisterState extends State<MyRegister> {
                     alignment: Alignment.centerRight,
                     children: <Widget>[
                       TextField(
+                          onChanged: (val) => {isEmpty()},
+                          controller: passCtr,
                           decoration: InputDecoration(
                               focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
@@ -172,14 +199,31 @@ class _MyRegisterState extends State<MyRegister> {
               height: 50,
               child: RaisedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => MyPreference()),
-                    );
+                    if (isButtonEnabled == true) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MyPreference(
+                                user: new User(
+                                    id: 0,
+                                    code: "A",
+                                    name: nameCtr.text,
+                                    email: emailCtr.text,
+                                    password: passCtr.text,
+                                    preference: "ALL"))),
+                      );
+                    } else {
+                      return;
+                    }
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(6)),
-                  color: Color.fromARGB(255, 30, 30, 30),
+                  color: () {
+                    if (isButtonEnabled == true)
+                      return Color.fromARGB(255, 30, 30, 30);
+                    else
+                      return Color.fromARGB(230, 30, 30, 30);
+                  }(),
                   child: Text('REGISTER',
                       style: TextStyle(
                           fontSize: 15,

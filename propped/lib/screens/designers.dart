@@ -3,22 +3,51 @@ import 'package:flutter/material.dart';
 import 'package:propped/screens/store.dart';
 import 'package:propped/utils/Designers.dart';
 import 'package:propped/widgets/customAppBar.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
 class MyDesigners extends StatefulWidget {
+  MyDesigners({Key key}):
+      super(key: key);
+
   @override
   MyDesignersState createState() => MyDesignersState();
 }
 
 class MyDesignersState extends State<MyDesigners> {
-  List<Designers> designers = [
-    new Designers("aba", "A BATHING APE"),
-    new Designers("aba", "A COLD WALL"),
-    new Designers("aba", "Chanel"),
-    new Designers("aba", "Camo"),
-    new Designers("aba", "Louis Vuitton"),
-    new Designers("aba", "Renner"),
-    new Designers("aba", "Ray Bun"),
-  ];
+
+  Future<List<Designers>> fetchDesigner() async {
+    final response =
+    await http.get('http://143.106.201.240:4000/stores');
+
+    if (response.statusCode == 200) {
+      // If the call to the server was successful, parse the JSON
+      List<dynamic> values = new List<dynamic>();
+      values = json.decode(response.body);
+      if (values.length > 0) {
+        for (int i = 0; i < values.length; i++) {
+          if (values[i] != null) {
+            Map<String, dynamic> map = values[i];
+            designers.add(Designers.fromJson(map));
+          }
+        }
+      }
+      setState(() {});
+      return designers;
+    } else {
+      // If that call was not successful, throw an error.
+      throw Exception('Failed to load post');
+    }
+  }
+
+  List<Designers> designers = new List<Designers>();
+
+  @override
+  void initState() {
+    super.initState();
+    fetchDesigner();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,22 +64,29 @@ class MyDesignersState extends State<MyDesigners> {
               data: ThemeData(primaryColor: Color.fromRGBO(30, 30, 30, 1)),
               isMaterialAppTheme: false,
               child: TextField(
-                onSubmitted: (String key) => {
-                  if (key.trim() == "") {} else {debugPrint(key)}
+                onSubmitted: (String key) =>
+                {
+                  if (key.trim() == "") {} else
+                    {debugPrint(key)}
                 },
-                onChanged: (String str) => {
+                onChanged: (String str) =>
+                {
                   if (str == "")
                     setState(() => {_visibleRemove = Colors.transparent})
                   else
                     setState(
-                        () => {_visibleRemove = Color.fromRGBO(30, 30, 30, 1)})
+                            () =>
+                        {
+                          _visibleRemove = Color.fromRGBO(30, 30, 30, 1)
+                        })
                 },
                 controller: _controller,
                 decoration: InputDecoration(
-                  filled: true,
+                    filled: true,
                     fillColor: CupertinoColors.systemGrey5,
                     suffixIcon: IconButton(
-                      onPressed: () => {
+                      onPressed: () =>
+                      {
                         _controller.clear(),
                         setState(() => {_visibleRemove = Colors.transparent})
                       },
@@ -62,10 +98,11 @@ class MyDesignersState extends State<MyDesigners> {
                     prefixIcon: Icon(Icons.search),
                     focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                            color: Color.fromRGBO(150, 150, 150, 1), width: 2.0)),
+                            color: Color.fromRGBO(150, 150, 150, 1),
+                            width: 2.0)),
                     enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                            color: Colors.transparent ),
+                            color: Colors.transparent),
                         borderRadius: BorderRadius.all(Radius.circular(7))),
                     hintText: 'Search designers and stores'),
               ),
@@ -73,106 +110,109 @@ class MyDesignersState extends State<MyDesigners> {
           ),
           Expanded(
               child: ListView.builder(
-            physics: new BouncingScrollPhysics(),
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            itemCount: designers.length,
-            itemBuilder: (BuildContext context, int index) {
-              return GestureDetector(
-                  onTap: () => {
+                physics: new BouncingScrollPhysics(),
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                itemCount: designers.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return GestureDetector(
+                      onTap: () =>
+                      {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => MyStore(code: designers[index].getCode())),
+                              builder: (context) =>
+                                  MyStore(code: designers[index].getCode())),
                         )
                       },
-                  child: () {
-                    if (index != 0) {
-                      if (designers[index].getName()[0] !=
-                          designers[index - 1].getName()[0]) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              height: 70,
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 30),
-                                child: Text(
-                                  designers[index].getName()[0],
-                                  style: TextStyle(
-                                      fontSize: 21.0,
-                                      fontFamily: 'Ubuntu',
-                                      fontWeight: FontWeight.w600,
-                                      color: Color.fromRGBO(40, 40, 40, 1)),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              height: 70,
-                              decoration: new BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          width: 1.0,
-                                          style: BorderStyle.solid,
-                                          color: Colors.black26))),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 0.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Text(
-                                      designers[index].getName(),
+                      child: () {
+                        if (index != 0) {
+                          if (designers[index].getName()[0] !=
+                              designers[index - 1].getName()[0]) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  height: 70,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 30),
+                                    child: Text(
+                                      designers[index].getName()[0],
                                       style: TextStyle(
                                           fontSize: 21.0,
                                           fontFamily: 'Ubuntu',
                                           fontWeight: FontWeight.w600,
                                           color: Color.fromRGBO(40, 40, 40, 1)),
                                     ),
-                                    Icon(
-                                      Icons.arrow_forward_ios,
-                                      color: Color.fromRGBO(30, 30, 30, 1),
-                                    )
-                                  ],
+                                  ),
                                 ),
-                              ),
-                            )
-                          ],
-                        );
-                      }
-                    }
-                    return Container(
-                      height: 70,
-                      decoration: new BoxDecoration(
-                          border: Border(
-                              bottom: BorderSide(
-                                  width: 1.0,
-                                  style: BorderStyle.solid,
-                                  color: Colors.black26))),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 0.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(
-                              designers[index].getName(),
-                              style: TextStyle(
-                                  fontSize: 21.0,
-                                  fontFamily: 'Ubuntu',
-                                  fontWeight: FontWeight.w600,
-                                  color: Color.fromRGBO(40, 40, 40, 1)),
+                                Container(
+                                  height: 70,
+                                  decoration: new BoxDecoration(
+                                      border: Border(
+                                          bottom: BorderSide(
+                                              width: 1.0,
+                                              style: BorderStyle.solid,
+                                              color: Colors.black26))),
+                                  child: Padding(
+                                    padding:
+                                    const EdgeInsets.symmetric(vertical: 0.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Text(
+                                          designers[index].getName(),
+                                          style: TextStyle(
+                                              fontSize: 21.0,
+                                              fontFamily: 'Ubuntu',
+                                              fontWeight: FontWeight.w600,
+                                              color: Color.fromRGBO(
+                                                  40, 40, 40, 1)),
+                                        ),
+                                        Icon(
+                                          Icons.arrow_forward_ios,
+                                          color: Color.fromRGBO(30, 30, 30, 1),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
+                            );
+                          }
+                        }
+                        return Container(
+                          height: 70,
+                          decoration: new BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                      width: 1.0,
+                                      style: BorderStyle.solid,
+                                      color: Colors.black26))),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 0.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  designers[index].getName(),
+                                  style: TextStyle(
+                                      fontSize: 21.0,
+                                      fontFamily: 'Ubuntu',
+                                      fontWeight: FontWeight.w600,
+                                      color: Color.fromRGBO(40, 40, 40, 1)),
+                                ),
+                                Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: Color.fromRGBO(30, 30, 30, 1),
+                                )
+                              ],
                             ),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              color: Color.fromRGBO(30, 30, 30, 1),
-                            )
-                          ],
-                        ),
-                      ),
-                    );
-                  }());
-            },
-          ))
+                          ),
+                        );
+                      }());
+                },
+              ))
         ],
       ),
     );

@@ -3,17 +3,54 @@ import 'package:flutter/material.dart';
 import 'package:propped/screens/subcategorie.dart';
 import 'package:propped/utils/Category.dart';
 import 'package:propped/widgets/customAppBar.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
 class MyCategories extends StatefulWidget {
+  MyCategories({Key key}):
+      super(key: key);
+
   @override
   _MyCategoriesState createState() => _MyCategoriesState();
 }
 
 class _MyCategoriesState extends State<MyCategories> {
-  List categories = [new Category(1, "AJAAQIKlO" ,"Bags"), new Category(1, "AJAAQIKlO", "Bags"), new Category(1, "AJAAQIKlO", "Bags")];
+
+  Future<List<Category>> fetchCategory() async {
+    final response =
+    await http.get('http://143.106.201.240:4000/categories');
+
+    if (response.statusCode == 200) {
+      // If the call to the server was successful, parse the JSON
+      List<dynamic> values = new List<dynamic>();
+      values = json.decode(response.body);
+      if (values.length > 0) {
+        for (int i = 0; i < values.length; i++) {
+          if (values[i] != null) {
+            Map<String, dynamic> map = values[i];
+            categories.add(Category.fromJson(map));
+          }
+        }
+      }
+      setState(() {});
+      return categories;
+    } else {
+      // If that call was not successful, throw an error.
+      throw Exception('Failed to load post');
+    }
+  }
+
+  List<Category> categories = new List<Category>();
 
   @override
+  void initState() {
+    super.initState();
+    fetchCategory();
+  }
+  @override
   Widget build(BuildContext context) {
+    debugPrint("building");
     return Scaffold(
         backgroundColor: Colors.white,
         extendBodyBehindAppBar: true,
@@ -38,7 +75,7 @@ class _MyCategoriesState extends State<MyCategories> {
                     padding: EdgeInsets.only(left: 15, right: 15, top: 0),
                     shrinkWrap: true,
                     physics: ClampingScrollPhysics(),
-                    itemCount: 3,
+                    itemCount: categories.length,
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () => {

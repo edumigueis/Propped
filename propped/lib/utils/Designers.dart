@@ -14,4 +14,9 @@ class Designers{
   String getCode(){
     return this.code;
   }
+
+  factory Designers.fromJson(Map<String, dynamic> json) {
+    return Designers(json['code_store'].toString(), json['name_store'].toString());
+  }
+
 }

@@ -19,4 +19,8 @@ class Category{
   String getCode(){
     return this.code;
   }
+
+  factory Category.fromJson(Map<String, dynamic> json) {
+    return Category(json['id_category'],json['code_category'].toString(), json['name_category'].toString());
+  }
 }

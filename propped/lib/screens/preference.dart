@@ -1,16 +1,51 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:propped/utils/User.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
 class MyPreference extends StatefulWidget {
-  MyPreference({Key key, this.title}) : super(key: key);
+  MyPreference({Key key, @required User user})
+      : this.user = user,
+        super(key: key);
 
-  final String title;
+  final User user;
 
   @override
   _MyPreferenceState createState() => _MyPreferenceState();
 }
 
 class _MyPreferenceState extends State<MyPreference> {
+  Future<User> register(String preference) async {
+    final http.Response response = await http.post(
+      'url',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'name_user': widget.user.name,
+        'email_user': widget.user.email,
+        'pass_user': widget.user.password,
+        'gender_user': 'Not Informed',
+        'birth_date_user': '1/1/1999',
+        'registry_user': 'Not Informed',
+        'phone_user': 'Not Informed',
+        'image_user': 'aaaaaaa',
+        'preference_user': preference,
+      }),
+    );
+    if (response.statusCode == 201) {
+      // If the server did return a 201 CREATED response,
+      // then parse the JSON.
+      return User.fromJson(jsonDecode(response.body));
+    } else {
+      // If the server did not return a 201 CREATED response,
+      // then throw an exception.
+      throw Exception('Failed to load user');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +87,9 @@ class _MyPreferenceState extends State<MyPreference> {
                           minWidth: 130,
                           height: 50,
                           child: RaisedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                register("ALL");
+                              },
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(6)),
                               color: Color.fromARGB(255, 250, 250, 250),
@@ -86,7 +123,9 @@ class _MyPreferenceState extends State<MyPreference> {
                           minWidth: 130,
                           height: 50,
                           child: RaisedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                register("MEN");
+                              },
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(6)),
                               color: Color.fromARGB(255, 250, 250, 250),
@@ -120,7 +159,9 @@ class _MyPreferenceState extends State<MyPreference> {
                           minWidth: 130,
                           height: 50,
                           child: RaisedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                register("WOMEN");
+                              },
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(6)),
                               color: Color.fromARGB(255, 250, 250, 250),
@@ -154,7 +195,9 @@ class _MyPreferenceState extends State<MyPreference> {
                           minWidth: 130,
                           height: 50,
                           child: RaisedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                register("GENDERLESS");
+                              },
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(6)),
                               color: Color.fromARGB(255, 250, 250, 250),
