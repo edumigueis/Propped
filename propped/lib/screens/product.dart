@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:propped/screens/home.dart';
+import 'package:propped/utils/Product.dart';
 import 'package:propped/utils/modal.dart';
 import 'package:propped/widgets/customAppBar.dart';
 import 'package:propped/widgets/menu.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
 class MyProduct extends StatefulWidget {
   @override
@@ -16,6 +20,38 @@ class _MyProductState extends State<MyProduct> {
   int _activeMeterIndex;
   String sizeOption = 'Select your size';
   var _availableSizeColor = Colors.black38;
+  int codeProduct = 12; //will be given by the previous widget
+  Product product = new Product(
+      id: 0,
+      code: "a",
+      name: "Not Available",
+      description: "alo",
+      weight: 300,
+      price: 19.9,
+      stock: 10);
+
+  Future<Product> fetchDesigner() async {
+    final response = await http.get(
+        'http://143.106.201.240:4000/products/' + this.codeProduct.toString());
+
+    if (response.statusCode == 200) {
+      // If the call to the server was successful, parse the JSON
+      List<dynamic> values = new List<dynamic>();
+      values = json.decode(response.body);
+      if (values.length > 0) {
+        if (values[0] != null) {
+          Map<String, dynamic> map = values[0];
+          this.product = Product.fromJson(map);
+        }
+      }
+      setState(() {});
+      debugPrint(product.name);
+      return product;
+    } else {
+      // If that call was not successful, throw an error.
+      throw Exception('Failed to load product');
+    }
+  }
 
   _closeModal(int index) {
     Navigator.of(context).pop();
