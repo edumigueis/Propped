@@ -20,7 +20,7 @@ class _MyProductState extends State<MyProduct> {
   int _activeMeterIndex;
   String sizeOption = 'Select your size';
   var _availableSizeColor = Colors.black38;
-  int codeProduct = 12; //will be given by the previous widget
+  int codeProduct = 27; //will be given by the previous widget
   Product product = new Product(
       id: 0,
       code: "a",

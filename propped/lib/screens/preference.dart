@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:propped/utils/Constants.dart';
 import 'package:propped/utils/User.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
+
+import 'home.dart';
 
 class MyPreference extends StatefulWidget {
   MyPreference({Key key, @required User user})
@@ -17,9 +20,9 @@ class MyPreference extends StatefulWidget {
 }
 
 class _MyPreferenceState extends State<MyPreference> {
-  Future<User> register(String preference) async {
+  Future<User> register(String preference, BuildContext ctx) async {
     final http.Response response = await http.post(
-      'url',
+      'http://' + Constants.serverIP + '/users',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -38,12 +41,22 @@ class _MyPreferenceState extends State<MyPreference> {
     if (response.statusCode == 201) {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
-      return User.fromJson(jsonDecode(response.body));
+      /*debugPrint(response.body.toString());
+      debugPrint(jsonDecode(response.body));*/
+      redirectToHome(ctx);
+      return new User();
     } else {
       // If the server did not return a 201 CREATED response,
       // then throw an exception.
       throw Exception('Failed to load user');
     }
+  }
+
+  void redirectToHome(BuildContext redirectTarget) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MyHome()),
+    );
   }
 
   @override
@@ -88,7 +101,7 @@ class _MyPreferenceState extends State<MyPreference> {
                           height: 50,
                           child: RaisedButton(
                               onPressed: () {
-                                register("ALL");
+                                register("ALL", context);
                               },
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(6)),
@@ -124,7 +137,7 @@ class _MyPreferenceState extends State<MyPreference> {
                           height: 50,
                           child: RaisedButton(
                               onPressed: () {
-                                register("MEN");
+                                register("MEN", context);
                               },
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(6)),
@@ -160,7 +173,7 @@ class _MyPreferenceState extends State<MyPreference> {
                           height: 50,
                           child: RaisedButton(
                               onPressed: () {
-                                register("WOMEN");
+                                register("WOMEN", context);
                               },
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(6)),
@@ -196,7 +209,7 @@ class _MyPreferenceState extends State<MyPreference> {
                           height: 50,
                           child: RaisedButton(
                               onPressed: () {
-                                register("GENDERLESS");
+                                register("GENDERLESS", context);
                               },
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(6)),

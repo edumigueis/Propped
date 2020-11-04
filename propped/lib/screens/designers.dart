@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:propped/screens/store.dart';
+import 'package:propped/utils/Constants.dart';
 import 'package:propped/utils/Designers.dart';
 import 'package:propped/widgets/customAppBar.dart';
 import 'package:http/http.dart' as http;
@@ -16,7 +17,7 @@ class MyDesigners extends StatefulWidget {
 
 class MyDesignersState extends State<MyDesigners> {
   Future<List<Designers>> fetchDesigner() async {
-    final response = await http.get('http://143.106.201.240:4000/stores');
+    final response = await http.get('http://' + Constants.serverIP + '/stores');
 
     if (response.statusCode == 200) {
       // If the call to the server was successful, parse the JSON

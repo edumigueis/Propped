@@ -2,24 +2,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:propped/screens/subcategorie.dart';
 import 'package:propped/utils/Category.dart';
+import 'package:propped/utils/Constants.dart';
 import 'package:propped/widgets/customAppBar.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
 class MyCategories extends StatefulWidget {
-  MyCategories({Key key}):
-      super(key: key);
+  MyCategories({Key key}) : super(key: key);
 
   @override
   _MyCategoriesState createState() => _MyCategoriesState();
 }
 
 class _MyCategoriesState extends State<MyCategories> {
-
   Future<List<Category>> fetchCategory() async {
     final response =
-    await http.get('http://143.106.201.240:4000/categories');
+        await http.get('http://' + Constants.serverIP + '/categories');
 
     if (response.statusCode == 200) {
       // If the call to the server was successful, parse the JSON
@@ -48,6 +47,7 @@ class _MyCategoriesState extends State<MyCategories> {
     super.initState();
     fetchCategory();
   }
+
   @override
   Widget build(BuildContext context) {
     debugPrint("building");
@@ -78,37 +78,41 @@ class _MyCategoriesState extends State<MyCategories> {
                     itemCount: categories.length,
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
-                        onTap: () => {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => Subcategories(category: categories[index])),
-                          )
-                        },
+                          onTap: () => {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Subcategories(
+                                          category: categories[index])),
+                                )
+                              },
                           child: Container(
-                        height: 60,
-                        decoration: new BoxDecoration(
-                            border: Border(
-                                bottom: BorderSide(
-                                    width: 1.0,
-                                    style: BorderStyle.solid,
-                                    color: Colors.black26))),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text(
-                                categories[index].getName(),
-                                style: TextStyle(fontSize: 17),
+                            height: 60,
+                            decoration: new BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                        width: 1.0,
+                                        style: BorderStyle.solid,
+                                        color: Colors.black26))),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 2.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Text(
+                                    categories[index].getName(),
+                                    style: TextStyle(fontSize: 17),
+                                  ),
+                                  Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: Color.fromRGBO(30, 30, 30, 1),
+                                  )
+                                ],
                               ),
-                              Icon(
-                                Icons.arrow_forward_ios,
-                                color: Color.fromRGBO(30, 30, 30, 1),
-                              )
-                            ],
-                          ),
-                        ),
-                      ));
+                            ),
+                          ));
                     }),
               ],
             )));
