@@ -9,15 +9,7 @@ class Subcategory {
     this.name = name;
   }
 
-  int getId(){
-    return this.id;
-  }
-
-  String getCode(){
-    return this.code;
-  }
-
-  String getName(){
-    return this.name;
+  factory Subcategory.fromJson(Map<String, dynamic> json) {
+    return Subcategory(json['id_subcategory'],json['code_subcategory'].toString(), json['name_subcategory'].toString());
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:propped/models/Category.dart';
-import 'file:///C:/Dudu/COTUCA/Propped/Propped/propped/lib/models/Subcategory.dart';
+import 'package:propped/models/Subcategory.dart';
 import 'package:propped/widgets/customAppBar.dart';
 import 'package:propped/widgets/filterItem.dart';
 import 'package:propped/widgets/menu.dart';
@@ -303,7 +303,7 @@ class _SearchCategoryResultState extends State<SearchCategoryResult> {
                   child: Text(
                     () {
                       if (this.subCat != null)
-                        return this.subCat.getName();
+                        return this.subCat.name;
                       else
                         return "Category";
                     }(),
