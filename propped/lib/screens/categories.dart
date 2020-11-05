@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:propped/screens/subcategorie.dart';
-import 'package:propped/utils/Category.dart';
+import 'package:propped/models/Category.dart';
 import 'package:propped/utils/Constants.dart';
 import 'package:propped/widgets/customAppBar.dart';
 import 'package:http/http.dart' as http;
@@ -32,7 +32,7 @@ class _MyCategoriesState extends State<MyCategories> {
           }
         }
       }
-      setState(() {});
+      if (this.mounted) setState(() {});
       return categories;
     } else {
       // If that call was not successful, throw an error.

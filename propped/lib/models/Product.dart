@@ -5,7 +5,7 @@ class Product {
   final String name;
   final String description;
   final double weight;
-  final double price;
+  final int price;
   final int stock;
 
   Product(

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:propped/utils/Constants.dart';
-import 'package:propped/utils/User.dart';
+import 'file:///C:/Dudu/COTUCA/Propped/Propped/propped/lib/models/User.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';

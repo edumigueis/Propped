@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:propped/screens/home.dart';
-import 'package:propped/utils/Product.dart';
-import 'package:propped/utils/modal.dart';
+import 'package:propped/models/Product.dart';
+import 'package:propped/models/Attribute.dart';
+import 'package:propped/utils/Constants.dart';
+import 'package:propped/models/Store.dart';
 import 'package:propped/widgets/customAppBar.dart';
 import 'package:propped/widgets/menu.dart';
 import 'package:http/http.dart' as http;
@@ -20,19 +22,24 @@ class _MyProductState extends State<MyProduct> {
   int _activeMeterIndex;
   String sizeOption = 'Select your size';
   var _availableSizeColor = Colors.black38;
-  int codeProduct = 27; //will be given by the previous widget
+  String codeProduct =
+      "0V89SN8U4CAXJKR6CKOSVENHT79GQ1"; //will be given by the previous widget
+  List<Attribute> productDetails;
+
   Product product = new Product(
       id: 0,
       code: "a",
       name: "Not Available",
       description: "alo",
       weight: 300,
-      price: 19.9,
+      price: 19,
       stock: 10);
 
-  Future<Product> fetchDesigner() async {
-    final response = await http.get(
-        'http://143.106.201.240:4000/products/' + this.codeProduct.toString());
+  Store store = new Store();
+
+  Future<Product> fetchProducts() async {
+    final response = await http
+        .get('http://' + Constants.serverIP + '/products/' + this.codeProduct);
 
     if (response.statusCode == 200) {
       // If the call to the server was successful, parse the JSON
@@ -44,13 +51,41 @@ class _MyProductState extends State<MyProduct> {
           this.product = Product.fromJson(map);
         }
       }
-      setState(() {});
-      debugPrint(product.name);
+      if (this.mounted) setState(() {});
       return product;
     } else {
       // If that call was not successful, throw an error.
       throw Exception('Failed to load product');
     }
+  }
+
+  /*Future<Store> fetchStore() async {
+    final response = await http
+        .get('http://' + Constants.serverIP + '/stores/' + this.product.store.toString());
+
+    if (response.statusCode == 200) {
+      // If the call to the server was successful, parse the JSON
+      List<dynamic> values = new List<dynamic>();
+      values = json.decode(response.body);
+      if (values.length > 0) {
+        if (values[0] != null) {
+          Map<String, dynamic> map = values[0];
+          this.store = Store.fromJson(map);
+        }
+      }
+      setState(() {});
+      return store;
+    } else {
+      // If that call was not successful, throw an error.
+      throw Exception('Failed to load product');
+    }
+  }*/
+
+  @override
+  void initState() {
+    super.initState();
+    fetchProducts();
+    debugPrint(this.product.name);
   }
 
   _closeModal(int index) {
@@ -231,7 +266,7 @@ class _MyProductState extends State<MyProduct> {
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  "Moletom com zíper e capuz",
+                  this.product.name,
                   style: TextStyle(
                       fontSize: 20.0,
                       fontFamily: 'Ubuntu',
@@ -239,7 +274,7 @@ class _MyProductState extends State<MyProduct> {
                       fontWeight: FontWeight.w500),
                 ),
                 Text(
-                  "R\$15.096",
+                  "R\$" + this.product.price.toString(),
                   style: TextStyle(
                       fontSize: 19.0,
                       fontFamily: 'Ubuntu',
@@ -247,7 +282,8 @@ class _MyProductState extends State<MyProduct> {
                       fontWeight: FontWeight.w600),
                 ),
                 Text(
-                  "12 x R\$1.258,00",
+                  "12 x R\$" +
+                      (this.product.price / 12).toString().substring(0, 4),
                   style: TextStyle(
                       fontSize: 15.0,
                       fontFamily: 'Ubuntu',
@@ -343,18 +379,102 @@ class _MyProductState extends State<MyProduct> {
                               Padding(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 17, vertical: 10),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ex lorem, elementum eu maximus et, accumsan eget sapien. Ut commodo eu dolor nec suscipit.',
-                                      style: new TextStyle(
-                                          fontSize: 17.0,
-                                          fontFamily: 'Ubuntu',
-                                          height: 1.1,
-                                          fontWeight: FontWeight.normal),
-                                    ),
-                                  ],
-                                ),
+                                child: Container(child: (() {
+                                  switch (index) {
+                                    case 0:
+                                      return Text(
+                                        this.product.description,
+                                        style: new TextStyle(
+                                            fontSize: 17.0,
+                                            fontFamily: 'Ubuntu',
+                                            height: 1.1,
+                                            fontWeight: FontWeight.normal),
+                                      );
+                                      break;
+                                    case 1:
+                                      return ListView.builder(
+                                          padding:
+                                              const EdgeInsets.only(top: 5),
+                                          shrinkWrap: true,
+                                          physics:
+                                              new NeverScrollableScrollPhysics(),
+                                          itemCount: 4,
+                                          itemBuilder:
+                                              (BuildContext ctx, int index) {
+                                            return Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: <Widget>[
+                                                  Text("Sleeves Length",
+                                                      style: new TextStyle(
+                                                          fontSize: 17.0,
+                                                          fontFamily: 'Ubuntu',
+                                                          height: 1.4,
+                                                          fontWeight: FontWeight
+                                                              .normal)),
+                                                  Text("35cm",
+                                                      style: new TextStyle(
+                                                          fontSize: 17.0,
+                                                          fontFamily: 'Ubuntu',
+                                                          height: 1.4,
+                                                          fontWeight: FontWeight
+                                                              .normal))
+                                                ]);
+                                          });
+                                      break;
+                                    case 2:
+                                      return ListView.builder(
+                                          padding:
+                                          const EdgeInsets.only(top: 5),
+                                          shrinkWrap: true,
+                                          physics:
+                                          new NeverScrollableScrollPhysics(),
+                                          itemCount: 4,
+                                          itemBuilder:
+                                              (BuildContext ctx, int index) {
+                                            return Row(
+                                                mainAxisAlignment:
+                                                MainAxisAlignment
+                                                    .spaceBetween,
+                                                children: <Widget>[
+                                                  Text("Main material",
+                                                      style: new TextStyle(
+                                                          fontSize: 17.0,
+                                                          fontFamily: 'Ubuntu',
+                                                          height: 1.4,
+                                                          fontWeight: FontWeight
+                                                              .normal)),
+                                                  Text("Cotton",
+                                                      style: new TextStyle(
+                                                          fontSize: 17.0,
+                                                          fontFamily: 'Ubuntu',
+                                                          height: 1.4,
+                                                          fontWeight: FontWeight
+                                                              .normal))
+                                                ]);
+                                          });
+                                      break;
+                                    case 3:
+                                      return Text(
+                                        this.product.description,
+                                        style: new TextStyle(
+                                            fontSize: 17.0,
+                                            fontFamily: 'Ubuntu',
+                                            height: 1.1,
+                                            fontWeight: FontWeight.normal),
+                                      );
+                                      break;
+                                  }
+                                  return Text(
+                                    this.product.description,
+                                    style: new TextStyle(
+                                        fontSize: 17.0,
+                                        fontFamily: 'Ubuntu',
+                                        height: 1.1,
+                                        fontWeight: FontWeight.normal),
+                                  );
+                                })()),
                               )
                             ],
                           ),
