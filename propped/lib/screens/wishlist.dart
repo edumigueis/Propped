@@ -1,18 +1,83 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:propped/models/Favorite.dart';
+import 'package:propped/models/Product.dart';
+import 'package:propped/utils/Constants.dart';
 import 'package:propped/widgets/customAppBar.dart';
 import 'package:propped/widgets/menu.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
 class MyWishlist extends StatefulWidget {
-  MyWishlist({Key key, this.title}) : super(key: key);
-
-  final String title;
+  MyWishlist({Key key}) : super(key: key);
 
   @override
   _MyWishlistState createState() => _MyWishlistState();
 }
 
 class _MyWishlistState extends State<MyWishlist> {
+  final idUser = 27;
+
+  Future<List<Favorite>> fetchFavorites() async {
+    final response =
+    await http.get('http://' + Constants.serverIP + '/favorites/user/'+ this.idUser.toString());
+
+    if (response.statusCode == 200) {
+      // If the call to the server was successful, parse the JSON
+      List<dynamic> values = new List<dynamic>();
+      values = json.decode(response.body);
+      if (values.length > 0) {
+        for (int i = 0; i < values.length; i++) {
+          if (values[i] != null) {
+            Map<String, dynamic> map = values[i];
+            favs.add(Favorite.fromJson(map));
+          }
+        }
+      }
+      await fetchProducts(favs);
+      return favs;
+    } else {
+      // If that call was not successful, throw an error.
+      throw Exception('Failed to load post');
+    }
+  }
+
+  Future<List<Product>> fetchProducts(List<Favorite> favorites) async {
+    for(int f = 0; f < favorites.length; f++){
+      final response =
+      await http.get('http://' + Constants.serverIP + '/products/'+ favorites[f].product.toString());
+
+      if (response.statusCode == 200) {
+        // If the call to the server was successful, parse the JSON
+        List<dynamic> values = new List<dynamic>();
+        values = json.decode(response.body);
+        if (values.length > 0) {
+          for (int i = 0; i < values.length; i++) {
+            if (values[i] != null) {
+              Map<String, dynamic> map = values[i];
+              products.add(Product.fromJson(map));
+            }
+          }
+        }
+      } else {
+        // If that call was not successful, throw an error.
+        throw Exception('Failed to load post');
+      }
+    }
+    if (this.mounted) setState(() {});
+    return products;
+  }
+
+  List<Product> products = new List<Product>();
+  List<Favorite> favs = new List<Favorite>();
+
+  @override
+  void initState(){
+    super.initState();
+    fetchFavorites();
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
