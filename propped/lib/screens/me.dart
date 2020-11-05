@@ -9,10 +9,10 @@ class Me extends StatefulWidget {
   _Me createState() => _Me();
 }
 
-enum SingingCharacter { All, Woman, Men, Genderless }
+enum Preferences { All, Woman, Men, Genderless }
 
 class _Me extends State<Me> {
-  SingingCharacter _character = SingingCharacter.Woman;
+  Preferences _character = Preferences.Woman;
   List supItems = [
     "About Propped",
     "Terms and Conditions",
@@ -162,9 +162,9 @@ class _Me extends State<Me> {
                           scale: 1.4,
                           child: Radio(
                             activeColor: Color.fromRGBO(30, 30, 30, 1),
-                            value: SingingCharacter.All,
+                            value: Preferences.All,
                             groupValue: _character,
-                            onChanged: (SingingCharacter value) {
+                            onChanged: (Preferences value) {
                               setState(() {
                                 _character = value;
                               });
@@ -185,9 +185,9 @@ class _Me extends State<Me> {
                           scale: 1.4,
                           child: Radio(
                             activeColor: Color.fromRGBO(30, 30, 30, 1),
-                            value: SingingCharacter.Woman,
+                            value: Preferences.Woman,
                             groupValue: _character,
-                            onChanged: (SingingCharacter value) {
+                            onChanged: (Preferences value) {
                               setState(() {
                                 _character = value;
                               });
@@ -208,9 +208,9 @@ class _Me extends State<Me> {
                           scale: 1.4,
                           child: Radio(
                             activeColor: Color.fromRGBO(30, 30, 30, 1),
-                            value: SingingCharacter.Men,
+                            value: Preferences.Men,
                             groupValue: _character,
-                            onChanged: (SingingCharacter value) {
+                            onChanged: (Preferences value) {
                               setState(() {
                                 _character = value;
                               });
@@ -231,9 +231,9 @@ class _Me extends State<Me> {
                           scale: 1.4,
                           child: Radio(
                             activeColor: Color.fromRGBO(30, 30, 30, 1),
-                            value: SingingCharacter.Genderless,
+                            value: Preferences.Genderless,
                             groupValue: _character,
-                            onChanged: (SingingCharacter value) {
+                            onChanged: (Preferences value) {
                               setState(() {
                                 _character = value;
                               });
