@@ -15,7 +15,7 @@ class User {
       name: json['name_user'],
       email: json['email_user'],
       password: json['pass_user'],
-      preference: json['gender_user']
+      preference: json['preference_user']
     );
   }
 }

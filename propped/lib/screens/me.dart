@@ -1,18 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:propped/utils/Constants.dart';
 import 'package:propped/widgets/customAppBar.dart';
 import 'package:propped/widgets/footer.dart';
 import 'package:propped/widgets/menu.dart';
+import 'package:propped/models/User.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
 class Me extends StatefulWidget {
   @override
   _Me createState() => _Me();
 }
 
-enum Preferences { All, Woman, Men, Genderless }
+enum Preferences { All, Women, Men, Genderless }
 
 class _Me extends State<Me> {
-  Preferences _character = Preferences.Woman;
+  Preferences _character = Preferences.All;
   List supItems = [
     "About Propped",
     "Terms and Conditions",
@@ -20,6 +25,65 @@ class _Me extends State<Me> {
     "Partners",
     "Guides"
   ];
+  String codeUser = "4CN5M7Y897Y9834NMU085";
+
+  Future<User> fetchUser() async {
+    final response = await http
+        .get('http://' + Constants.serverIP + '/users/' + this.codeUser);
+
+    if (response.statusCode == 200) {
+      // If the call to the server was successful, parse the JSON
+      List<dynamic> values = new List<dynamic>();
+      values = json.decode(response.body);
+      if (values.length > 0) {
+        if (values[0] != null) {
+          Map<String, dynamic> map = values[0];
+          this.user = User.fromJson(map);
+          this._character = getPreference(this.user);
+        }
+      }
+      if (this.mounted) setState(() {});
+      return user;
+    } else {
+      // If that call was not successful, throw an error.
+      throw Exception('Failed to load user');
+    }
+  }
+
+  Preferences getPreference(User usr) {
+    debugPrint(usr.preference);
+    switch (usr.preference.toUpperCase()) {
+      case "ALL":
+        {
+          return Preferences.All;
+        }
+        break;
+      case "MEN":
+        {
+          return Preferences.Men;
+        }
+        break;
+      case "WOMEN":
+        {
+          return Preferences.Women;
+        }
+        break;
+      case "GENDERLESS":
+        {
+          return Preferences.Genderless;
+        }
+        break;
+    }
+    return Preferences.All;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUser();
+  }
+
+  User user = new User(name: "Error", email: "Failed to load");
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +129,7 @@ class _Me extends State<Me> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text("Alana Megid",
+                          Text(this.user.name,
                               style: TextStyle(
                                   fontSize: 20.0,
                                   fontFamily: 'Ubuntu',
@@ -75,7 +139,7 @@ class _Me extends State<Me> {
                           Padding(
                             padding: const EdgeInsets.only(top: 8.0),
                             child: Text(
-                              "Lorem Ipsum Dolor Sit amet",
+                              this.user.email,
                               style: TextStyle(
                                   fontSize: 17.0,
                                   fontFamily: 'Ubuntu',
@@ -180,12 +244,12 @@ class _Me extends State<Me> {
                                 style: BorderStyle.solid,
                                 color: Colors.black26))),
                     child: ListTile(
-                        title: const Text('Woman'),
+                        title: const Text('Women'),
                         leading: Transform.scale(
                           scale: 1.4,
                           child: Radio(
                             activeColor: Color.fromRGBO(30, 30, 30, 1),
-                            value: Preferences.Woman,
+                            value: Preferences.Women,
                             groupValue: _character,
                             onChanged: (Preferences value) {
                               setState(() {
@@ -250,7 +314,7 @@ class _Me extends State<Me> {
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 10),
-                      child: Text("Location",
+                      child: Text("Support",
                           style: TextStyle(
                               fontSize: 20.0,
                               fontFamily: 'Ubuntu',
