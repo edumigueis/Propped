@@ -219,6 +219,7 @@ class _MyProductState extends State<MyProduct> {
       appBar: CustomAppBar(showArrow: true),
       backgroundColor: Colors.white,
       body: ListView(
+        physics: new BouncingScrollPhysics(),
         padding: const EdgeInsets.all(0),
         children: <Widget>[
           CarouselSlider(

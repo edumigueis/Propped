@@ -25,6 +25,7 @@ class _Search extends State<MySearch> {
         showArrow: false,
       ),
       body: ListView(
+        physics: new BouncingScrollPhysics(),
         padding: EdgeInsets.symmetric(vertical: 0, horizontal: 15),
         children: [
           Padding(
