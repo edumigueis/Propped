@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:propped/screens/cart.dart';
 import 'package:propped/screens/preference.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -48,7 +49,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
         GestureDetector(
           onTap: () => Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => MyPreference()),
+            MaterialPageRoute(builder: (context) => MyShoppingBag()),
           ),
           child: Container(
               child: Icon(Icons.shopping_basket),

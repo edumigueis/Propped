@@ -35,7 +35,7 @@ class _MyProductState extends State<MyProduct> {
       price: 19,
       stock: 10);
 
-  Store store = new Store();
+  Store store = new Store(name: "Couldn't load store");
 
   Future<Product> fetchProducts() async {
     final response = await http
@@ -51,6 +51,7 @@ class _MyProductState extends State<MyProduct> {
           this.product = Product.fromJson(map);
         }
       }
+      await fetchStore(this.product.store);
       if (this.mounted) setState(() {});
       return product;
     } else {
@@ -59,9 +60,9 @@ class _MyProductState extends State<MyProduct> {
     }
   }
 
-  /*Future<Store> fetchStore() async {
-    final response = await http
-        .get('http://' + Constants.serverIP + '/stores/' + this.product.store.toString());
+  Future<Store> fetchStore(int id) async {
+    final response =
+        await http.get('http://' + Constants.serverIP + '/stores/' + '1');
 
     if (response.statusCode == 200) {
       // If the call to the server was successful, parse the JSON
@@ -73,13 +74,12 @@ class _MyProductState extends State<MyProduct> {
           this.store = Store.fromJson(map);
         }
       }
-      setState(() {});
       return store;
     } else {
       // If that call was not successful, throw an error.
       throw Exception('Failed to load product');
     }
-  }*/
+  }
 
   @override
   void initState() {
@@ -147,34 +147,37 @@ class _MyProductState extends State<MyProduct> {
                 children: <Widget>[
                   ListTile(
                     title: Text('XXS'),
-                    leading: Icon(CupertinoIcons.minus_circled),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 30),
                     onTap: () => _closeModal(0),
                   ),
                   ListTile(
                     title: Text('XS'),
-                    leading: Icon(Icons.content_copy),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 30),
                     onTap: () => _closeModal(1),
                   ),
                   ListTile(
                     title: Text('S'),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 30),
                     onTap: () => _closeModal(2),
                   ),
                   ListTile(
                     title: Text('M'),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 30),
                     onTap: () => _closeModal(3),
                   ),
                   ListTile(
                     title: Text('L'),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 30),
                     onTap: () => _closeModal(4),
                   ),
                   ListTile(
                     title: Text('XL'),
-                    leading: Icon(CupertinoIcons.add),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 30),
                     onTap: () => _closeModal(5),
                   ),
                   ListTile(
                     title: Text('XXL'),
-                    leading: Icon(CupertinoIcons.add_circled),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 30),
                     onTap: () => _closeModal(6),
                   )
                 ],
@@ -359,7 +362,12 @@ class _MyProductState extends State<MyProduct> {
                                     return "Composition & Care";
                                     break;
                                   case 3:
-                                    return "Designer - Balmain";
+                                    if (this.store.name.length < 20)
+                                      return "Designer - " + this.store.name;
+                                    else
+                                      return "Designer - " +
+                                          this.store.name.substring(0, 19) +
+                                          "...";
                                     break;
                                 }
                                 return "Description";
@@ -426,17 +434,17 @@ class _MyProductState extends State<MyProduct> {
                                     case 2:
                                       return ListView.builder(
                                           padding:
-                                          const EdgeInsets.only(top: 5),
+                                              const EdgeInsets.only(top: 5),
                                           shrinkWrap: true,
                                           physics:
-                                          new NeverScrollableScrollPhysics(),
+                                              new NeverScrollableScrollPhysics(),
                                           itemCount: 4,
                                           itemBuilder:
                                               (BuildContext ctx, int index) {
                                             return Row(
                                                 mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: <Widget>[
                                                   Text("Main material",
                                                       style: new TextStyle(
@@ -456,13 +464,61 @@ class _MyProductState extends State<MyProduct> {
                                           });
                                       break;
                                     case 3:
-                                      return Text(
-                                        this.product.description,
-                                        style: new TextStyle(
-                                            fontSize: 17.0,
-                                            fontFamily: 'Ubuntu',
-                                            height: 1.1,
-                                            fontWeight: FontWeight.normal),
+                                      return Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 10, top: 7),
+                                            child: Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed iaculis, risus in porta accumsan, augue sem vulputate diam, pretium pretium massa ligula id ante. Mauris laoreet mattis mauris, vitae feugiat justo ultrices et. Curabitur lacinia leo vitae leo laoreet, vitae consequat sapien tincidunt.",
+                                                //here store description will be added
+                                                style: new TextStyle(
+                                                    fontSize: 17.0,
+                                                    fontFamily: 'Ubuntu',
+                                                    height: 1.1,
+                                                    fontWeight:
+                                                        FontWeight.normal),
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            margin: EdgeInsets.symmetric(
+                                                vertical: 18),
+                                            child: OutlinedButton(
+                                              onPressed: () => {},
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                // Replace with a Row for horizontal icon + text
+                                                children: <Widget>[
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 8,
+                                                            top: 15,
+                                                            bottom: 15),
+                                                    child: Text(
+                                                      "See more from " +
+                                                          store.name,
+                                                      style: TextStyle(
+                                                          color: Color.fromRGBO(
+                                                              30, 30, 30, 1),
+                                                          fontSize: 18),
+                                                    ),
+                                                  ),
+                                                  Icon(
+                                                    Icons.arrow_forward_ios,
+                                                    color: Color.fromRGBO(
+                                                        30, 30, 30, 1),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       );
                                       break;
                                   }
