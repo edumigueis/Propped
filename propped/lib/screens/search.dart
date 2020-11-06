@@ -44,12 +44,16 @@ class _Search extends State<MySearch> {
             isMaterialAppTheme: false,
             child: TextField(
               onSubmitted: (String key) => {
-                if (key.trim() != "") {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => MySearchResult(keyword: key,)),
-                  )
-                }
+                if (key.trim() != "")
+                  {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MySearchResult(
+                                keyword: key,
+                              )),
+                    )
+                  }
               },
               onChanged: (String str) => {
                 if (str == "")
@@ -77,8 +81,7 @@ class _Search extends State<MySearch> {
                       borderSide: BorderSide(
                           color: Color.fromRGBO(190, 190, 190, 1), width: 2.0)),
                   enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: Colors.transparent ),
+                      borderSide: BorderSide(color: Colors.transparent),
                       borderRadius: BorderRadius.all(Radius.circular(7))),
                   hintText: "Clothes, accessories and all"),
             ),
