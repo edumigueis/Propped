@@ -9,7 +9,7 @@ class Store {
     return Store(
         id: json['id_store'],
         code: json['code_store'],
-        name: json['name_store']
+        name: json['name_store'],
     );
   }
 }

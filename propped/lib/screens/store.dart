@@ -1,8 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:propped/models/Store.dart';
 import 'package:propped/screens/home.dart';
+import 'package:propped/utils/Constants.dart';
 import 'package:propped/widgets/customAppBar.dart';
 import 'package:propped/widgets/menu.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
 class MyStore extends StatefulWidget {
   MyStore({Key key, @required String code})
@@ -16,9 +21,33 @@ class MyStore extends StatefulWidget {
 }
 
 class _MyStoreState extends State<MyStore> {
+  Store store = new Store();
   @override
   void initState(){
-    //fetch da api com o cod
+    super.initState();
+    fetchStore(widget.code);
+  }
+
+  Future<Store> fetchStore(String code) async {
+    final response = await http
+        .get('http://' + Constants.serverIP + '/stores/' + code);
+
+    if (response.statusCode == 200) {
+      // If the call to the server was successful, parse the JSON
+      List<dynamic> values = new List<dynamic>();
+      values = json.decode(response.body);
+      if (values.length > 0) {
+        if (values[0] != null) {
+          Map<String, dynamic> map = values[0];
+          this.store = Store.fromJson(map);
+        }
+      }
+      if (this.mounted) setState(() {});
+      return store;
+    } else {
+      // If that call was not successful, throw an error.
+      throw Exception('Failed to load user');
+    }
   }
 
   @override
@@ -35,109 +64,151 @@ class _MyStoreState extends State<MyStore> {
       extendBodyBehindAppBar: true,
       appBar: CustomAppBar(showArrow: true),
       body: Padding(
-        padding: EdgeInsets.fromLTRB(7.5, 50, 7.5, 0),
-        child: Column(
-          children: [
-            GestureDetector(
-              onTap: () => {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => MyHome()),
-                )
-              },
-              child: Text(
-                "Stores and stuff",
-                style: TextStyle(
-                    fontSize: 20,
-                    fontFamily: 'Ubuntu',
-                    color: Color.fromRGBO(244, 123, 55, 1)),
+        padding: EdgeInsets.symmetric(horizontal: 15),
+        child: Center(
+          child: ListView(
+            physics: new BouncingScrollPhysics(),
+            padding: EdgeInsets.only(top: 90),
+            children: [
+              Center(
+                child: Container(
+                  alignment: Alignment.center,
+                  height: 125,
+                  width: 125,
+                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(60)),
+                      image: DecorationImage(
+                          image: NetworkImage(
+                              "https://images.pexels.com/photos/2101839/pexels-photo-2101839.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"))),
+                ),
               ),
-            ),
-            SizedBox(
-                width: 100,
-                height: 40,
-                child: RaisedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => MyHome()),
-                      );
-                    },
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6)),
-                    color: Color.fromARGB(255, 30, 30, 30),
-                    child: Text('REGISTER',
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontFamily: 'Ubuntu',
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromRGBO(240, 240, 240, 1))))),
-            Expanded(
-              child: GridView.count(
-                padding: const EdgeInsets.only(top: 20),
-                physics: new BouncingScrollPhysics(),
-                // Create a grid with 2 columns. If you change the scrollDirection to
-                // horizontal, this produces 2 rows.
-                crossAxisCount: 2,
-                childAspectRatio: (itemWidth / itemHeight),
-                // Generate 100 widgets that display their index in the List.
-                children: List.generate(10, (index) {
-                  return Padding(
-                      padding: const EdgeInsets.fromLTRB(7.5, 0, 7.5, 15),
-                      child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Container(
-                                margin: const EdgeInsets.only(bottom: 10),
-                                height: MediaQuery.of(context).size.height / 3,
-                                width: MediaQuery.of(context).size.width / 2,
-                                child: Stack(
-                                  children: <Widget>[
-                                    Container(
-                                      width: double.infinity,
-                                      alignment: Alignment.center,
-                                      child: Image(
-                                        image: NetworkImage(
-                                            'https://cdn-images.farfetch-contents.com/15/23/22/29/15232229_29297818_1000.jpg'),
-                                        fit: BoxFit.cover,
+              Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.only(top: 20, bottom: 15),
+                child: Text("Chanel", style: TextStyle(
+                    fontSize: 35,
+                    fontFamily: 'Ubuntu',
+                    fontWeight: FontWeight.w500,
+                    color: Color.fromRGBO(30, 30, 30, 1))),
+              ),
+              Center(
+                child: Text(
+                    "PARIS, FR", style: TextStyle(
+                    fontSize: 14,
+                    fontFamily: 'Ubuntu',
+                    fontWeight: FontWeight.w900,
+                    color: Color.fromRGBO(30, 30, 30, 1))),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 30),
+                child: SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: RaisedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => MyHome()),
+                          );
+                        },
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(6)),
+                        color: Color.fromARGB(255, 30, 30, 30),
+                        child: Text('SEE MORE',
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontFamily: 'Ubuntu',
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromRGBO(240, 240, 240, 1))))),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 20),
+                child: SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: RaisedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => MyHome()),
+                          );
+                        },
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(6),
+                            side: BorderSide(color: Color.fromRGBO(30, 30, 30, 1), width: 2.5)),
+                        color: Colors.white,
+                        child: Text('RATINGS',
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontFamily: 'Ubuntu',
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromRGBO(30, 30, 30, 1))))),
+              ),
+                GridView.count(
+                  padding: const EdgeInsets.only(top: 20),
+                  physics: new BouncingScrollPhysics(),
+                  shrinkWrap: true,
+                  // Create a grid with 2 columns. If you change the scrollDirection to
+                  // horizontal, this produces 2 rows.
+                  crossAxisCount: 2,
+                  childAspectRatio: (itemWidth / itemHeight),
+                  // Generate 100 widgets that display their index in the List.
+                  children: List.generate(10, (index) {
+                        return Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Container(
+                                  margin: const EdgeInsets.only(bottom: 10),
+                                  height: MediaQuery.of(context).size.height / 3,
+                                  width: MediaQuery.of(context).size.width / 2,
+                                  child: Stack(
+                                    children: <Widget>[
+                                      Container(
+                                        width: double.infinity,
+                                        alignment: Alignment.center,
+                                        child: Image(
+                                          image: NetworkImage(
+                                              'https://cdn-images.farfetch-contents.com/15/23/22/29/15232229_29297818_1000.jpg'),
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
-                                    ),
-                                    Positioned(
-                                      top: 10,
-                                      right: 10,
-                                      child: new Icon(Icons.star, size: 30),
-                                    )
-                                  ],
-                                )),
-                            Text('Martine Rose',
-                                style: TextStyle(
-                                    fontSize: 15.0,
-                                    fontFamily: 'Ubuntu',
-                                    fontWeight: FontWeight.w500,
-                                    color: Color.fromRGBO(120, 120, 120, 1)),
-                                textAlign: TextAlign.center),
-                            Text('Colorblock Pants',
-                                style: TextStyle(
-                                    fontSize: 19.0,
-                                    fontFamily: 'Ubuntu',
-                                    fontWeight: FontWeight.w700,
-                                    color: Color.fromRGBO(40, 40, 40, 1)),
-                                textAlign: TextAlign.center),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-                              child: Text('USD 1200',
+                                      Positioned(
+                                        top: 10,
+                                        right: 10,
+                                        child: new Icon(Icons.star, size: 30),
+                                      )
+                                    ],
+                                  )),
+                              Text('Martine Rose',
                                   style: TextStyle(
-                                      fontSize: 17.0,
+                                      fontSize: 15.0,
                                       fontFamily: 'Ubuntu',
                                       fontWeight: FontWeight.w500,
+                                      color: Color.fromRGBO(120, 120, 120, 1)),
+                                  textAlign: TextAlign.center),
+                              Text('Colorblock Pants',
+                                  style: TextStyle(
+                                      fontSize: 19.0,
+                                      fontFamily: 'Ubuntu',
+                                      fontWeight: FontWeight.w700,
                                       color: Color.fromRGBO(40, 40, 40, 1)),
                                   textAlign: TextAlign.center),
-                            )
-                          ]));
-                }),
-              ),
-            )
-          ],
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+                                child: Text('USD 1200',
+                                    style: TextStyle(
+                                        fontSize: 17.0,
+                                        fontFamily: 'Ubuntu',
+                                        fontWeight: FontWeight.w500,
+                                        color: Color.fromRGBO(40, 40, 40, 1)),
+                                    textAlign: TextAlign.center),
+                              )
+                            ]);
+                  }),
+                ),
+            ],
+          ),
         ),
       ),
       /*ListView(
