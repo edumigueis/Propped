@@ -1,3 +1,3 @@
 class Constants{
-  static const serverIP = "192.168.29.1:4000";
+  static const serverIP = "143.106.203.224:4000";
 }
