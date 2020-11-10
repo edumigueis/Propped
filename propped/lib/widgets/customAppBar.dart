@@ -50,7 +50,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
         GestureDetector(
           onTap: () => Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => MyStore(code: "aloalo")),
+            MaterialPageRoute(builder: (context) => MyShoppingBag()),
           ),
           child: Container(
               child: Icon(Icons.shopping_basket),

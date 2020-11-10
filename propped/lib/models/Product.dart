@@ -7,6 +7,7 @@ class Product {
   final double weight;
   final int price;
   final int stock;
+  final List<String> images;
 
   Product(
       {this.id,
@@ -16,7 +17,7 @@ class Product {
       this.description,
       this.weight,
       this.price,
-      this.stock});
+      this.stock, this.images});
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(

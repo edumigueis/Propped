@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:propped/screens/store.dart';
 import 'package:propped/utils/Constants.dart';
-import 'file:///C:/Dudu/COTUCA/Propped/Propped/propped/lib/models/Designers.dart';
+import 'package:propped/models/Designers.dart';
 import 'package:propped/widgets/customAppBar.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
@@ -113,7 +113,7 @@ class MyDesignersState extends State<MyDesigners> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  MyStore(code: designers[index].getCode())),
+                                  MyStore(id: designers[index].getId())),
                         )
                       },
                   child: () {
