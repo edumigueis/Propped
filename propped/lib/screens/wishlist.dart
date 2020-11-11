@@ -17,11 +17,13 @@ class MyWishlist extends StatefulWidget {
 }
 
 class _MyWishlistState extends State<MyWishlist> {
-  final idUser = 27;
+  final idUser = 14;
 
   Future<List<Favorite>> fetchFavorites() async {
-    final response =
-    await http.get('http://' + Constants.serverIP + '/favorites/user/'+ this.idUser.toString());
+    final response = await http.get('http://' +
+        Constants.serverIP +
+        '/favorites/user/' +
+        this.idUser.toString());
 
     if (response.statusCode == 200) {
       // If the call to the server was successful, parse the JSON
@@ -44,9 +46,15 @@ class _MyWishlistState extends State<MyWishlist> {
   }
 
   Future<List<Product>> fetchProducts(List<Favorite> favorites) async {
-    for(int f = 0; f < favorites.length; f++){
-      final response =
-      await http.get('http://' + Constants.serverIP + '/products/'+ favorites[f].product.toString());
+    debugPrint('http://' +
+        Constants.serverIP +
+        '/products/' +
+        favorites[0].product.toString());
+    for (int f = 0; f < favorites.length - 1; f++) {
+      final response = await http.get('http://' +
+          Constants.serverIP +
+          '/products/' +
+          favorites[f].product.toString());
 
       if (response.statusCode == 200) {
         // If the call to the server was successful, parse the JSON
@@ -73,7 +81,7 @@ class _MyWishlistState extends State<MyWishlist> {
   List<Favorite> favs = new List<Favorite>();
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     fetchFavorites();
   }

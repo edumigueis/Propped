@@ -88,8 +88,12 @@ class _MyStoreState extends State<MyStore> {
                             fontWeight: FontWeight.bold,
                             color: Color.fromRGBO(30, 30, 30, 1))),
                     ListTile(
-                      title: Text((){
-                        return this.store.city + ", " + this.store.state + ", " + this.store.country;
+                      title: Text(() {
+                        return this.store.city +
+                            ", " +
+                            this.store.state +
+                            ", " +
+                            this.store.country;
                       }()),
                       contentPadding: EdgeInsets.symmetric(vertical: 7),
                     ),
@@ -124,7 +128,8 @@ class _MyStoreState extends State<MyStore> {
   }
 
   Future<List<Product>> fetchProductsByDesigners() async {
-    final response = await http.get('http://' + Constants.serverIP + '/products');
+    final response =
+        await http.get('http://' + Constants.serverIP + '/products');
 
     if (response.statusCode == 200) {
       // If the call to the server was successful, parse the JSON
@@ -297,7 +302,9 @@ class _MyStoreState extends State<MyStore> {
                             textAlign: TextAlign.center),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-                          child: Text('USD \$'+ this.productsDesigner[index].price.toString(),
+                          child: Text(
+                              'USD \$' +
+                                  this.productsDesigner[index].price.toString(),
                               style: TextStyle(
                                   fontSize: 17.0,
                                   fontFamily: 'Ubuntu',

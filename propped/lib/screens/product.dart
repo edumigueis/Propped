@@ -5,6 +5,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:propped/screens/home.dart';
 import 'package:propped/models/Product.dart';
 import 'package:propped/models/Attribute.dart';
+import 'package:propped/screens/store.dart';
 import 'package:propped/utils/Constants.dart';
 import 'package:propped/models/Store.dart';
 import 'package:propped/widgets/customAppBar.dart';
@@ -488,7 +489,15 @@ class _MyProductState extends State<MyProduct> {
                                             margin: EdgeInsets.symmetric(
                                                 vertical: 18),
                                             child: OutlinedButton(
-                                              onPressed: () => {},
+                                              onPressed: () => {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          MyStore(
+                                                              id: store.id)),
+                                                )
+                                              },
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
