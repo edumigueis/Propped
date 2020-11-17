@@ -38,6 +38,8 @@ class _MyProductState extends State<MyProduct> {
 
   Store store = new Store(name: "Couldn't load store");
 
+  List<String> images = new List<String>();
+
   Future<Product> fetchProducts() async {
     final response = await http
         .get('http://' + Constants.serverIP + '/products/' + this.codeProduct);
@@ -53,17 +55,18 @@ class _MyProductState extends State<MyProduct> {
         }
       }
       await fetchStore(this.product.store);
+      //await fetchImages(this.product.code);
       if (this.mounted) setState(() {});
       return product;
     } else {
       // If that call was not successful, throw an error.
-      throw Exception('Failed to load product');
+      throw Exception('Failed to load store');
     }
   }
 
   Future<Store> fetchStore(int id) async {
-    final response =
-        await http.get('http://' + Constants.serverIP + '/stores/' + '1');
+    final response = await http
+        .get('http://' + Constants.serverIP + '/stores/' + id.toString());
 
     if (response.statusCode == 200) {
       // If the call to the server was successful, parse the JSON
@@ -82,11 +85,35 @@ class _MyProductState extends State<MyProduct> {
     }
   }
 
+  Future<List<String>> fetchImages(String code) async {
+    debugPrint('http://' + Constants.serverIP + '/products/images/' + code);
+    final response = await http
+        .get('http://' + Constants.serverIP + '/products/images/' + code);
+
+    if (response.statusCode == 200) {
+      // If the call to the server was successful, parse the JSON
+      List<dynamic> values = new List<dynamic>();
+      debugPrint(values.toString());
+      values = json.decode(response.body);
+      if (values.length > 0) {
+        for (int i = 0; i < values.length; i++) {
+          if (values[i] != null) {
+            String map = values[i];
+            this.images.add(map);
+          }
+        }
+      }
+      return images;
+    } else {
+      // If that call was not successful, throw an error.
+      throw Exception('Failed to load images');
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     fetchProducts();
-    debugPrint(this.product.name);
   }
 
   _closeModal(int index) {
@@ -188,6 +215,16 @@ class _MyProductState extends State<MyProduct> {
 
   @override
   Widget build(BuildContext context) {
+    if (images != null) {
+      images.add(
+          "https://cdn-images.farfetch-contents.com/15/57/78/62/15577862_28040975_1000.jpg");
+      images.add(
+          "https://cdn-images.farfetch-contents.com/15/57/78/62/15577862_28040977_1000.jpg");
+      images.add(
+          "https://cdn-images.farfetch-contents.com/15/57/78/62/15577862_28037975_1000.jpg");
+      images.add(
+          "https://cdn-images.farfetch-contents.com/15/57/78/62/15577862_28037978_1000.jpg");
+    }
     return Scaffold(
       floatingActionButton: RawMaterialButton(
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -239,9 +276,7 @@ class _MyProductState extends State<MyProduct> {
                 scrollDirection: Axis.horizontal),
             items: [
               "https://cdn-images.farfetch-contents.com/15/57/78/62/15577862_28040975_1000.jpg",
-              "https://cdn-images.farfetch-contents.com/15/57/78/62/15577862_28040977_1000.jpg",
-              "https://cdn-images.farfetch-contents.com/15/57/78/62/15577862_28037975_1000.jpg",
-              "https://cdn-images.farfetch-contents.com/15/57/78/62/15577862_28037978_1000.jpg"
+              "https://cdn-images.farfetch-contents.com/15/57/78/62/15577862_28040975_1000.jpg"
             ].map((i) {
               // guardar objetos em cada uma das posições do vetor e acessar os campos no builder
               return Builder(
@@ -264,7 +299,7 @@ class _MyProductState extends State<MyProduct> {
             child: Column(
               children: <Widget>[
                 Text(
-                  "Balmain",
+                  this.store.name,
                   style: TextStyle(
                       fontSize: 21.0,
                       fontFamily: 'Ubuntu',
