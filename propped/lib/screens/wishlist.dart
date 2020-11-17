@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:propped/models/Favorite.dart';
 import 'package:propped/models/Product.dart';
+import 'package:propped/models/Store.dart';
 import 'package:propped/utils/Constants.dart';
 import 'package:propped/widgets/customAppBar.dart';
 import 'package:propped/widgets/menu.dart';
@@ -53,7 +54,7 @@ class _MyWishlistState extends State<MyWishlist> {
     for (int f = 0; f < favorites.length - 1; f++) {
       final response = await http.get('http://' +
           Constants.serverIP +
-          '/products/' +
+          '/products/id/' +
           favorites[f].product.toString());
 
       if (response.statusCode == 200) {
@@ -70,15 +71,72 @@ class _MyWishlistState extends State<MyWishlist> {
         }
       } else {
         // If that call was not successful, throw an error.
-        throw Exception('Failed to load post');
+        throw Exception('Failed to load products');
       }
     }
-    if (this.mounted) setState(() {});
+    await fetchStores(products);
+    //await fetchImages(products);
     return products;
   }
 
+  Future<List<String>> fetchImages(List<Product> prod) async {
+    for (int f = 0; f < prod.length - 1; f++) {
+      final response = await http.get('http://' +
+          Constants.serverIP +
+          '/products/image/' +
+          prod[f].id.toString());
+
+      if (response.statusCode == 200) {
+        // If the call to the server was successful, parse the JSON
+        List<dynamic> values = new List<dynamic>();
+        values = json.decode(response.body);
+        if (values.length > 0) {
+          if (values[0] != null) {
+            Map<String, dynamic> map = values[0];
+            debugPrint(map.toString());
+            images.add(map.toString());
+          }
+        }
+      } else {
+        // If that call was not successful, throw an error.
+        throw Exception('Failed to load products');
+      }
+    }
+
+    return images;
+  }
+
+  Future<List<Store>> fetchStores(List<Product> prod) async {
+    for (int f = 0; f < prod.length; f++) {
+      debugPrint(prod[f].name);
+      final response = await http.get('http://' +
+          Constants.serverIP +
+          '/stores/' +
+          prod[f].store.toString());
+
+      if (response.statusCode == 200) {
+        // If the call to the server was successful, parse the JSON
+        List<dynamic> values = new List<dynamic>();
+        values = json.decode(response.body);
+        if (values.length > 0) {
+          if (values[0] != null) {
+            Map<String, dynamic> map = values[0];
+            stores.add(Store.fromJson(map));
+          }
+        }
+      } else {
+        // If that call was not successful, throw an error.
+        throw Exception('Failed to load products');
+      }
+    }
+    if (this.mounted) setState(() {});
+    return stores;
+  }
+
+  List<Store> stores = new List<Store>();
   List<Product> products = new List<Product>();
   List<Favorite> favs = new List<Favorite>();
+  List<String> images = new List<String>();
 
   @override
   void initState() {
@@ -88,7 +146,9 @@ class _MyWishlistState extends State<MyWishlist> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    var size = MediaQuery
+        .of(context)
+        .size;
 
     /*Here i'm not worrying about menu or notification bar height,
     because the grid parent has vertical scroll behaviour.*/
@@ -124,7 +184,7 @@ class _MyWishlistState extends State<MyWishlist> {
                   crossAxisCount: 2,
                   childAspectRatio: (itemWidth / itemHeight),
                   // Generate 100 widgets that display their index in the List.
-                  children: List.generate(10, (index) {
+                  children: List.generate(products.length, (index) {
                     return Padding(
                         padding: const EdgeInsets.fromLTRB(7.5, 0, 7.5, 15),
                         child: Column(
@@ -133,8 +193,14 @@ class _MyWishlistState extends State<MyWishlist> {
                               Container(
                                   margin: const EdgeInsets.only(bottom: 10),
                                   height:
-                                      MediaQuery.of(context).size.height / 3,
-                                  width: MediaQuery.of(context).size.width / 2,
+                                  MediaQuery
+                                      .of(context)
+                                      .size
+                                      .height / 3,
+                                  width: MediaQuery
+                                      .of(context)
+                                      .size
+                                      .width / 2,
                                   child: Stack(
                                     children: <Widget>[
                                       Container(
@@ -153,14 +219,19 @@ class _MyWishlistState extends State<MyWishlist> {
                                       )
                                     ],
                                   )),
-                              Text('Martine Rose',
+                              Text(() {
+                                if (stores.length == products.length)
+                                  return stores[index].name;
+                                else
+                                  return "unknown";
+                              }(),
                                   style: TextStyle(
                                       fontSize: 15.0,
                                       fontFamily: 'Ubuntu',
                                       fontWeight: FontWeight.w500,
                                       color: Color.fromRGBO(120, 120, 120, 1)),
                                   textAlign: TextAlign.center),
-                              Text('Colorblock Pants',
+                              Text(products[index].name,
                                   style: TextStyle(
                                       fontSize: 19.0,
                                       fontFamily: 'Ubuntu',
@@ -169,7 +240,8 @@ class _MyWishlistState extends State<MyWishlist> {
                                   textAlign: TextAlign.center),
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-                                child: Text('USD 1200',
+                                child: Text(
+                                    'USD \$' + products[index].price.toString(),
                                     style: TextStyle(
                                         fontSize: 17.0,
                                         fontFamily: 'Ubuntu',
