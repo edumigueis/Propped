@@ -20,6 +20,8 @@ class _MyCategoriesState extends State<MyCategories> {
     final response =
         await http.get('http://' + Constants.serverIP + '/categories');
 
+    debugPrint(response.toString());
+
     if (response.statusCode == 200) {
       // If the call to the server was successful, parse the JSON
       List<dynamic> values = new List<dynamic>();

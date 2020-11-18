@@ -50,7 +50,7 @@ class _MyLandingState extends State<MyLanding>{
                 style: TextStyle(
                     fontSize: 25.0,
                     fontFamily: 'Ubuntu',
-                    fontWeight: FontWeight.bold),
+                    fontWeight: FontWeight.w600),
               ),
             ),
             Padding(
@@ -60,7 +60,7 @@ class _MyLandingState extends State<MyLanding>{
                 style: TextStyle(
                     fontSize: 18.0,
                     fontFamily: 'Ubuntu',
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w500,
                     color: Color.fromRGBO(40, 40, 40, 1)),
                 textAlign: TextAlign.center,
               ),

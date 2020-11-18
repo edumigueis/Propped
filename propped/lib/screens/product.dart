@@ -24,7 +24,7 @@ class _MyProductState extends State<MyProduct> {
   String sizeOption = 'Select your size';
   var _availableSizeColor = Colors.black38;
   String codeProduct =
-      "0V89SN8U4CAXJKR6CKOSVENHT79GQ1"; //will be given by the previous widget
+      "E5ZUQ5C8SZBJVTB3YN48YIG1EY5M7P"; //will be given by the previous widget
   List<Attribute> productDetails;
 
   Product product = new Product(
@@ -78,6 +78,7 @@ class _MyProductState extends State<MyProduct> {
           this.store = Store.fromJson(map);
         }
       }
+      await fetchImages(this.product.id.toString());
       return store;
     } else {
       // If that call was not successful, throw an error.
