@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:propped/models/BagItem.dart';
+import 'package:propped/models/Product.dart';
 import 'package:propped/widgets/customAppBar.dart';
 import 'package:propped/utils/Constants.dart';
 import 'package:http/http.dart' as http;
@@ -21,11 +22,11 @@ class MyShoppingBag extends StatefulWidget {
 
 class _MyShoppingBagState extends State<MyShoppingBag> {
   List<BagItem> bagItems;
-  int idCart = 1;
+  int idCart = 6;
 
   Future<BagItem> addItem(BagItem itemToAdd) async {
     final http.Response response = await http.post(
-      'http://' + Constants.serverIP + '/cart',
+      'http://' + Constants.serverIP + '/carts/product',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -38,6 +39,8 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
     if (response.statusCode == 201) {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
+      bagItems.add(widget.bagitem);
+      if (this.mounted) setState((){});
       return new BagItem();
     } else {
       // If the server did not return a 201 CREATED response,
@@ -46,87 +49,171 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
     }
   }
 
+  Future<List<BagItem>> fetchProductsByCart() async {
+    final response =
+    await http.get('http://' + Constants.serverIP + '/carts/products/'+ this.idCart.toString());
+
+    if (response.statusCode == 200) {
+      // If the call to the server was successful, parse the JSON
+      List<dynamic> values = new List<dynamic>();
+      values = json.decode(response.body);
+      if (values.length > 0) {
+        for (int i = 0; i < values.length; i++) {
+          if (values[i] != null) {
+            Map<String, dynamic> map = values[i];
+            bagItems.add(new BagItem(product: Product.fromJson(map)));
+          }
+        }
+      }
+      if (this.mounted) setState(() {});
+      return bagItems;
+    } else {
+      // If that call was not successful, throw an error.
+      throw Exception('Failed to load products from this store');
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    if (this.widget.bagitem != null) addItem(this.widget.bagitem);
+    //if (this.widget.bagitem != null) addItem(this.widget.bagitem);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(showArrow: true),
+      backgroundColor: Colors.white,
+      appBar: CustomAppBar(showArrow: true, title: "Shopping Bag",),
       body: Column(
         children: <Widget>[
           Expanded(
             child: ListView.builder(
               padding: EdgeInsets.symmetric(horizontal: 15),
               physics: new BouncingScrollPhysics(),
-              itemCount: 8,
+              itemCount: 6,
               itemBuilder: (BuildContext ctx, int i) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 80,
-                        height: 100,
-                        margin: EdgeInsets.only(right: 10),
-                        decoration: new BoxDecoration(
-                            image: DecorationImage(
-                                image: NetworkImage(
-                                    "https://cdn-images.farfetch-contents.com/15/23/22/29/15232229_29297818_1000.jpg"),
-                                fit: BoxFit.cover)),
-                      ),
-                      Container(
-                        width: (MediaQuery.of(context).size.width - 160),
-                        height: 100,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Off-White"),
-                            Text("Vulcanized Sneakers"),
-                            Container(
-                              width: 60,
-                              height: 60,
-                              child: TextField(
-                                onChanged: (value) => {},
-                                decoration: InputDecoration(
-                                    focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color:
-                                                Color.fromRGBO(30, 30, 30, 1),
-                                            width: 4.0),
-                                        borderRadius: BorderRadius.zero),
-                                    enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color:
-                                                Color.fromRGBO(30, 30, 30, 1),
-                                            width: 3.0),
-                                        borderRadius: BorderRadius.zero),
-                                    hintText: 'Min'),
-                                keyboardType: TextInputType.number,
-                                inputFormatters: <TextInputFormatter>[
-                                  FilteringTextInputFormatter.digitsOnly
-                                ],
-                              ),
+                  if(i != 5){
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 15.0),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 80,
+                            height: 100,
+                            margin: EdgeInsets.only(right: 10),
+                            decoration: new BoxDecoration(
+                                image: DecorationImage(
+                                    image: NetworkImage(
+                                        "https://is4.revolveassets.com/images/p4/n/z/OFFF-MZ32_V1.jpg"),
+                                    fit: BoxFit.cover)),
+                          ),
+                          Container(
+                            width: (MediaQuery.of(context).size.width - 180),
+                            height: 100,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Off-White", style: TextStyle(
+                                    fontSize: 19.0,
+                                    fontFamily: 'Ubuntu',
+                                    height: 1.5,
+                                    fontWeight: FontWeight.w600)),
+                                Text("Vulcanized Sneakers", style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontFamily: 'Ubuntu',
+                                    height: 1.5,
+                                    fontWeight: FontWeight.normal)),
+                                Container(
+                                  width: 20,
+                                  height: 20,
+                                  margin: EdgeInsets.only(top: 15),
+                                  decoration: new BoxDecoration(
+                                      borderRadius: BorderRadius.all(Radius.circular(40)),
+                                      image: DecorationImage(
+                                          image: NetworkImage(
+                                              "https://upload.wikimedia.org/wikipedia/en/thumb/0/03/Flag_of_Italy.svg/1200px-Flag_of_Italy.svg.png"),
+                                          fit: BoxFit.cover)),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+
+                          Container(
+                            width: 60,
+                            height: 40,
+                            child: TextField(
+                              expands: true,
+                              minLines: null,
+                              maxLines: null,
+                              onChanged: (value) => {},
+                              decoration: InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.black26,
+                                          width: 1.0),
+                                      borderRadius: BorderRadius.all(Radius.circular(3.5))),
+                                  contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color:
+                                          Colors.black26,
+                                          width: 1.0),
+                                      borderRadius: BorderRadius.all(Radius.circular(3.5))),
+                                  hintText: 'Qty 1'),
+                              keyboardType: TextInputType.number,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                      Container(
-                        width: 40,
-                        height: 40,
-                        decoration: new BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(40)),
-                            image: DecorationImage(
-                                image: NetworkImage(
-                                    "https://upload.wikimedia.org/wikipedia/en/thumb/0/03/Flag_of_Italy.svg/1200px-Flag_of_Italy.svg.png"),
-                                fit: BoxFit.cover)),
+                    );
+                  }
+                    return Container(
+                      color: CupertinoColors.systemGrey5,
+                      margin: EdgeInsets.symmetric(vertical: 20),
+                      height: 100,
+                      width: double.infinity,
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                            height: 70,
+                            width: 70,
+                            margin: EdgeInsets.symmetric(horizontal: 20),
+                            child: Icon(CupertinoIcons.car, size: 50, color: Color.fromRGBO(30, 30, 30, 1),),
+                          ),
+                          Container(
+                            margin: EdgeInsets.symmetric(vertical: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text("Free Return Policy",
+                                    style: TextStyle(
+                                        fontSize: 20.0,
+                                        fontFamily: 'Ubuntu',
+                                        fontWeight: FontWeight.w600,
+                                        color: Color.fromRGBO(40, 40, 40, 1)),
+                                    textAlign: TextAlign.left),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: Text(
+                                    "All items can be returned for free",
+                                    style: TextStyle(
+                                        fontSize: 17.0,
+                                        fontFamily: 'Ubuntu',
+                                        fontWeight: FontWeight.normal,
+                                        color: Color.fromRGBO(40, 40, 40, 1)),
+                                    textAlign: TextAlign.left,
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
                       ),
-                    ],
-                  ),
-                );
+                    );
               },
             ),
           ),
