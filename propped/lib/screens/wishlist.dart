@@ -5,6 +5,7 @@ import 'package:propped/models/Product.dart';
 import 'package:propped/models/Store.dart';
 import 'package:propped/utils/Constants.dart';
 import 'package:propped/widgets/customAppBar.dart';
+import 'package:propped/widgets/errorMsgWidget.dart';
 import 'package:propped/widgets/menu.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
@@ -19,6 +20,7 @@ class MyWishlist extends StatefulWidget {
 
 class _MyWishlistState extends State<MyWishlist> {
   final idUser = 14;
+  bool nothingFound = false;
 
   Future<List<Favorite>> fetchFavorites() async {
     final response = await http.get('http://' +
@@ -41,8 +43,9 @@ class _MyWishlistState extends State<MyWishlist> {
       await fetchProducts(favs);
       return favs;
     } else {
-      // If that call was not successful, throw an error.
-      throw Exception('Failed to load wishlist');
+      setState(() {
+        this.nothingFound = true;
+      });
     }
   }
 
@@ -146,9 +149,7 @@ class _MyWishlistState extends State<MyWishlist> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery
-        .of(context)
-        .size;
+    var size = MediaQuery.of(context).size;
 
     /*Here i'm not worrying about menu or notification bar height,
     because the grid parent has vertical scroll behaviour.*/
@@ -175,84 +176,84 @@ class _MyWishlistState extends State<MyWishlist> {
                           color: Color.fromRGBO(40, 40, 40, 1)),
                     ),
                   )),
-              Expanded(
-                child: GridView.count(
-                  padding: const EdgeInsets.only(top: 20),
-                  physics: new BouncingScrollPhysics(),
-                  // Create a grid with 2 columns. If you change the scrollDirection to
-                  // horizontal, this produces 2 rows.
-                  crossAxisCount: 2,
-                  childAspectRatio: (itemWidth / itemHeight),
-                  // Generate 100 widgets that display their index in the List.
-                  children: List.generate(products.length, (index) {
-                    return Padding(
-                        padding: const EdgeInsets.fromLTRB(7.5, 0, 7.5, 15),
-                        child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              Container(
-                                  margin: const EdgeInsets.only(bottom: 10),
-                                  height:
-                                  MediaQuery
-                                      .of(context)
-                                      .size
-                                      .height / 3,
-                                  width: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width / 2,
-                                  child: Stack(
-                                    children: <Widget>[
-                                      Container(
-                                        width: double.infinity,
-                                        alignment: Alignment.center,
-                                        child: Image(
-                                          image: NetworkImage(
-                                              'https://cdn-images.farfetch-contents.com/15/23/22/29/15232229_29297818_1000.jpg'),
-                                          fit: BoxFit.cover,
-                                        ),
+              Expanded(child: () {
+                if (!this.nothingFound)
+                  return GridView.count(
+                    padding: const EdgeInsets.only(top: 20),
+                    physics: new BouncingScrollPhysics(),
+                    // Create a grid with 2 columns. If you change the scrollDirection to
+                    // horizontal, this produces 2 rows.
+                    crossAxisCount: 2,
+                    childAspectRatio: (itemWidth / itemHeight),
+                    // Generate 100 widgets that display their index in the List.
+                    children: List.generate(products.length, (index) {
+                      return Padding(
+                          padding: const EdgeInsets.fromLTRB(7.5, 0, 7.5, 15),
+                          child:
+                              Column(mainAxisSize: MainAxisSize.min, children: <
+                                  Widget>[
+                            Container(
+                                margin: const EdgeInsets.only(bottom: 10),
+                                height: MediaQuery.of(context).size.height / 3,
+                                width: MediaQuery.of(context).size.width / 2,
+                                child: Stack(
+                                  children: <Widget>[
+                                    Container(
+                                      width: double.infinity,
+                                      alignment: Alignment.center,
+                                      child: Image(
+                                        image: NetworkImage(
+                                            'https://cdn-images.farfetch-contents.com/15/23/22/29/15232229_29297818_1000.jpg'),
+                                        fit: BoxFit.cover,
                                       ),
-                                      Positioned(
-                                        top: 10,
-                                        right: 10,
-                                        child: new Icon(Icons.star, size: 30),
-                                      )
-                                    ],
-                                  )),
-                              Text(() {
-                                if (stores.length == products.length)
-                                  return stores[index].name;
-                                else
-                                  return "unknown";
-                              }(),
+                                    ),
+                                    Positioned(
+                                      top: 10,
+                                      right: 10,
+                                      child: new Icon(Icons.star, size: 30),
+                                    )
+                                  ],
+                                )),
+                            Text(() {
+                              if (stores.length == products.length)
+                                return stores[index].name;
+                              else
+                                return "unknown";
+                            }(),
+                                style: TextStyle(
+                                    fontSize: 15.0,
+                                    fontFamily: 'Ubuntu',
+                                    fontWeight: FontWeight.w500,
+                                    color: Color.fromRGBO(120, 120, 120, 1)),
+                                textAlign: TextAlign.center),
+                            Text(products[index].name,
+                                style: TextStyle(
+                                    fontSize: 19.0,
+                                    fontFamily: 'Ubuntu',
+                                    fontWeight: FontWeight.w700,
+                                    color: Color.fromRGBO(40, 40, 40, 1)),
+                                textAlign: TextAlign.center),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+                              child: Text(
+                                  'USD \$' + products[index].price.toString(),
                                   style: TextStyle(
-                                      fontSize: 15.0,
+                                      fontSize: 17.0,
                                       fontFamily: 'Ubuntu',
                                       fontWeight: FontWeight.w500,
-                                      color: Color.fromRGBO(120, 120, 120, 1)),
-                                  textAlign: TextAlign.center),
-                              Text(products[index].name,
-                                  style: TextStyle(
-                                      fontSize: 19.0,
-                                      fontFamily: 'Ubuntu',
-                                      fontWeight: FontWeight.w700,
                                       color: Color.fromRGBO(40, 40, 40, 1)),
                                   textAlign: TextAlign.center),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-                                child: Text(
-                                    'USD \$' + products[index].price.toString(),
-                                    style: TextStyle(
-                                        fontSize: 17.0,
-                                        fontFamily: 'Ubuntu',
-                                        fontWeight: FontWeight.w500,
-                                        color: Color.fromRGBO(40, 40, 40, 1)),
-                                    textAlign: TextAlign.center),
-                              )
-                            ]));
-                  }),
-                ),
-              )
+                            )
+                          ]));
+                    }),
+                  );
+                else {
+                  return ErrorMsgWidget(
+                      title: "Your wishlist is empty",
+                      message:
+                          "Star some products to save them in your wishlist and pick up where you left off.");
+                }
+              }())
             ],
           )),
       bottomNavigationBar: MyMenu(
