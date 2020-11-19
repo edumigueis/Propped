@@ -1,15 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:propped/models/Image.dart';
 import 'package:propped/models/Product.dart';
 import 'package:propped/models/Store.dart';
 import 'package:propped/screens/home.dart';
+import 'package:propped/screens/product.dart';
 import 'package:propped/utils/Constants.dart';
 import 'package:propped/widgets/customAppBar.dart';
 import 'package:propped/widgets/menu.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
+
+import 'package:propped/widgets/productGridItem.dart';
 
 class MyStore extends StatefulWidget {
   MyStore({Key key, @required int id})
@@ -128,8 +132,14 @@ class _MyStoreState extends State<MyStore> {
   }
 
   Future<List<Product>> fetchProductsByDesigners() async {
-    final response =
-        await http.get('http://' + Constants.serverIP + '/products');
+    debugPrint('http://' +
+        Constants.serverIP +
+        '/products/store/' +
+        this.store.id.toString());
+    final response = await http.get('http://' +
+        Constants.serverIP +
+        '/products/store/' +
+        this.store.id.toString());
 
     if (response.statusCode == 200) {
       // If the call to the server was successful, parse the JSON
@@ -144,6 +154,7 @@ class _MyStoreState extends State<MyStore> {
         }
       }
       if (this.mounted) setState(() {});
+      await fetchImages();
       return productsDesigner;
     } else {
       // If that call was not successful, throw an error.
@@ -152,6 +163,63 @@ class _MyStoreState extends State<MyStore> {
   }
 
   List<Product> productsDesigner = new List<Product>();
+  List<ImageObj> images = new List<ImageObj>();
+
+  Future<List<ImageObj>> fetchImages() async {
+    for (int f = 0; f < this.productsDesigner.length; f++) {
+      debugPrint('http://' +
+          Constants.serverIP +
+          '/products/image/' +
+          this.productsDesigner[f].id.toString());
+      final response = await http.get('http://' +
+          Constants.serverIP +
+          '/products/image/' +
+          this.productsDesigner[f].id.toString());
+      if (response.statusCode == 200) {
+        // If the call to the server was successful, parse the JSON
+        List<dynamic> values = new List<dynamic>();
+        values = json.decode(response.body);
+        if (values.length > 0) {
+          if (values[0] != null) {
+            Map<String, dynamic> map = values[0];
+            this.images.add(ImageObj.fromJson(map));
+          }
+        }
+      } else {
+        // If that call was not successful, throw an error.
+        this.images.add(new ImageObj(url: "", idImage: -1, idProduct: -1));
+      }
+    }
+    await fetchImagesProp();
+    return images;
+  }
+
+  Future<List<ImageObj>> fetchImagesProp() async {
+    for (int f = 0; f < images.length; f++) {
+      final response = await http.get('http://' +
+          Constants.serverIP +
+          '/images/id/' +
+          images[f].idImage.toString());
+
+      if (response.statusCode == 200) {
+        // If the call to the server was successful, parse the JSON
+        List<dynamic> values = new List<dynamic>();
+        values = json.decode(response.body);
+
+        if (values.length > 0) {
+          if (values[0] != null) {
+            Map<String, dynamic> map = values[0];
+            this.images[f].url = map['photo_image'];
+          }
+        }
+      } else {
+        // If that call was not successful, throw an error.
+        this.images[f].url =
+            "https://icons-for-free.com/iconfiles/png/512/facebook+sad+emoji+sad+face+icon-1320166641720234915.png";
+      }
+    }
+    return images;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -261,58 +329,20 @@ class _MyStoreState extends State<MyStore> {
                 childAspectRatio: (itemWidth / itemHeight),
                 // Generate 100 widgets that display their index in the List.
                 children: List.generate(productsDesigner.length, (index) {
-                  return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Container(
-                            margin: const EdgeInsets.only(bottom: 10),
-                            height: MediaQuery.of(context).size.height / 3,
-                            width: MediaQuery.of(context).size.width / 2,
-                            child: Stack(
-                              children: <Widget>[
-                                Container(
-                                  width: double.infinity,
-                                  alignment: Alignment.center,
-                                  child: Image(
-                                    image: NetworkImage(
-                                        'https://cdn-images.farfetch-contents.com/15/23/22/29/15232229_29297818_1000.jpg'),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                Positioned(
-                                  top: 10,
-                                  right: 10,
-                                  child: new Icon(Icons.star, size: 30),
-                                )
-                              ],
-                            )),
-                        Text('Martine Rose',
-                            style: TextStyle(
-                                fontSize: 15.0,
-                                fontFamily: 'Ubuntu',
-                                fontWeight: FontWeight.w500,
-                                color: Color.fromRGBO(120, 120, 120, 1)),
-                            textAlign: TextAlign.center),
-                        Text(this.productsDesigner[index].name,
-                            style: TextStyle(
-                                fontSize: 19.0,
-                                fontFamily: 'Ubuntu',
-                                fontWeight: FontWeight.w700,
-                                color: Color.fromRGBO(40, 40, 40, 1)),
-                            textAlign: TextAlign.center),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-                          child: Text(
-                              'USD \$' +
-                                  this.productsDesigner[index].price.toString(),
-                              style: TextStyle(
-                                  fontSize: 17.0,
-                                  fontFamily: 'Ubuntu',
-                                  fontWeight: FontWeight.w500,
-                                  color: Color.fromRGBO(40, 40, 40, 1)),
-                              textAlign: TextAlign.center),
-                        )
-                      ]);
+                  String img;
+                  if (images == null || images.length == 0)
+                    img = "";
+                  else if (images[index] == null)
+                    img = "";
+                  else
+                    img = images[index].url;
+                  return ProductGridItem(
+                      redirectCode: productsDesigner[index].code,
+                      image: img,
+                      text1: this.store.name,
+                      text2: productsDesigner[index].name,
+                      text3: productsDesigner[index].price.toString(),
+                      isFavorite: false);
                 }),
               ),
             ],
