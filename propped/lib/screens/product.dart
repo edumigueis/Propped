@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:propped/models/Image.dart';
 import 'package:propped/screens/home.dart';
 import 'package:propped/models/Product.dart';
 import 'package:propped/models/Attribute.dart';
@@ -24,7 +25,7 @@ class _MyProductState extends State<MyProduct> {
   String sizeOption = 'Select your size';
   var _availableSizeColor = Colors.black38;
   String codeProduct =
-      "E5ZUQ5C8SZBJVTB3YN48YIG1EY5M7P"; //will be given by the previous widget
+      "FQ77S4YQZX3B656UWYSU30WFSWNO4N"; //will be given by the previous widget
   List<Attribute> productDetails;
 
   Product product = new Product(
@@ -38,7 +39,7 @@ class _MyProductState extends State<MyProduct> {
 
   Store store = new Store(name: "Couldn't load store");
 
-  List<String> images = new List<String>();
+  List<ImageObj> images = new List<ImageObj>();
 
   Future<Product> fetchProducts() async {
     final response = await http
@@ -86,7 +87,7 @@ class _MyProductState extends State<MyProduct> {
     }
   }
 
-  Future<List<String>> fetchImages(String code) async {
+  Future<List<ImageObj>> fetchImages(String code) async {
     debugPrint('http://' + Constants.serverIP + '/products/images/' + code);
     final response = await http
         .get('http://' + Constants.serverIP + '/products/images/' + code);
@@ -94,21 +95,47 @@ class _MyProductState extends State<MyProduct> {
     if (response.statusCode == 200) {
       // If the call to the server was successful, parse the JSON
       List<dynamic> values = new List<dynamic>();
-      debugPrint(values.toString());
       values = json.decode(response.body);
+      debugPrint(values.toString());
       if (values.length > 0) {
         for (int i = 0; i < values.length; i++) {
           if (values[i] != null) {
-            String map = values[i];
-            this.images.add(map);
+            Map<String, dynamic> map = values[i];
+            this.images.add(ImageObj.fromJson(map));
           }
         }
       }
+      await fetchImagesProp();
       return images;
     } else {
       // If that call was not successful, throw an error.
       throw Exception('Failed to load images');
     }
+  }
+
+  Future<List<ImageObj>> fetchImagesProp() async {
+    for (int f = 0; f < images.length; f++) {
+
+      final response =
+          await http.get('http://' + Constants.serverIP + '/images/id/' + images[f].idImage.toString());
+
+      if (response.statusCode == 200) {
+        // If the call to the server was successful, parse the JSON
+        List<dynamic> values = new List<dynamic>();
+        values = json.decode(response.body);
+
+        if (values.length > 0) {
+            if (values[0] != null) {
+              Map<String, dynamic> map = values[0];
+              this.images[f].url = map['photo_image'];
+            }
+        }
+      } else {
+        // If that call was not successful, throw an error.
+        throw Exception('Failed to load image url');
+      }
+    }
+    return images;
   }
 
   @override
@@ -216,16 +243,6 @@ class _MyProductState extends State<MyProduct> {
 
   @override
   Widget build(BuildContext context) {
-    if (images != null) {
-      images.add(
-          "https://cdn-images.farfetch-contents.com/15/57/78/62/15577862_28040975_1000.jpg");
-      images.add(
-          "https://cdn-images.farfetch-contents.com/15/57/78/62/15577862_28040977_1000.jpg");
-      images.add(
-          "https://cdn-images.farfetch-contents.com/15/57/78/62/15577862_28037975_1000.jpg");
-      images.add(
-          "https://cdn-images.farfetch-contents.com/15/57/78/62/15577862_28037978_1000.jpg");
-    }
     return Scaffold(
       floatingActionButton: RawMaterialButton(
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -275,18 +292,14 @@ class _MyProductState extends State<MyProduct> {
                 autoPlayCurve: Curves.fastOutSlowIn,
                 enlargeCenterPage: true,
                 scrollDirection: Axis.horizontal),
-            items: [
-              "https://cdn-images.farfetch-contents.com/15/57/78/62/15577862_28040975_1000.jpg",
-              "https://cdn-images.farfetch-contents.com/15/57/78/62/15577862_28040975_1000.jpg"
-            ].map((i) {
-              // guardar objetos em cada uma das posições do vetor e acessar os campos no builder
+            items: images.map((i) {
               return Builder(
                 builder: (BuildContext context) {
                   return Container(
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: NetworkImage("$i"),
+                          image: NetworkImage(""+ i.url),
                           fit: BoxFit.cover,
                           repeat: ImageRepeat.noRepeat),
                     ),
