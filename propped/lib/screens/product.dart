@@ -16,6 +16,12 @@ import 'dart:async';
 import 'dart:convert';
 
 class MyProduct extends StatefulWidget {
+  String code;
+
+  MyProduct({Key key, @required String code}):
+      this.code = code,
+      super(key: key);
+
   @override
   _MyProductState createState() => _MyProductState();
 }
@@ -24,8 +30,6 @@ class _MyProductState extends State<MyProduct> {
   int _activeMeterIndex;
   String sizeOption = 'Select your size';
   var _availableSizeColor = Colors.black38;
-  String codeProduct =
-      "FQ77S4YQZX3B656UWYSU30WFSWNO4N"; //will be given by the previous widget
   List<Attribute> productDetails;
 
   Product product = new Product(
@@ -43,7 +47,7 @@ class _MyProductState extends State<MyProduct> {
 
   Future<Product> fetchProducts() async {
     final response = await http
-        .get('http://' + Constants.serverIP + '/products/' + this.codeProduct);
+        .get('http://' + Constants.serverIP + '/products/' + widget.code);
 
     if (response.statusCode == 200) {
       // If the call to the server was successful, parse the JSON
@@ -88,7 +92,6 @@ class _MyProductState extends State<MyProduct> {
   }
 
   Future<List<ImageObj>> fetchImages(String code) async {
-    debugPrint('http://' + Constants.serverIP + '/products/images/' + code);
     final response = await http
         .get('http://' + Constants.serverIP + '/products/images/' + code);
 

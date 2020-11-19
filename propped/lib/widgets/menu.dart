@@ -76,7 +76,7 @@ class MyMenu extends StatelessWidget {
         {
           Navigator.push(
             ctx,
-            MaterialPageRoute(builder: (context) => MyProduct()),
+            MaterialPageRoute(builder: (context) => MyProduct(code: "FQ77S4YQZX3B656UWYSU30WFSWNO4N")),
           );
         }
         break;
