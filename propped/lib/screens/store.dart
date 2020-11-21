@@ -108,7 +108,6 @@ class _MyStoreState extends State<MyStore> {
   }
 
   Future<Store> fetchStore(int code) async {
-    debugPrint('http://' + Constants.serverIP + '/stores/' + code.toString());
     final response = await http
         .get('http://' + Constants.serverIP + '/stores/' + code.toString());
 
@@ -132,10 +131,6 @@ class _MyStoreState extends State<MyStore> {
   }
 
   Future<List<Product>> fetchProductsByDesigners() async {
-    debugPrint('http://' +
-        Constants.serverIP +
-        '/products/store/' +
-        this.store.id.toString());
     final response = await http.get('http://' +
         Constants.serverIP +
         '/products/store/' +
@@ -167,10 +162,6 @@ class _MyStoreState extends State<MyStore> {
 
   Future<List<ImageObj>> fetchImages() async {
     for (int f = 0; f < this.productsDesigner.length; f++) {
-      debugPrint('http://' +
-          Constants.serverIP +
-          '/products/image/' +
-          this.productsDesigner[f].id.toString());
       final response = await http.get('http://' +
           Constants.serverIP +
           '/products/image/' +
@@ -250,8 +241,16 @@ class _MyStoreState extends State<MyStore> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(60)),
                       image: DecorationImage(
+                          alignment: Alignment.center,
                           image: NetworkImage(
-                              "https://images.pexels.com/photos/2101839/pexels-photo-2101839.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"))),
+                            () {
+                              if (this.store.image != null)
+                                return this.store.image;
+                              else
+                                return "https://i.pinimg.com/originals/99/78/0d/99780d9905251a464bbc088f0bb56c79.png";
+                            }(),
+                          ),
+                          fit: BoxFit.cover)),
                 ),
               ),
               Container(

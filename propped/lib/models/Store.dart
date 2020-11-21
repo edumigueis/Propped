@@ -7,8 +7,9 @@ class Store {
   final String phone;
   final String state;
   final String website;
+  final String image;
 
-  Store({this.id, this.code, this.name, this.city, this.country, this.phone, this.state, this.website});
+  Store({this.id, this.code, this.name, this.city, this.country, this.phone, this.state, this.website, this.image});
 
   factory Store.fromJson(Map<String, dynamic> json) {
     return Store(
@@ -19,7 +20,8 @@ class Store {
         country: json['country_store'],
         phone: json['phone_store'],
         state: json['state_store'],
-      website: json['website_store']
+        website: json['website_store'],
+        image: json['image_store']
     );
   }
 }
