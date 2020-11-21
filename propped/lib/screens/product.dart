@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:propped/models/BagItem.dart';
 import 'package:propped/models/Image.dart';
+import 'package:propped/screens/cart.dart';
 import 'package:propped/screens/home.dart';
 import 'package:propped/models/Product.dart';
 import 'package:propped/models/Attribute.dart';
@@ -99,7 +101,6 @@ class _MyProductState extends State<MyProduct> {
       // If the call to the server was successful, parse the JSON
       List<dynamic> values = new List<dynamic>();
       values = json.decode(response.body);
-      debugPrint(values.toString());
       if (values.length > 0) {
         for (int i = 0; i < values.length; i++) {
           if (values[i] != null) {
@@ -149,7 +150,6 @@ class _MyProductState extends State<MyProduct> {
 
   _closeModal(int index) {
     Navigator.of(context).pop();
-    debugPrint(index.toString());
 
     setState(() {
       switch (index) {
@@ -252,7 +252,7 @@ class _MyProductState extends State<MyProduct> {
         onPressed: () => {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => MyHome()),
+            MaterialPageRoute(builder: (context) => MyShoppingBag(bagitem: new BagItem(product: this.product, quantity: 1,  size: this.sizeOption),)),
           )
         },
         child: Container(
