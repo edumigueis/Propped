@@ -64,10 +64,10 @@ class _MyWishlistState extends State<MyWishlist> {
         List<dynamic> values = new List<dynamic>();
         values = json.decode(response.body);
         if (values.length > 0) {
-            if (values[0] != null) {
-              Map<String, dynamic> map = values[0];
-              products.add(Product.fromJson(map));
-            }
+          if (values[0] != null) {
+            Map<String, dynamic> map = values[0];
+            products.add(Product.fromJson(map));
+          }
         }
       } else {
         // If that call was not successful, throw an error.
@@ -127,7 +127,7 @@ class _MyWishlistState extends State<MyWishlist> {
       } else {
         // If that call was not successful, throw an error.
         this.images[f].url =
-        "https://icons-for-free.com/iconfiles/png/512/facebook+sad+emoji+sad+face+icon-1320166641720234915.png";
+            "https://icons-for-free.com/iconfiles/png/512/facebook+sad+emoji+sad+face+icon-1320166641720234915.png";
       }
     }
     return images;
@@ -211,20 +211,24 @@ class _MyWishlistState extends State<MyWishlist> {
                     childAspectRatio: (itemWidth / itemHeight),
                     // Generate 100 widgets that display their index in the List.
                     children: List.generate(products.length, (index) {
-                        String img;
-                        if (images == null || images.length == 0)
-                          img = "a";
-                        else if (images[index] == null)
-                          img = "a";
-                        else
-                          img = images[index].url;
-                        return ProductGridItem(
-                            redirectCode: products[index].code,
-                            image: img,
-                            text1: stores[index].name,
-                            text2: products[index].name,
-                            text3: products[index].price.toString(),
-                            isFavorite: true);
+                      String img;
+                      if (images == null || images.length == 0)
+                        img = "a";
+                      else if (images[index] == null)
+                        img = "a";
+                      else
+                        img = images[index].url;
+                      return ProductGridItem(
+                        redirectCode: products[index].code,
+                        image: img,
+                        text1: stores[index].name,
+                        text2: products[index].name,
+                        text3: products[index].price.toString(),
+                        isFavorite: true,
+                        favorite: new Favorite(
+                            product: this.products[index].id,
+                            user: this.idUser),
+                      );
                     }),
                   );
                 else {

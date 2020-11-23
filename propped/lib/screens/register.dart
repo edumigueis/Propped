@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:propped/screens/preference.dart';
-import 'file:///C:/Dudu/COTUCA/Propped/Propped/propped/lib/models/User.dart';
+import 'package:propped/models/User.dart';
 
 class MyRegister extends StatefulWidget {
   MyRegister({Key key, this.title}) : super(key: key);

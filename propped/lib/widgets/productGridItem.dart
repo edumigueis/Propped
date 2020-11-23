@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:propped/models/Favorite.dart';
 import 'package:propped/screens/product.dart';
 
 class ProductGridItem extends StatefulWidget {
@@ -10,6 +11,7 @@ class ProductGridItem extends StatefulWidget {
       @required this.text3,
       @required this.image,
       @required this.isFavorite,
+      @required this.favorite,
       @required this.redirectCode})
       : super(key: key);
 
@@ -19,6 +21,7 @@ class ProductGridItem extends StatefulWidget {
   String image;
   bool isFavorite;
   String redirectCode;
+  Favorite favorite;
 
   @override
   ProductGridItemState createState() => ProductGridItemState();
@@ -59,6 +62,17 @@ class ProductGridItemState extends State<ProductGridItem> {
                   child: GestureDetector(
                       behavior: HitTestBehavior.translucent,
                       onTap: () => {
+                            if (this.widget.isFavorite == false)
+                              {
+                                Favorite.save(new Favorite(
+                                    user: this.widget.favorite.user,
+                                    product: this.widget.favorite.product))
+                              }
+                            else
+                              {
+                                if (this.widget.isFavorite == true)
+                                  Favorite.delete(this.widget.favorite)
+                              },
                             setState(() {
                               this.widget.isFavorite
                                   ? this.widget.isFavorite = false
