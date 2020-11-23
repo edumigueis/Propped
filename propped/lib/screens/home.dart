@@ -493,8 +493,8 @@ class _MyHomeState extends State<MyHome> {
       bottomNavigationBar: MyMenu(
         meIcon: CupertinoIcons.person,
         searchIcon: CupertinoIcons.search,
-        homeIcon: Icons.home,
-        wishlistIcon: Icons.star_border,
+        homeIcon: CupertinoIcons.home,
+        wishlistIcon: CupertinoIcons.heart,
       ),
     );
   }

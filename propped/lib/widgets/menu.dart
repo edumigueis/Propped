@@ -6,7 +6,8 @@ import 'package:propped/screens/search.dart';
 import 'package:propped/screens/wishlist.dart';
 
 class MyMenu extends StatelessWidget {
-  MyMenu({ Key key,
+  MyMenu({
+    Key key,
     @required this.meIcon,
     @required this.searchIcon,
     @required this.homeIcon,
@@ -18,6 +19,7 @@ class MyMenu extends StatelessWidget {
   final IconData searchIcon;
   final IconData homeIcon;
   final IconData wishlistIcon;
+
   /*void _loadCurrentIcon(BuildContext ctx) {
     switch (_currentIndex) {
       case 0:
@@ -107,7 +109,15 @@ class MyMenu extends StatelessWidget {
         )
       ],
       selectedItemColor: Colors.black,
-      selectedIconTheme: IconThemeData(opacity: 1, size: 30),
+      selectedLabelStyle: TextStyle(
+        fontWeight: FontWeight.w500,
+        fontFamily: 'Ubuntu',
+      ),
+      unselectedLabelStyle: TextStyle(
+        fontWeight: FontWeight.normal,
+        fontFamily: 'Ubuntu',
+      ),
+      selectedIconTheme: IconThemeData(opacity: 1, size: 32),
       unselectedIconTheme: IconThemeData(opacity: 1, size: 28),
       onTap: _onItemTapped,
     );

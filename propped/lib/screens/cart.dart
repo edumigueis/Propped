@@ -25,7 +25,7 @@ class MyShoppingBag extends StatefulWidget {
 }
 
 class _MyShoppingBagState extends State<MyShoppingBag> {
-  List<BagItem> bagItems;
+  List<BagItem> bagItems = new List<BagItem>();
   int idCart = 6;
   bool cartIsEmpty = false;
 
@@ -66,9 +66,10 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
       values = json.decode(response.body);
       if (values.length > 0) {
         for (int i = 0; i < values.length; i++) {
+          debugPrint(values[i].toString());
           if (values[i] != null) {
             Map<String, dynamic> map = values[i];
-            bagItems.add(new BagItem(product: Product.fromJson(map)));
+            bagItems.add(new BagItem(product: Product.fromJson(map), quantity: map['amount_productsshoppingcart']));
           }
         }
       }
@@ -110,16 +111,16 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
       body: Column(
         children: <Widget>[
           Expanded(child: () {
-            if (!this.cartIsEmpty) {
+            if (!this.cartIsEmpty && bagItems != null) {
               return ListView.builder(
                 padding: EdgeInsets.symmetric(horizontal: 15),
                 physics: new BouncingScrollPhysics(),
-                itemCount: 5,
+                itemCount: bagItems.length + 1,
                 itemBuilder: (BuildContext ctx, int i) {
-                  if (i != 4) {
+                  if (i != bagItems.length) {
                     return ShoppingBagItem(
                       country: countries[i],
-                      product: new Product(name: "Vulcanized Sneakers"),
+                      product: new Product(name: "Off White"),
                       store: new Store(name: "Off White"),
                       image:
                           "https://is4.revolveassets.com/images/p4/n/z/OFFF-MZ32_V1.jpg",
