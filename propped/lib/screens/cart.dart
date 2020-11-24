@@ -74,12 +74,42 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
         }
       }
       if (this.mounted) setState(() {});
+      await fetchStores();
       return bagItems;
     } else {
       // If that call was not successful, throw an error.
       if (this.mounted) setState(() {});
       this.cartIsEmpty = true;
     }
+  }
+
+  Future<List<BagItem>> fetchStores() async{
+    for(int f = 0; f < this.bagItems.length; f++){
+      final response = await http.get('http://' +
+          Constants.serverIP +
+          '/stores/' +
+          this.bagItems[f].product.store.toString());
+
+      if (response.statusCode == 200) {
+        // If the call to the server was successful, parse the JSON
+        List<dynamic> values = new List<dynamic>();
+        values = json.decode(response.body);
+        if (values.length > 0) {
+            debugPrint(values[0].toString());
+            if (values[0] != null) {
+              Map<String, dynamic> map = values[0];
+              bagItems[f].store = Store.fromJson(map);
+            }
+          }
+      } else {
+        // If that call was not successful, throw an error.
+        if (this.mounted) setState(() {
+          this.cartIsEmpty = true;
+        });
+      }
+    }
+    if (this.mounted) setState(() {});
+    return bagItems;
   }
 
   @override
