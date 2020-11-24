@@ -1,19 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:propped/screens/home.dart';
-import 'package:propped/screens/wishlist.dart';
 
 class MyLogin extends StatefulWidget {
   MyLogin({Key key, this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -22,27 +12,49 @@ class MyLogin extends StatefulWidget {
 }
 
 class _MyLoginState extends State<MyLogin> {
-  int _counter = 0;
+  bool login = false;
+  bool isButtonEnabled = false;
+  String msg = "";
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController passController = new TextEditingController();
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  bool isLoginValid(String email, String pass) {
+    if (email.trim() == "" || pass.trim() == "")
+      return false;
+    else {
+      loginVerified();
+      if (this.login == true) {
+        debugPrint("aaaaaaaaaaaaaaaaaaa");
+        return true;
+      }
+    }
+    return false;
+  }
+
+  bool isEmpty() {
+    if (passController.text.trim() == "" || emailController.text.trim() == "")
+      setState(() {
+        isButtonEnabled = false;
+      });
+    else
+      setState(() {
+        isButtonEnabled = true;
+      });
+
+    return isButtonEnabled;
+  }
+
+  void loginVerified() async {
+    await verifyLogin().then((isValid) => {this.login = isValid});
+  }
+
+  Future<bool> verifyLogin() async {
+    this.login = true;
+    return Future<bool>.value(true);
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
@@ -81,6 +93,8 @@ class _MyLoginState extends State<MyLogin> {
                     ),
                   ),
                   TextField(
+                    onChanged: (val) => {isEmpty()},
+                    controller: emailController,
                     decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -114,6 +128,8 @@ class _MyLoginState extends State<MyLogin> {
                     ),
                   ),
                   TextField(
+                      onChanged: (val) => {isEmpty()},
+                      controller: passController,
                       decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -147,14 +163,31 @@ class _MyLoginState extends State<MyLogin> {
               height: 50,
               child: RaisedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => MyHome()),
-                    );
+                    if (isButtonEnabled == true) {
+                      bool loginRes = isLoginValid(
+                          emailController.text, passController.text);
+                      if (!loginRes) {
+                        debugPrint("hey boo");
+                        setState(() {
+                          this.msg = "The email or password aren't correct.";
+                        });
+                      } else if (loginRes) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MyHome()),
+                        );
+                      }
+                    } else
+                      return;
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(6)),
-                  color: Color.fromARGB(255, 30, 30, 30),
+                  color: () {
+                    if (isButtonEnabled == true)
+                      return Color.fromARGB(255, 30, 30, 30);
+                    else
+                      return Color.fromARGB(230, 30, 30, 30);
+                  }(),
                   child: Text('LOGIN',
                       style: TextStyle(
                           fontSize: 15,
@@ -162,6 +195,15 @@ class _MyLoginState extends State<MyLogin> {
                           fontWeight: FontWeight.bold,
                           color: Color.fromRGBO(240, 240, 240, 1)))),
             ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
+            child: Text("$msg",
+                style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: 'Ubuntu',
+                    fontWeight: FontWeight.w500,
+                    color: Color.fromRGBO(237, 67, 35, 1))),
           )
         ],
       )),

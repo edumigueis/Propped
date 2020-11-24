@@ -69,7 +69,9 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
           debugPrint(values[i].toString());
           if (values[i] != null) {
             Map<String, dynamic> map = values[i];
-            bagItems.add(new BagItem(product: Product.fromJson(map), quantity: map['amount_productsshoppingcart']));
+            bagItems.add(new BagItem(
+                product: Product.fromJson(map),
+                quantity: map['amount_productsshoppingcart']));
           }
         }
       }
@@ -83,8 +85,8 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
     }
   }
 
-  Future<List<BagItem>> fetchStores() async{
-    for(int f = 0; f < this.bagItems.length; f++){
+  Future<List<BagItem>> fetchStores() async {
+    for (int f = 0; f < this.bagItems.length; f++) {
       final response = await http.get('http://' +
           Constants.serverIP +
           '/stores/' +
@@ -95,17 +97,18 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
         List<dynamic> values = new List<dynamic>();
         values = json.decode(response.body);
         if (values.length > 0) {
-            debugPrint(values[0].toString());
-            if (values[0] != null) {
-              Map<String, dynamic> map = values[0];
-              bagItems[f].store = Store.fromJson(map);
-            }
+          debugPrint(values[0].toString());
+          if (values[0] != null) {
+            Map<String, dynamic> map = values[0];
+            bagItems[f].store = Store.fromJson(map);
           }
+        }
       } else {
         // If that call was not successful, throw an error.
-        if (this.mounted) setState(() {
-          this.cartIsEmpty = true;
-        });
+        if (this.mounted)
+          setState(() {
+            this.cartIsEmpty = true;
+          });
       }
     }
     if (this.mounted) setState(() {});
