@@ -364,7 +364,7 @@ class _Me extends State<Me> {
         meIcon: CupertinoIcons.person_solid,
         searchIcon: CupertinoIcons.search,
         homeIcon: CupertinoIcons.home,
-        wishlistIcon: Icons.star_border,
+        wishlistIcon: CupertinoIcons.heart,
       ),
     );
   }
