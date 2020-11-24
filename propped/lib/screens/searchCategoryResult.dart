@@ -2,10 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:propped/models/Category.dart';
+import 'package:propped/models/Favorite.dart';
 import 'package:propped/models/Subcategory.dart';
 import 'package:propped/widgets/customAppBar.dart';
 import 'package:propped/widgets/filterItem.dart';
 import 'package:propped/widgets/menu.dart';
+import 'package:propped/widgets/productGridItem.dart';
 
 class SearchCategoryResult extends StatefulWidget {
   SearchCategoryResult(
@@ -253,7 +255,7 @@ class _SearchCategoryResultState extends State<SearchCategoryResult> {
                                   height: 50,
                                   child: RaisedButton(
                                       onPressed: () {
-                                          debugPrint("results to be shown");
+                                        debugPrint("results to be shown");
                                       },
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
@@ -360,57 +362,18 @@ class _SearchCategoryResultState extends State<SearchCategoryResult> {
                 // Generate 100 widgets that display their index in the List.
                 children: List.generate(10, (index) {
                   return Padding(
-                      padding: const EdgeInsets.fromLTRB(7.5, 0, 7.5, 15),
-                      child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Container(
-                                margin: const EdgeInsets.only(bottom: 10),
-                                height: MediaQuery.of(context).size.height / 3,
-                                width: MediaQuery.of(context).size.width / 2,
-                                child: Stack(
-                                  children: <Widget>[
-                                    Container(
-                                      width: double.infinity,
-                                      alignment: Alignment.center,
-                                      child: Image(
-                                        image: NetworkImage(
-                                            'https://cdn-images.farfetch-contents.com/15/23/22/29/15232229_29297818_1000.jpg'),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: 10,
-                                      right: 10,
-                                      child: new Icon(Icons.star, size: 30),
-                                    )
-                                  ],
-                                )),
-                            Text('Martine Rose',
-                                style: TextStyle(
-                                    fontSize: 15.0,
-                                    fontFamily: 'Ubuntu',
-                                    fontWeight: FontWeight.w500,
-                                    color: Color.fromRGBO(120, 120, 120, 1)),
-                                textAlign: TextAlign.center),
-                            Text('Colorblock Pants',
-                                style: TextStyle(
-                                    fontSize: 19.0,
-                                    fontFamily: 'Ubuntu',
-                                    fontWeight: FontWeight.w700,
-                                    color: Color.fromRGBO(40, 40, 40, 1)),
-                                textAlign: TextAlign.center),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-                              child: Text('USD 1200',
-                                  style: TextStyle(
-                                      fontSize: 17.0,
-                                      fontFamily: 'Ubuntu',
-                                      fontWeight: FontWeight.w500,
-                                      color: Color.fromRGBO(40, 40, 40, 1)),
-                                  textAlign: TextAlign.center),
-                            )
-                          ]));
+                      padding: const EdgeInsets.fromLTRB(5, 0, 5, 15),
+                      child: ProductGridItem(
+                        text1: "Martine Rose",
+                        text2: "Colorblock Pants",
+                        text3: "1350.0",
+                        image:
+                            "https://www.rebeccataylor.com/dw/image/v2/ABBY_PRD/on/demandware.static/-/Sites-master-catalog-rebeccataylor/default/dw78a1f271/hi-res/large/220600p416_multi_combo_front.jpg?sw=1218&sh=1848&sm=fit",
+                        isFavorite: false,
+                        favorite: new Favorite(
+                            id: 10, product: 95, user: 14, code: "aakakakkak"),
+                        redirectCode: "A",
+                      ));
                 }),
               ),
             )
@@ -419,9 +382,9 @@ class _SearchCategoryResultState extends State<SearchCategoryResult> {
       ),
       bottomNavigationBar: MyMenu(
         meIcon: CupertinoIcons.person,
-        searchIcon: CupertinoIcons.search,
-        homeIcon: Icons.home,
-        wishlistIcon: Icons.star_border,
+        searchIcon: Icons.search,
+        homeIcon: CupertinoIcons.home,
+        wishlistIcon: CupertinoIcons.heart,
       ),
     );
   }

@@ -166,7 +166,7 @@ class _Search extends State<MySearch> {
         meIcon: CupertinoIcons.person,
         searchIcon: Icons.search,
         homeIcon: CupertinoIcons.home,
-        wishlistIcon: Icons.star_border,
+        wishlistIcon: CupertinoIcons.heart,
       ),
     );
   }
