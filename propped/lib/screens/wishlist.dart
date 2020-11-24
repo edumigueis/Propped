@@ -218,16 +218,19 @@ class _MyWishlistState extends State<MyWishlist> {
                         img = "a";
                       else
                         img = images[index].url;
-                      return ProductGridItem(
-                        redirectCode: products[index].code,
-                        image: img,
-                        text1: stores[index].name,
-                        text2: products[index].name,
-                        text3: products[index].price.toString(),
-                        isFavorite: true,
-                        favorite: new Favorite(
-                            product: this.products[index].id,
-                            user: this.idUser),
+                      return Padding(
+                        padding: const EdgeInsets.fromLTRB(5, 0, 5, 15),
+                        child: ProductGridItem(
+                          redirectCode: products[index].code,
+                          image: img,
+                          text1: stores[index].name,
+                          text2: products[index].name,
+                          text3: products[index].price.toString(),
+                          isFavorite: true,
+                          favorite: new Favorite(
+                              product: this.products[index].id,
+                              user: this.idUser),
+                        ),
                       );
                     }),
                   );
@@ -244,7 +247,7 @@ class _MyWishlistState extends State<MyWishlist> {
         meIcon: CupertinoIcons.person,
         searchIcon: CupertinoIcons.search,
         homeIcon: CupertinoIcons.home,
-        wishlistIcon: Icons.star,
+        wishlistIcon: CupertinoIcons.heart_solid,
       ),
     );
   }
