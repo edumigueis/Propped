@@ -92,18 +92,38 @@ class _MyHomeState extends State<MyHome> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                ShadowText(i.getCategory().capitalize(),
-                                    style: TextStyle(fontSize: 16.0), color: Colors.white12, opacity: 0.5,),
-                                ShadowText(i.getName(),
-                                    style: TextStyle(
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.bold,
-                                        height: 1.3), color: Colors.white12, opacity: 0.5,),
-                                ShadowText("\$" + i.getPrice().toString(),
-                                    style: TextStyle(
-                                        fontSize: 15.0,
-                                        height: 1.85,
-                                        fontWeight: FontWeight.w600), color: Colors.white12, opacity: 0.5,),
+                                ShadowText(
+                                  i.getCategory().capitalize(),
+                                  style: TextStyle(
+                                    color: Color.fromRGBO(30, 30, 30, 1),
+                                    fontSize: 16.0,
+                                    fontFamily: 'Ubuntu',
+                                  ),
+                                  color: Colors.white12,
+                                  opacity: 0.3,
+                                ),
+                                ShadowText(
+                                  i.getName(),
+                                  style: TextStyle(
+                                      color: Color.fromRGBO(30, 30, 30, 1),
+                                      fontSize: 20.0,
+                                      fontFamily: 'Ubuntu',
+                                      fontWeight: FontWeight.bold,
+                                      height: 1.3),
+                                  color: Colors.white12,
+                                  opacity: 0.4,
+                                ),
+                                ShadowText(
+                                  "\$" + i.getPrice().toString(),
+                                  style: TextStyle(
+                                      color: Color.fromRGBO(30, 30, 30, 1),
+                                      fontSize: 15.0,
+                                      fontFamily: 'Ubuntu',
+                                      height: 1.85,
+                                      fontWeight: FontWeight.w600),
+                                  color: Colors.white12,
+                                  opacity: 0.4,
+                                ),
                               ],
                             ),
                           ));
