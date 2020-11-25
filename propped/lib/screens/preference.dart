@@ -5,7 +5,6 @@ import 'package:propped/models/User.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
-
 import 'home.dart';
 
 class MyPreference extends StatefulWidget {
