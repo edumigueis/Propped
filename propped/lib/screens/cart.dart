@@ -1,7 +1,8 @@
+import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:propped/models/BagItem.dart';
+import 'package:propped/models/Image.dart';
 import 'package:propped/models/Product.dart';
 import 'package:propped/models/Store.dart';
 import 'package:propped/widgets/customAppBar.dart';
@@ -9,7 +10,6 @@ import 'package:propped/utils/Constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:propped/widgets/errorMsgWidget.dart';
 import 'package:propped/widgets/shoppingBagItem.dart';
 
@@ -66,7 +66,6 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
       values = json.decode(response.body);
       if (values.length > 0) {
         for (int i = 0; i < values.length; i++) {
-          debugPrint(values[i].toString());
           if (values[i] != null) {
             Map<String, dynamic> map = values[i];
             bagItems.add(new BagItem(
@@ -75,6 +74,7 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
           }
         }
       }
+      shuffleAndAttributeCountries();
       if (this.mounted) setState(() {});
       await fetchStores();
       return bagItems;
@@ -97,7 +97,6 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
         List<dynamic> values = new List<dynamic>();
         values = json.decode(response.body);
         if (values.length > 0) {
-          debugPrint(values[0].toString());
           if (values[0] != null) {
             Map<String, dynamic> map = values[0];
             bagItems[f].store = Store.fromJson(map);
@@ -111,8 +110,64 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
           });
       }
     }
+    fetchImages();
     if (this.mounted) setState(() {});
     return bagItems;
+  }
+
+  List<ImageObj> images = new List<ImageObj>();
+
+  Future<List<BagItem>> fetchImages() async {
+    for (int f = 0; f < this.bagItems.length; f++) {
+      final response = await http.get('http://' +
+          Constants.serverIP +
+          '/products/image/' +
+          bagItems[f].product.id.toString());
+
+      if (response.statusCode == 200) {
+        // If the call to the server was successful, parse the JSON
+        List<dynamic> values = new List<dynamic>();
+        values = json.decode(response.body);
+        if (values.length > 0) {
+          if (values[0] != null) {
+            Map<String, dynamic> map = values[0];
+            this.images.add(ImageObj.fromJson(map));
+          }
+        }
+      } else {
+        // If that call was not successful, throw an error.
+        this.images.add(new ImageObj());
+      }
+    }
+    await fetchImagesProp();
+    return bagItems;
+  }
+
+  Future<List<ImageObj>> fetchImagesProp() async {
+    for (int f = 0; f < images.length; f++) {
+      final response = await http.get('http://' +
+          Constants.serverIP +
+          '/images/id/' +
+          images[f].idImage.toString());
+
+      if (response.statusCode == 200) {
+        // If the call to the server was successful, parse the JSON
+        List<dynamic> values = new List<dynamic>();
+        values = json.decode(response.body);
+
+        if (values.length > 0) {
+          if (values[0] != null) {
+            Map<String, dynamic> map = values[0];
+            this.images[f].url = map['photo_image'];
+          }
+        }
+      } else {
+        this.images[f].url =
+            "https://cdn.dribbble.com/users/257123/screenshots/13967127/media/20ea6c404c5787a1dca1180abd01905b.png";
+      }
+    }
+    if (this.mounted) setState(() {});
+    return images;
   }
 
   @override
@@ -120,7 +175,6 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
     super.initState();
     //if (this.widget.bagitem != null) addItem(this.widget.bagitem);
     fetchProductsByCart();
-    countries.shuffle();
   }
 
   List<String> countries = [
@@ -130,8 +184,28 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
     "https://static3.depositphotos.com/1000209/137/v/600/depositphotos_1377995-stock-illustration-france-flag.jpg",
     "https://upload.wikimedia.org/wikipedia/en/thumb/0/05/Flag_of_Brazil.svg/1200px-Flag_of_Brazil.svg.png",
   ];
-  int randomNumber;
+
+  shuffleAndAttributeCountries() {
+    if (bagItems.length > 0 && bagItems[0] != null) {
+      var rng = new Random();
+      for (int i = 0; i < bagItems.length; i++) {
+        bagItems[i].country = countries[rng.nextInt(countries.length) - 1];
+      }
+    }
+  }
+
   int count = 0;
+  double shipping = 20;
+
+  double calcFinalAmount() {
+    if (this.bagItems.length > 0 && this.bagItems != null) {
+      double finalAmount = 0.0;
+      for (int f = 0; f < bagItems.length; f++) {
+        finalAmount += this.bagItems[f].product.price;
+      }
+      return finalAmount;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -152,12 +226,33 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
                 itemBuilder: (BuildContext ctx, int i) {
                   if (i != bagItems.length) {
                     return ShoppingBagItem(
-                      country: countries[i],
-                      product: new Product(name: "Off White"),
-                      store: new Store(name: "Off White"),
-                      image:
-                          "https://is4.revolveassets.com/images/p4/n/z/OFFF-MZ32_V1.jpg",
-                      price: 110.0,
+                      country: () {
+                        if (bagItems[i].country != "" &&
+                            bagItems[i].country != null)
+                          return bagItems[i].country;
+                        else
+                          return "https://images.fineartamerica.com/images/artworkimages/mediumlarge/3/off-white-linen-white-ultra-pale-gray-solid-color-parable-to-behr-dutch-white-mq3-31-melissa-fague.jpg";
+                      }(),
+                      product: bagItems[i].product,
+                      store: bagItems[i].store,
+                      image: () {
+                        if (images != null) {
+                          if (images.length > 0) {
+                            if (images[i] != null || images[i].url == null) {
+                              return images[i].url;
+                            }
+                          }
+                        }
+                        return "https://images.fineartamerica.com/images/artworkimages/mediumlarge/3/off-white-linen-white-ultra-pale-gray-solid-color-parable-to-behr-dutch-white-mq3-31-melissa-fague.jpg";
+                      }(),
+                      price: bagItems[i].product.price,
+                      quantity: bagItems[i].quantity,
+                      onDispose: () {
+                        setState(() {
+                          debugPrint(bagItems[0].toString());
+                          bagItems.removeAt(i);
+                        });
+                      },
                     );
                   }
                   return Container(
@@ -258,7 +353,13 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
                                       fontWeight: FontWeight.normal,
                                       color: Color.fromRGBO(30, 30, 30, 1))),
                               TextSpan(
-                                  text: 'USD \$80.0',
+                                  text: 'USD \$' +
+                                      () {
+                                        if (calcFinalAmount() == null)
+                                          return "0.00";
+                                        else
+                                          return calcFinalAmount().toString();
+                                      }(),
                                   style: TextStyle(
                                       fontSize: 16,
                                       height: 1.5,
@@ -268,7 +369,21 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
                             ],
                           ),
                         ),
-                        Text('USD \$80.0',
+                        Text(
+                            'USD \$' +
+                                () {
+                                  if (shipping == null &&
+                                      calcFinalAmount() == null) return "0.00";
+                                  if (shipping == null &&
+                                      calcFinalAmount() != null)
+                                    return calcFinalAmount();
+                                  if (shipping != null &&
+                                      calcFinalAmount() == null)
+                                    return shipping;
+
+                                  return (shipping + calcFinalAmount());
+                                }()
+                                    .toString(),
                             textAlign: TextAlign.end,
                             style: TextStyle(
                                 fontSize: 16,
@@ -288,7 +403,7 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
                                       fontWeight: FontWeight.normal,
                                       color: Color.fromRGBO(30, 30, 30, 1))),
                               TextSpan(
-                                  text: 'USD \$0.0',
+                                  text: 'USD \$' + this.shipping.toString(),
                                   style: TextStyle(
                                       fontSize: 16,
                                       height: 1.5,
