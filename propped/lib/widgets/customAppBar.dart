@@ -59,18 +59,26 @@ class _CustomAppBarState extends State<CustomAppBar> {
               Center(
                 child: Padding(
                   padding: const EdgeInsets.only(right: 4.0),
-                  child: Text("1", style: TextStyle(
-                    fontFamily: 'Ubuntu',
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Color.fromRGBO(30, 30, 30, 1)
-                  ),),
+                  child: Text(
+                    "1",
+                    style: TextStyle(
+                        fontFamily: 'Ubuntu',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Color.fromRGBO(30, 30, 30, 1)),
+                  ),
                 ),
               ),
               Container(
-                  child: Container(width: 25, height: 25, decoration: new BoxDecoration(
-                    image: new DecorationImage(image: NetworkImage("https://freeiconshop.com/wp-content/uploads/edd/shopping-bag-outline.png"), fit: BoxFit.cover)
-                  ),),
+                  child: Container(
+                    width: 25,
+                    height: 25,
+                    decoration: new BoxDecoration(
+                        image: new DecorationImage(
+                            image: NetworkImage(
+                                "https://freeiconshop.com/wp-content/uploads/edd/shopping-bag-outline.png"),
+                            fit: BoxFit.cover)),
+                  ),
                   margin: const EdgeInsets.only(right: 10)),
             ],
           ),
