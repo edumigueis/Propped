@@ -52,6 +52,7 @@ class MyDesignersState extends State<MyDesigners> {
     var _controller = TextEditingController();
     var _visibleRemove = Colors.transparent;
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: CustomAppBar(
         showArrow: true,
         title: "Designers",
