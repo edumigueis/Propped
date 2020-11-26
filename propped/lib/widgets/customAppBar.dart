@@ -3,24 +3,34 @@ import 'package:flutter/material.dart';
 import 'package:propped/screens/cart.dart';
 import 'package:propped/screens/preference.dart';
 import 'package:propped/screens/store.dart';
+import 'package:propped/utils/Constants.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
-  CustomAppBar({Key key, String title, @required bool showArrow})
+  CustomAppBar({Key key, String title, @required bool showArrow, bool isCart})
       : preferredSize = Size.fromHeight(kToolbarHeight),
         this.showArrow = showArrow,
         this.title = title,
+        this.isCart = isCart,
         super(key: key);
 
   @override
   final Size preferredSize; // default is 56.0
   final String title;
   final bool showArrow;
+  final bool isCart;
 
   @override
   _CustomAppBarState createState() => _CustomAppBarState();
 }
 
 class _CustomAppBarState extends State<CustomAppBar> {
+
+  @override
+  void initState(){
+    super.initState();
+    debugPrint("yay");
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -52,9 +62,34 @@ class _CustomAppBarState extends State<CustomAppBar> {
             context,
             MaterialPageRoute(builder: (context) => MyShoppingBag()),
           ),
-          child: Container(
-              child: Icon(Icons.shopping_basket),
-              margin: const EdgeInsets.only(right: 10)),
+          child: Row(
+            children: [
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 4.0),
+                  child: Text(
+                    Constants.spBagItems.toString(),
+                    style: TextStyle(
+                        fontFamily: 'Ubuntu',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Color.fromRGBO(30, 30, 30, 1)),
+                  ),
+                ),
+              ),
+              Container(
+                  child: Container(
+                    width: 25,
+                    height: 25,
+                    decoration: new BoxDecoration(
+                        image: new DecorationImage(
+                            image: NetworkImage(
+                                "https://freeiconshop.com/wp-content/uploads/edd/shopping-bag-outline.png"),
+                            fit: BoxFit.cover)),
+                  ),
+                  margin: const EdgeInsets.only(right: 10)),
+            ],
+          ),
         )
       ],
     );

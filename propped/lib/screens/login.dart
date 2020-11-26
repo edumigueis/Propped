@@ -1,6 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:propped/screens/home.dart';
+import 'package:flutter_session/flutter_session.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:propped/utils/Constants.dart';
 
 class MyLogin extends StatefulWidget {
   MyLogin({Key key, this.title}) : super(key: key);
@@ -49,6 +55,35 @@ class _MyLoginState extends State<MyLogin> {
   }
 
   Future<bool> verifyLogin() async {
+    /*final response = await http.get('http://' +
+        Constants.serverIP +
+        '/users/login/' +
+        this.emailController.text +
+        '/' +
+        this.passController.text);
+
+    if (response.statusCode == 200) {
+      int id;
+      List<dynamic> values = new List<dynamic>();
+      values = json.decode(response.body);
+      if (values.length > 0) {
+        if (values[0] != null) {
+          Map<String, dynamic> map = values[0];
+          id = map['id_user'];
+          debugPrint(id.toString());
+          var session = FlutterSession();
+          await session.set("id", id);
+          this.login = true;
+          return Future<bool>.value(true);
+        }
+      }
+      this.login = false;
+      return Future<bool>.value(false);
+    } else {
+      this.login = false;
+      return Future<bool>.value(false);
+    }*/
+
     this.login = true;
     return Future<bool>.value(true);
   }

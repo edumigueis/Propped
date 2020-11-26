@@ -6,6 +6,7 @@ class BagItem{
   Store store;
   final int quantity;
   final String size;
+  String country;
 
-  BagItem({this.product, this.store, this.quantity, this.size});
+  BagItem({this.product, this.store, this.quantity, this.size, this.country});
 }

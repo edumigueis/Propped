@@ -7,6 +7,7 @@ import 'package:propped/utils/sliderItem.dart';
 import 'package:propped/utils/stringExtension.dart';
 import 'package:propped/widgets/customAppBar.dart';
 import 'package:propped/widgets/menu.dart';
+import 'package:propped/widgets/shadowText.dart';
 
 class MyHome extends StatefulWidget {
   MyHome({Key key, this.title}) : super(key: key);
@@ -64,21 +65,24 @@ class _MyHomeState extends State<MyHome> {
                   scrollDirection: Axis.horizontal,
                 ),
                 items: [
-                  new SliderItem("The shirt", "shirts", 1.00),
-                  new SliderItem("The shirt", "shirts", 2.00),
-                  new SliderItem("The shirt", "shirts", 3.00),
-                  new SliderItem("The shirt", "shirts", 4.00),
-                  new SliderItem("The shirt", "shirts", 5.00)
+                  new SliderItem("Jeans jacket", "Balenciaga", 1200.00,
+                      "https://cdn-images.farfetch-contents.com/15/92/10/40/15921040_ba827e39-3af3-494e-8d96-1aa07c3c5701_1000.jpg"),
+                  new SliderItem("CK top", "Calvin Klein", 4500.00,
+                      "https://cdn.cnn.com/cnnnext/dam/assets/200626154625-01-jari-jones-calvin-klein-super-169.jpg"),
+                  new SliderItem("Cargo pants", "Hugo Boss", 350.00,
+                      "https://cdn-images.farfetch-contents.com/15/13/94/04/15139404_26260949_480.jpg"),
+                  new SliderItem("Flair ribcage pants ", "shirts", 400.00,
+                      "https://cdn-images.farfetch-contents.com/14/05/85/86/14058586_18824807_1000.jpg"),
+                  new SliderItem("Kartman suit", "Hugo Boss", 4900.90,
+                      "https://cdn-static.farfetch-contents.com/cms-cm/br/media/1603820/data/05ad44e1c19ec1f2e5a3960e1a95ae32.jpg?ratio=1x1_two-columns&minWidth=637")
                 ].map((i) {
-                  // guardar objetos em cada uma das posições do vetor e acessar os campos no builder
                   return Builder(
                     builder: (BuildContext context) {
                       return Container(
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                                image: NetworkImage(
-                                    "https://cea.vteximg.com.br/arquivos/ids/15801927/T-Shirt-Feminina-Mindset-Pessoas-Manga-Curta-Decote-Redondo-Off-White-9965361-Off_White_1.jpg?v=637365113743730000"),
+                                image: NetworkImage(i.getImage()),
                                 fit: BoxFit.cover,
                                 repeat: ImageRepeat.noRepeat),
                           ),
@@ -88,18 +92,38 @@ class _MyHomeState extends State<MyHome> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text(i.getCategory().capitalize(),
-                                    style: TextStyle(fontSize: 16.0)),
-                                Text(i.getName(),
-                                    style: TextStyle(
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.bold,
-                                        height: 1.3)),
-                                Text("\$" + i.getPrice().toString(),
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        height: 1.35,
-                                        fontWeight: FontWeight.w600)),
+                                ShadowText(
+                                  i.getCategory().capitalize(),
+                                  style: TextStyle(
+                                    color: Color.fromRGBO(30, 30, 30, 1),
+                                    fontSize: 16.0,
+                                    fontFamily: 'Ubuntu',
+                                  ),
+                                  color: Colors.white12,
+                                  opacity: 0.3,
+                                ),
+                                ShadowText(
+                                  i.getName(),
+                                  style: TextStyle(
+                                      color: Color.fromRGBO(30, 30, 30, 1),
+                                      fontSize: 20.0,
+                                      fontFamily: 'Ubuntu',
+                                      fontWeight: FontWeight.bold,
+                                      height: 1.3),
+                                  color: Colors.white12,
+                                  opacity: 0.4,
+                                ),
+                                ShadowText(
+                                  "\$" + i.getPrice().toString(),
+                                  style: TextStyle(
+                                      color: Color.fromRGBO(30, 30, 30, 1),
+                                      fontSize: 15.0,
+                                      fontFamily: 'Ubuntu',
+                                      height: 1.85,
+                                      fontWeight: FontWeight.w600),
+                                  color: Colors.white12,
+                                  opacity: 0.4,
+                                ),
                               ],
                             ),
                           ));
@@ -116,11 +140,13 @@ class _MyHomeState extends State<MyHome> {
                   children: <Widget>[
                     Text("Holiday sale",
                         style: TextStyle(
+                            color: Color.fromRGBO(30, 30, 30, 1),
                             fontSize: 21.0,
                             height: 1.35,
                             fontWeight: FontWeight.bold)),
                     Text("SEE ALL",
                         style: TextStyle(
+                            color: Color.fromRGBO(30, 30, 30, 1),
                             fontSize: 13.0,
                             height: 1.35,
                             fontWeight: FontWeight.bold)),
@@ -175,16 +201,19 @@ class _MyHomeState extends State<MyHome> {
                                 children: <Widget>[
                                   Text("Golf La Fleur x Converse",
                                       style: TextStyle(
+                                          color: Color.fromRGBO(30, 30, 30, 1),
                                           fontSize: 16.0,
                                           height: 1.7,
                                           fontWeight: FontWeight.bold)),
                                   Text("Strain Sneekers",
                                       style: TextStyle(
+                                          color: Color.fromRGBO(30, 30, 30, 1),
                                           fontSize: 18.0,
                                           height: 1.4,
                                           fontWeight: FontWeight.w500)),
                                   Text("\$50.00",
                                       style: TextStyle(
+                                          color: Color.fromRGBO(30, 30, 30, 1),
                                           fontSize: 17.0,
                                           height: 1.4,
                                           fontWeight: FontWeight.w500)),
@@ -201,6 +230,7 @@ class _MyHomeState extends State<MyHome> {
                     left: 15.0, top: 50.0, bottom: 20.0, right: 15.0),
                 child: Text("This week's highlights",
                     style: TextStyle(
+                        color: Color.fromRGBO(30, 30, 30, 1),
                         fontSize: 21.0,
                         height: 1.35,
                         fontWeight: FontWeight.bold)),
@@ -235,11 +265,13 @@ class _MyHomeState extends State<MyHome> {
                                 children: <Widget>[
                                   Text("BALENCIAGA",
                                       style: TextStyle(
+                                          color: Color.fromRGBO(30, 30, 30, 1),
                                           fontSize: 21.0,
                                           height: 2,
                                           fontWeight: FontWeight.bold)),
                                   Text("New York style, but fresh-minded.",
                                       style: TextStyle(
+                                          color: Color.fromRGBO(30, 30, 30, 1),
                                           fontSize: 17.0,
                                           height: 1.7,
                                           fontWeight: FontWeight.w500)),
@@ -260,11 +292,13 @@ class _MyHomeState extends State<MyHome> {
                   children: <Widget>[
                     Text("Recommended for you",
                         style: TextStyle(
+                            color: Color.fromRGBO(30, 30, 30, 1),
                             fontSize: 21.0,
                             height: 1.35,
                             fontWeight: FontWeight.bold)),
                     Text("SEE ALL",
                         style: TextStyle(
+                            color: Color.fromRGBO(30, 30, 30, 1),
                             fontSize: 13.0,
                             height: 1.35,
                             fontWeight: FontWeight.bold)),
@@ -319,16 +353,19 @@ class _MyHomeState extends State<MyHome> {
                                 children: <Widget>[
                                   Text("Golf La Fleur x Converse",
                                       style: TextStyle(
+                                          color: Color.fromRGBO(30, 30, 30, 1),
                                           fontSize: 16.0,
                                           height: 1.7,
                                           fontWeight: FontWeight.bold)),
                                   Text("Strain Sneekers",
                                       style: TextStyle(
+                                          color: Color.fromRGBO(30, 30, 30, 1),
                                           fontSize: 18.0,
                                           height: 1.4,
                                           fontWeight: FontWeight.w500)),
                                   Text("\$50.00",
                                       style: TextStyle(
+                                          color: Color.fromRGBO(30, 30, 30, 1),
                                           fontSize: 17.0,
                                           height: 1.4,
                                           fontWeight: FontWeight.w500)),
@@ -408,11 +445,13 @@ class _MyHomeState extends State<MyHome> {
                   children: <Widget>[
                     Text("Added recently",
                         style: TextStyle(
+                            color: Color.fromRGBO(30, 30, 30, 1),
                             fontSize: 21.0,
                             height: 1.35,
                             fontWeight: FontWeight.bold)),
                     Text("SEE ALL",
                         style: TextStyle(
+                            color: Color.fromRGBO(30, 30, 30, 1),
                             fontSize: 13.0,
                             height: 1.35,
                             fontWeight: FontWeight.bold)),
