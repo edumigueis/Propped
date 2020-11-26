@@ -12,6 +12,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:propped/widgets/errorMsgWidget.dart';
 import 'package:propped/widgets/shoppingBagItem.dart';
+import 'package:flutter_session/flutter_session.dart';
 
 class MyShoppingBag extends StatefulWidget {
   final BagItem bagitem;
@@ -170,11 +171,38 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
     return images;
   }
 
+  Future<int> fetchCountOfProducts() async{
+    final response = await http.get('http://' +
+        Constants.serverIP +
+        '/products/count/' +
+        await FlutterSession().get("id").toString());
+
+    if (response.statusCode == 200) {
+      // If the call to the server was successful, parse the JSON
+      List<dynamic> values = new List<dynamic>();
+      values = json.decode(response.body);
+
+      if (values.length > 0) {
+        if (values[0] != null) {
+          Map<String, dynamic> map = values[0];
+          setState(() {
+            Constants.spBagItems = map['count'];
+          });
+        }
+      }
+    } else {
+      setState(() {
+        Constants.spBagItems = 0;
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     //if (this.widget.bagitem != null) addItem(this.widget.bagitem);
     fetchProductsByCart();
+    fetchCountOfProducts();
   }
 
   List<String> countries = [
@@ -189,7 +217,7 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
     if (bagItems.length > 0 && bagItems[0] != null) {
       var rng = new Random();
       for (int i = 0; i < bagItems.length; i++) {
-        bagItems[i].country = countries[rng.nextInt(countries.length) - 1];
+        bagItems[i].country = countries[rng.nextInt(countries.length - 1)];
       }
     }
   }

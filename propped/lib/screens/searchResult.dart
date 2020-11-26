@@ -5,10 +5,14 @@ import 'package:propped/models/Favorite.dart';
 import 'package:propped/screens/searchCategoryResult.dart';
 import 'package:propped/models/Category.dart';
 import 'package:propped/models/Subcategory.dart';
+import 'package:propped/models/Product.dart';
 import 'package:propped/widgets/customAppBar.dart';
 import 'package:propped/widgets/filterItem.dart';
 import 'package:propped/widgets/menu.dart';
 import 'package:propped/widgets/productGridItem.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
 class MySearchResult extends StatefulWidget {
   MySearchResult({Key key, @required String keyword})
@@ -259,6 +263,16 @@ class _SearchResult extends State<MySearchResult> {
             ),
           ),
         ));
+  }
+
+  Future<List<Product>> fetchResults() async{
+
+  }
+
+  @override
+  void initState(){
+    super.initState();
+    this.fetchResults();
   }
 
   @override

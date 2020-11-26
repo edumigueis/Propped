@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:propped/screens/cart.dart';
 import 'package:propped/screens/preference.dart';
 import 'package:propped/screens/store.dart';
+import 'package:propped/utils/Constants.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   CustomAppBar({Key key, String title, @required bool showArrow, bool isCart})
@@ -23,6 +24,13 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _CustomAppBarState extends State<CustomAppBar> {
+
+  @override
+  void initState(){
+    super.initState();
+    debugPrint("yay");
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -60,7 +68,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                 child: Padding(
                   padding: const EdgeInsets.only(right: 4.0),
                   child: Text(
-                    "1",
+                    Constants.spBagItems.toString(),
                     style: TextStyle(
                         fontFamily: 'Ubuntu',
                         fontSize: 16,

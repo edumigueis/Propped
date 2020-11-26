@@ -5,7 +5,6 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:propped/models/BagItem.dart';
 import 'package:propped/models/Image.dart';
 import 'package:propped/screens/cart.dart';
-import 'package:propped/screens/home.dart';
 import 'package:propped/models/Product.dart';
 import 'package:propped/models/Attribute.dart';
 import 'package:propped/screens/store.dart';
