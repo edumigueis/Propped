@@ -6,6 +6,8 @@ import 'package:propped/screens/searchCategoryResult.dart';
 import 'package:propped/models/Category.dart';
 import 'package:propped/models/Subcategory.dart';
 import 'package:propped/models/Product.dart';
+import 'package:propped/utils/Constants.dart';
+import 'package:propped/utils/FiltersCollection.dart';
 import 'package:propped/widgets/customAppBar.dart';
 import 'package:propped/widgets/filterItem.dart';
 import 'package:propped/widgets/menu.dart';
@@ -30,249 +32,296 @@ class _SearchResult extends State<MySearchResult> {
   Subcategory subCat;
   Sorting _character = Sorting.Recommended;
   List filterItems = ["Color", "Sizes", "Price Range", "Occasion"];
+  FiltersCollection filters = new FiltersCollection();
 
   void _showRefineModal() {
     showCupertinoModalBottomSheet(
         expand: false,
         context: context,
         builder: (context, ScrollController sc) => Material(
-          child: Navigator(
-            onGenerateRoute: (_) => MaterialPageRoute(
-              builder: (context) => Builder(
-                builder: (context) => CupertinoPageScaffold(
-                  navigationBar: CupertinoNavigationBar(
-                      leading: Container(), middle: Text('Refine')),
-                  child: SafeArea(
-                      bottom: false,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 300.0,
-                            margin: EdgeInsets.symmetric(horizontal: 15),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Padding(
-                                  padding:
-                                  EdgeInsets.symmetric(vertical: 10),
-                                  child: Text("Order by",
-                                      style: TextStyle(
-                                          fontSize: 20.0,
-                                          fontFamily: 'Ubuntu',
-                                          fontWeight: FontWeight.w600,
-                                          color: Color.fromRGBO(
-                                              40, 40, 40, 1))),
+              child: Navigator(
+                onGenerateRoute: (_) => MaterialPageRoute(
+                  builder: (context) => Builder(
+                    builder: (context) => CupertinoPageScaffold(
+                      navigationBar: CupertinoNavigationBar(
+                          leading: Container(), middle: Text('Refine')),
+                      child: SafeArea(
+                          bottom: false,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                height: 300.0,
+                                margin: EdgeInsets.symmetric(horizontal: 15),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 10),
+                                      child: Text("Order by",
+                                          style: TextStyle(
+                                              fontSize: 20.0,
+                                              fontFamily: 'Ubuntu',
+                                              fontWeight: FontWeight.w600,
+                                              color: Color.fromRGBO(
+                                                  40, 40, 40, 1))),
+                                    ),
+                                    Container(
+                                      decoration: new BoxDecoration(
+                                          border: Border(
+                                              bottom: BorderSide(
+                                                  width: 1.0,
+                                                  style: BorderStyle.solid,
+                                                  color: Colors.black26))),
+                                      child: ListTile(
+                                          title: const Text('Recommended'),
+                                          leading: Transform.scale(
+                                            scale: 1.4,
+                                            child: Radio(
+                                              activeColor:
+                                                  Color.fromRGBO(30, 30, 30, 1),
+                                              value: Sorting.Recommended,
+                                              groupValue: _character,
+                                              onChanged: (Sorting value) {
+                                                setState(() {
+                                                  _character = value;
+                                                });
+                                              },
+                                            ),
+                                          )),
+                                    ),
+                                    Container(
+                                      decoration: new BoxDecoration(
+                                          border: Border(
+                                              bottom: BorderSide(
+                                                  width: 1.0,
+                                                  style: BorderStyle.solid,
+                                                  color: Colors.black26))),
+                                      child: ListTile(
+                                          title: const Text('Most Recent'),
+                                          leading: Transform.scale(
+                                            scale: 1.4,
+                                            child: Radio(
+                                              activeColor:
+                                                  Color.fromRGBO(30, 30, 30, 1),
+                                              value: Sorting.Recent,
+                                              groupValue: _character,
+                                              onChanged: (Sorting value) {
+                                                setState(() {
+                                                  _character = value;
+                                                });
+                                              },
+                                            ),
+                                          )),
+                                    ),
+                                    Container(
+                                      decoration: new BoxDecoration(
+                                          border: Border(
+                                              bottom: BorderSide(
+                                                  width: 1.0,
+                                                  style: BorderStyle.solid,
+                                                  color: Colors.black26))),
+                                      child: ListTile(
+                                          title:
+                                              const Text('Price (low to high)'),
+                                          leading: Transform.scale(
+                                            scale: 1.4,
+                                            child: Radio(
+                                              activeColor:
+                                                  Color.fromRGBO(30, 30, 30, 1),
+                                              value: Sorting.Price,
+                                              groupValue: _character,
+                                              onChanged: (Sorting value) {
+                                                setState(() {
+                                                  _character = value;
+                                                });
+                                              },
+                                            ),
+                                          )),
+                                    ),
+                                    Container(
+                                      decoration: new BoxDecoration(
+                                          border: Border(
+                                              bottom: BorderSide(
+                                                  width: 1.0,
+                                                  style: BorderStyle.solid,
+                                                  color: Colors.black26))),
+                                      child: ListTile(
+                                          title:
+                                              const Text('Price (high to low)'),
+                                          leading: Transform.scale(
+                                            scale: 1.4,
+                                            child: Radio(
+                                              activeColor:
+                                                  Color.fromRGBO(30, 30, 30, 1),
+                                              value: Sorting.Prices,
+                                              groupValue: _character,
+                                              onChanged: (Sorting value) {
+                                                setState(() {
+                                                  _character = value;
+                                                });
+                                              },
+                                            ),
+                                          )),
+                                    ),
+                                  ],
                                 ),
-                                Container(
-                                  decoration: new BoxDecoration(
-                                      border: Border(
-                                          bottom: BorderSide(
-                                              width: 1.0,
-                                              style: BorderStyle.solid,
-                                              color: Colors.black26))),
-                                  child: ListTile(
-                                      title: const Text('Recommended'),
-                                      leading: Transform.scale(
-                                        scale: 1.4,
-                                        child: Radio(
-                                          activeColor:
-                                          Color.fromRGBO(30, 30, 30, 1),
-                                          value: Sorting.Recommended,
-                                          groupValue: _character,
-                                          onChanged: (Sorting value) {
-                                            setState(() {
-                                              _character = value;
-                                            });
-                                          },
-                                        ),
-                                      )),
-                                ),
-                                Container(
-                                  decoration: new BoxDecoration(
-                                      border: Border(
-                                          bottom: BorderSide(
-                                              width: 1.0,
-                                              style: BorderStyle.solid,
-                                              color: Colors.black26))),
-                                  child: ListTile(
-                                      title: const Text('Most Recent'),
-                                      leading: Transform.scale(
-                                        scale: 1.4,
-                                        child: Radio(
-                                          activeColor:
-                                          Color.fromRGBO(30, 30, 30, 1),
-                                          value: Sorting.Recent,
-                                          groupValue: _character,
-                                          onChanged: (Sorting value) {
-                                            setState(() {
-                                              _character = value;
-                                            });
-                                          },
-                                        ),
-                                      )),
-                                ),
-                                Container(
-                                  decoration: new BoxDecoration(
-                                      border: Border(
-                                          bottom: BorderSide(
-                                              width: 1.0,
-                                              style: BorderStyle.solid,
-                                              color: Colors.black26))),
-                                  child: ListTile(
-                                      title:
-                                      const Text('Price (low to high)'),
-                                      leading: Transform.scale(
-                                        scale: 1.4,
-                                        child: Radio(
-                                          activeColor:
-                                          Color.fromRGBO(30, 30, 30, 1),
-                                          value: Sorting.Price,
-                                          groupValue: _character,
-                                          onChanged: (Sorting value) {
-                                            setState(() {
-                                              _character = value;
-                                            });
-                                          },
-                                        ),
-                                      )),
-                                ),
-                                Container(
-                                  decoration: new BoxDecoration(
-                                      border: Border(
-                                          bottom: BorderSide(
-                                              width: 1.0,
-                                              style: BorderStyle.solid,
-                                              color: Colors.black26))),
-                                  child: ListTile(
-                                      title:
-                                      const Text('Price (high to low)'),
-                                      leading: Transform.scale(
-                                        scale: 1.4,
-                                        child: Radio(
-                                          activeColor:
-                                          Color.fromRGBO(30, 30, 30, 1),
-                                          value: Sorting.Prices,
-                                          groupValue: _character,
-                                          onChanged: (Sorting value) {
-                                            setState(() {
-                                              _character = value;
-                                            });
-                                          },
-                                        ),
-                                      )),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 15),
-                            child: Text("Filter by",
-                                style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontFamily: 'Ubuntu',
-                                    fontWeight: FontWeight.w600,
-                                    color: Color.fromRGBO(40, 40, 40, 1))),
-                          ),
-                          Expanded(
-                            child: ListView(
-                              physics: new BouncingScrollPhysics(),
-                              padding: EdgeInsets.symmetric(horizontal: 15),
-                              shrinkWrap: true,
-                              children: ListTile.divideTiles(
-                                context: context,
-                                tiles: List.generate(
-                                    filterItems.length,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 15),
+                                child: Text("Filter by",
+                                    style: TextStyle(
+                                        fontSize: 20.0,
+                                        fontFamily: 'Ubuntu',
+                                        fontWeight: FontWeight.w600,
+                                        color: Color.fromRGBO(40, 40, 40, 1))),
+                              ),
+                              Expanded(
+                                child: ListView(
+                                  physics: new BouncingScrollPhysics(),
+                                  padding: EdgeInsets.symmetric(horizontal: 15),
+                                  shrinkWrap: true,
+                                  children: ListTile.divideTiles(
+                                    context: context,
+                                    tiles: List.generate(
+                                        filterItems.length,
                                         (index) => GestureDetector(
-                                      onTap: () {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    FilterItem(
-                                                      filterName:
-                                                      filterItems[
-                                                      index],
-                                                    )));
-                                      },
-                                      child: Container(
-                                        height: 60,
-                                        decoration: new BoxDecoration(
-                                            border: Border(
-                                                bottom: BorderSide(
-                                                    width: 1.0,
-                                                    style: BorderStyle
-                                                        .solid,
-                                                    color: Colors
-                                                        .black26))),
-                                        child: Padding(
-                                          padding: const EdgeInsets
-                                              .symmetric(
-                                              horizontal: 20.0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                            MainAxisAlignment
-                                                .spaceBetween,
-                                            children: <Widget>[
-                                              Text(
-                                                filterItems[index]
-                                                    .toString(),
-                                                style: TextStyle(
-                                                    fontSize: 17),
+                                              onTap: () {
+                                                Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            FilterItem(
+                                                                filterName:
+                                                                    filterItems[
+                                                                        index],
+                                                                callback:
+                                                                    (val) => {
+                                                                          retrieveNonNulls(
+                                                                              val)
+                                                                        })));
+                                              },
+                                              child: Container(
+                                                height: 60,
+                                                decoration: new BoxDecoration(
+                                                    border: Border(
+                                                        bottom: BorderSide(
+                                                            width: 1.0,
+                                                            style: BorderStyle
+                                                                .solid,
+                                                            color: Colors
+                                                                .black26))),
+                                                child: Padding(
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 20.0),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: <Widget>[
+                                                      Text(
+                                                        filterItems[index]
+                                                            .toString(),
+                                                        style: TextStyle(
+                                                            fontSize: 17),
+                                                      ),
+                                                      Icon(
+                                                        Icons.arrow_forward_ios,
+                                                        color: Color.fromRGBO(
+                                                            30, 30, 30, 1),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
                                               ),
-                                              Icon(
-                                                Icons.arrow_forward_ios,
-                                                color: Color.fromRGBO(
-                                                    30, 30, 30, 1),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    )),
-                              ).toList(),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(
-                                15.0, 20.0, 15.0, 20.0),
-                            child: SizedBox(
-                              width: double.infinity,
-                              height: 50,
-                              child: RaisedButton(
-                                  onPressed: () {
-                                    debugPrint("results to be shown");
-                                  },
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                      BorderRadius.circular(6)),
-                                  color: Color.fromARGB(255, 30, 30, 30),
-                                  child: Text('SHOW RESULTS',
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontFamily: 'Ubuntu',
-                                          fontWeight: FontWeight.bold,
-                                          color: Color.fromRGBO(
-                                              240, 240, 240, 1)))),
-                            ),
-                          )
-                        ],
-                      )),
+                                            )),
+                                  ).toList(),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                    15.0, 20.0, 15.0, 20.0),
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  height: 50,
+                                  child: RaisedButton(
+                                      onPressed: () {
+                                        //fetchResults(cat.id, subCat.id, color, range, occ, size)
+                                      },
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(6)),
+                                      color: Color.fromARGB(255, 30, 30, 30),
+                                      child: Text('SHOW RESULTS',
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontFamily: 'Ubuntu',
+                                              fontWeight: FontWeight.bold,
+                                              color: Color.fromRGBO(
+                                                  240, 240, 240, 1)))),
+                                ),
+                              )
+                            ],
+                          )),
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-        ));
+            ));
   }
 
-  Future<List<Product>> fetchResults() async{
+  void retrieveNonNulls(FiltersCollection value) {
+    //VARIOS AJUSTES
+    debugPrint("-------------------------");
+    debugPrint(filters.getColor().toString());
+    debugPrint(filters.getPriceRange().toString());
+    debugPrint(filters.getSize().toString());
 
+    if (value.size != null) this.filters.size = value.getSize();
+    if (value.color != null) this.filters.color = value.getColor();
+    if (value.occasion != null) this.filters.occasion = value.getOccasion();
+    if (value.getPriceRange() != null)
+      this.filters.setPriceRange(value.getPriceRange());
+
+    debugPrint("-------------------------");
+    debugPrint(filters.getColor().toString());
+    debugPrint(filters.getPriceRange().toString());
+    debugPrint(filters.getSize().toString());
+  }
+
+  Future<List<Product>> fetchResults(int cat, int subCat, String color,
+      String range, String occ, String size) async {
+    final http.Response response = await http.post(
+      'http://' + Constants.serverIP + '/users',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        "name": this.widget.keyword,
+        "idCategory": cat,
+        "idSubcategory": subCat,
+        "filters": [color, range, occ, size]
+      }),
+    );
+    if (response.statusCode == 200) {
+      // If the server did return a 201 CREATED response,
+      // then parse the JSON.
+      debugPrint(response.body.toString());
+      debugPrint(jsonDecode(response.body));
+      return new List<Product>();
+    } else {
+      // If the server did not return a 201 CREATED response,
+      // then throw an exception.
+      throw Exception('Failed to load searched products');
+    }
   }
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    this.fetchResults();
+    //this.fetchResults(-1, -1, "", "-1", "", "");
   }
 
   @override
@@ -307,9 +356,7 @@ class _SearchResult extends State<MySearchResult> {
                         color: Color.fromRGBO(30, 30, 30, 1), fontSize: 16),
                   ),
                   OutlinedButton(
-                    onPressed: () => {
-                      _showRefineModal()
-                    },
+                    onPressed: () => {_showRefineModal()},
                     child: Row(
                       // Replace with a Row for horizontal icon + text
                       children: <Widget>[
@@ -349,12 +396,13 @@ class _SearchResult extends State<MySearchResult> {
                         text1: "Martine Rose",
                         text2: "Colorblock Pants",
                         text3: "1350.0",
-                        image: "https://www.rebeccataylor.com/dw/image/v2/ABBY_PRD/on/demandware.static/-/Sites-master-catalog-rebeccataylor/default/dw78a1f271/hi-res/large/220600p416_multi_combo_front.jpg?sw=1218&sh=1848&sm=fit",
+                        image:
+                            "https://www.rebeccataylor.com/dw/image/v2/ABBY_PRD/on/demandware.static/-/Sites-master-catalog-rebeccataylor/default/dw78a1f271/hi-res/large/220600p416_multi_combo_front.jpg?sw=1218&sh=1848&sm=fit",
                         isFavorite: false,
-                        favorite: new Favorite(id: 10, product: 95, user: 14, code: "aakakakkak"),
+                        favorite: new Favorite(
+                            id: 10, product: 95, user: 14, code: "aakakakkak"),
                         redirectCode: "A",
-                      )
-                  );
+                      ));
                 }),
               ),
             )
