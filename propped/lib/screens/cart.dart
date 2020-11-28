@@ -27,8 +27,36 @@ class MyShoppingBag extends StatefulWidget {
 
 class _MyShoppingBagState extends State<MyShoppingBag> {
   List<BagItem> bagItems = new List<BagItem>();
+
   int idCart = 6;
   bool cartIsEmpty = false;
+
+  Future<bool> setUserAndCart() async {
+    int idUser = 25;
+    int test = await FlutterSession().get("id");
+    debugPrint(test.toString());
+    final response = await http.get(
+        'http://' + Constants.serverIP + '/carts/user/' + idUser.toString());
+
+    if (response.statusCode == 200) {
+      // If the call to the server was successful, parse the JSON
+      List<dynamic> values = new List<dynamic>();
+      values = json.decode(response.body);
+      if (values.length > 0) {
+        if (values[0] != null) {
+          Map<String, dynamic> map = values[0];
+          this.idCart = map['id_shoppingcart'];
+        }
+      }
+      return true;
+    } else {
+      if (this.mounted)
+        setState(() {
+          this.cartIsEmpty = true;
+        });
+      return false;
+    }
+  }
 
   Future<BagItem> addItem(BagItem itemToAdd) async {
     final http.Response response = await http.post(
@@ -43,10 +71,6 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
       }),
     );
     if (response.statusCode == 201) {
-      // If the server did return a 201 CREATED response,
-      // then parse the JSON.
-      bagItems.add(widget.bagitem);
-      if (this.mounted) setState(() {});
       return new BagItem();
     } else {
       // If the server did not return a 201 CREATED response,
@@ -69,9 +93,11 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
         for (int i = 0; i < values.length; i++) {
           if (values[i] != null) {
             Map<String, dynamic> map = values[i];
-            bagItems.add(new BagItem(
+            debugPrint(i.toString());
+            bagItems.insert(i, new BagItem(
                 product: Product.fromJson(map),
                 quantity: map['amount_productsshoppingcart']));
+            debugPrint("length:" + bagItems.length.toString());
           }
         }
       }
@@ -83,6 +109,27 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
       // If that call was not successful, throw an error.
       if (this.mounted) setState(() {});
       this.cartIsEmpty = true;
+    }
+  }
+
+  Future<BagItem> removeItem(BagItem toBeDeleted) async {
+    debugPrint("delete product with id:" + toBeDeleted.product.id.toString());
+    final http.Response response = await http.delete(
+      'http://' +
+          Constants.serverIP +
+          '/carts/product/' +
+          this.idCart.toString() +
+          '/' +
+          toBeDeleted.product.id.toString(),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return new BagItem();
+    } else {
+      throw Exception('Failed to delete album.');
     }
   }
 
@@ -171,12 +218,10 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
     return images;
   }
 
-  Future<int> fetchCountOfProducts() async{
+  Future<int> fetchCountOfProducts() async {
     String userId = await FlutterSession().get("id").toString();
-    final response = await http.get('http://' +
-        Constants.serverIP +
-        '/products/count/' + userId
-        );
+    final response = await http
+        .get('http://' + Constants.serverIP + '/products/count/' + userId);
 
     if (response.statusCode == 200) {
       // If the call to the server was successful, parse the JSON
@@ -198,12 +243,23 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
     }
   }
 
+  Future<bool> initAll() async {
+    await setUserAndCart().then((value) => {
+          if (value == true) {fetchProductsByCart(), fetchCountOfProducts()}
+        });
+  }
+
   @override
   void initState() {
     super.initState();
-    //if (this.widget.bagitem != null) addItem(this.widget.bagitem);
-    fetchProductsByCart();
-    fetchCountOfProducts();
+    if (this.widget.bagitem != null) {
+      debugPrint("inittttt");
+      addItem(this.widget.bagitem).then((BagItem b) {
+        initAll();
+      });
+    } else {
+      initAll();
+    }
   }
 
   List<String> countries = [
@@ -277,10 +333,12 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
                       price: bagItems[i].product.price,
                       quantity: bagItems[i].quantity,
                       onDispose: () {
-                        setState(() {
-                          debugPrint(bagItems[0].toString());
-                          bagItems.removeAt(i);
-                        });
+                        debugPrint("aaaaaaaaaaaaaaaaaaaaaa" + i.toString());
+                        removeItem(bagItems[i]).then((value) => {
+                              setState(() {
+                                bagItems.removeAt(i);
+                              })
+                            });
                       },
                     );
                   }

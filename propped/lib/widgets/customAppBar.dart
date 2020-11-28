@@ -28,7 +28,6 @@ class _CustomAppBarState extends State<CustomAppBar> {
   @override
   void initState(){
     super.initState();
-    debugPrint("yay");
   }
 
   @override
@@ -37,7 +36,6 @@ class _CustomAppBarState extends State<CustomAppBar> {
       title: () {
         if (widget.title != null) {
           if (widget.title.trim() != "") {
-            debugPrint(widget.title);
             return Text(
               widget.title,
               style: TextStyle(

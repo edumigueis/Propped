@@ -383,6 +383,7 @@ class _MyProductState extends State<MyProduct> {
                   margin:
                       EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 30),
                   child: GestureDetector(
+                    //APENAS MOSTRAR TAMANHOS DISPONÍVEIS A PARTIR DO TRATAMENTO DA STRING DO CAMPO size_product
                     onTap: _showModal,
                     child: Container(
                         child: Padding(
