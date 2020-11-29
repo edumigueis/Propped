@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:propped/models/Favorite.dart';
+import 'package:propped/models/Image.dart';
+import 'package:propped/models/Store.dart';
 import 'package:propped/screens/searchCategoryResult.dart';
 import 'package:propped/models/Category.dart';
 import 'package:propped/models/Subcategory.dart';
@@ -9,6 +11,7 @@ import 'package:propped/models/Product.dart';
 import 'package:propped/utils/Constants.dart';
 import 'package:propped/utils/FiltersCollection.dart';
 import 'package:propped/widgets/customAppBar.dart';
+import 'package:propped/widgets/errorMsgWidget.dart';
 import 'package:propped/widgets/filterItem.dart';
 import 'package:propped/widgets/menu.dart';
 import 'package:propped/widgets/productGridItem.dart';
@@ -253,18 +256,17 @@ class _SearchResult extends State<MySearchResult> {
                                   height: 50,
                                   child: RaisedButton(
                                       onPressed: () {
-                                        if(filters.getPriceRange() != null)
-                                        {
+                                        if (filters.getPriceRange() != null) {
                                           fetchResults(
                                               -1,
                                               -1,
                                               this.filters.getColor(),
                                               this
-                                                  .filters
-                                                  .getPriceRange()
-                                                  .getStart()
-                                                  .toString() +
-                                                  "-" +
+                                                      .filters
+                                                      .getPriceRange()
+                                                      .getStart()
+                                                      .toString() +
+                                                  " " +
                                                   this
                                                       .filters
                                                       .getPriceRange()
@@ -272,13 +274,12 @@ class _SearchResult extends State<MySearchResult> {
                                                       .toString(),
                                               this.filters.getOccasion(),
                                               this.filters.getSize());
-                                        }
-                                        else{
+                                        } else {
                                           fetchResults(
                                               -1,
                                               -1,
                                               this.filters.getColor(),
-                                              "0-1000000",
+                                              "0 1000000",
                                               this.filters.getOccasion(),
                                               this.filters.getSize());
                                         }
@@ -308,12 +309,9 @@ class _SearchResult extends State<MySearchResult> {
   }
 
   void retrieveNonNulls(FiltersCollection value) {
-    if (value.size != null)
-      this.filters.size = value.getSize();
-    if (value.color != null)
-      this.filters.color = value.getColor();
-    if (value.occasion != null)
-      this.filters.occasion = value.getOccasion();
+    if (value.size != null) this.filters.size = value.getSize();
+    if (value.color != null) this.filters.color = value.getColor();
+    if (value.occasion != null) this.filters.occasion = value.getOccasion();
     if (value.getPriceRange() != null)
       this.filters.setPriceRange(value.getPriceRange());
 
@@ -336,42 +334,148 @@ class _SearchResult extends State<MySearchResult> {
 
   Future<List<Product>> fetchResults(int cat, int subCat, String color,
       String range, String occ, String size) async {
-    if(occ == null)
-      occ = "";
-    if(size == null)
-      size = "";
-    if(color == null)
-      color = "";
+    if (occ == null) occ = "";
+    if (size == null) size = "";
+    if (color == null) color = "";
 
     final http.Response response = await http.post(
-      'http://' + Constants.serverIP + '/users',
+      'http://' + Constants.serverIP + '/products/search',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, dynamic>{
-        "name": this.widget.keyword,
-        "idCategory": cat,
-        "idSubcategory": subCat,
-        "filters": [color, range, occ, size]
+        "name_product": this.widget.keyword,
+        "id_category_product": cat,
+        "id_subcategory_product": subCat,
+        "filters_product": [color, range, occ, size]
       }),
     );
+    debugPrint(response.statusCode.toString());
     if (response.statusCode == 200) {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
       debugPrint(response.body.toString());
-      debugPrint(jsonDecode(response.body));
-      return new List<Product>();
+      List<dynamic> values = new List<dynamic>();
+      values = json.decode(response.body);
+      if (values.length > 0) {
+        for (int i = 0; i < values.length; i++) {
+          if (values[i] != null) {
+            Map<String, dynamic> map = values[i];
+            this.products.add(Product.fromJson(map));
+          }
+        }
+      }
+      await fetchStores(products);
+      return this.products;
+    } else if (response.statusCode == 404) {
+      setState(() {
+        this.nothingFound = true;
+        this.msg = "We couldn't find what you are searching for.";
+        this.titleMsg = "No Results";
+      });
     } else {
-      // If the server did not return a 201 CREATED response,
-      // then throw an exception.
-      throw Exception('Failed to load searched products');
+      setState(() {
+        this.nothingFound = true;
+        this.msg =
+            "There has been a problem with the search. Please try again and check your internet connection.";
+        this.titleMsg = "Oops...";
+      });
     }
   }
+
+  Future<List<Store>> fetchStores(List<Product> prod) async {
+    for (int f = 0; f < prod.length; f++) {
+      final response = await http.get('http://' +
+          Constants.serverIP +
+          '/stores/' +
+          prod[f].store.toString());
+
+      if (response.statusCode == 200) {
+        // If the call to the server was successful, parse the JSON
+        List<dynamic> values = new List<dynamic>();
+        values = json.decode(response.body);
+        if (values.length > 0) {
+          if (values[0] != null) {
+            Map<String, dynamic> map = values[0];
+            stores.add(Store.fromJson(map));
+          }
+        }
+      } else {
+        // If that call was not successful, throw an error.
+        throw Exception('Failed to load products');
+      }
+    }
+    await fetchImages(this.products);
+    if (this.mounted) setState(() {});
+    return stores;
+  }
+
+  Future<List<ImageObj>> fetchImages(List<Product> prod) async {
+    for (int f = 0; f < prod.length; f++) {
+      final response = await http.get('http://' +
+          Constants.serverIP +
+          '/products/image/' +
+          prod[f].id.toString());
+
+      if (response.statusCode == 200) {
+        // If the call to the server was successful, parse the JSON
+        List<dynamic> values = new List<dynamic>();
+        values = json.decode(response.body);
+        if (values.length > 0) {
+          if (values[0] != null) {
+            Map<String, dynamic> map = values[0];
+            images.add(ImageObj.fromJson(map));
+          }
+        }
+      } else {
+        // If that call was not successful, throw an error.
+        this.images.add(new ImageObj(url: "", idImage: -1, idProduct: -1));
+      }
+      await fetchImagesProp();
+    }
+
+    return images;
+  }
+
+  Future<List<ImageObj>> fetchImagesProp() async {
+    for (int f = 0; f < images.length; f++) {
+      final response = await http.get('http://' +
+          Constants.serverIP +
+          '/images/id/' +
+          images[f].idImage.toString());
+
+      if (response.statusCode == 200) {
+        // If the call to the server was successful, parse the JSON
+        List<dynamic> values = new List<dynamic>();
+        values = json.decode(response.body);
+
+        if (values.length > 0) {
+          if (values[0] != null) {
+            Map<String, dynamic> map = values[0];
+            this.images[f].url = map['photo_image'];
+          }
+        }
+      } else {
+        // If that call was not successful, throw an error.
+        this.images[f].url =
+            "https://icons-for-free.com/iconfiles/png/512/facebook+sad+emoji+sad+face+icon-1320166641720234915.png";
+      }
+    }
+    return images;
+  }
+
+  List<Product> products = new List<Product>();
+  List<Store> stores = new List<Store>();
+  List<ImageObj> images = new List<ImageObj>();
+  int idUser = 25;
+  bool nothingFound = false;
+  String msg = "";
+  String titleMsg = "";
 
   @override
   void initState() {
     super.initState();
-    //this.fetchResults(-1, -1, "", "-1", "", "");
+    this.fetchResults(-1, -1, "", "-1", "", "");
   }
 
   @override
@@ -401,7 +505,13 @@ class _SearchResult extends State<MySearchResult> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "1201 items found",
+                    () {
+                      int length = this.products.length;
+                      if (length == 1)
+                        return "1 item found";
+                      else
+                        return length.toString() + " item found";
+                    }(),
                     style: TextStyle(
                         color: Color.fromRGBO(30, 30, 30, 1), fontSize: 16),
                   ),
@@ -430,32 +540,44 @@ class _SearchResult extends State<MySearchResult> {
                 ],
               ),
             ),
-            Expanded(
-              child: GridView.count(
-                padding: const EdgeInsets.only(top: 0),
-                physics: new BouncingScrollPhysics(),
-                // Create a grid with 2 columns. If you change the scrollDirection to
-                // horizontal, this produces 2 rows.
-                crossAxisCount: 2,
-                childAspectRatio: (itemWidth / itemHeight),
-                // Generate 100 widgets that display their index in the List.
-                children: List.generate(10, (index) {
-                  return Padding(
+            Expanded(child: () {
+              if (!this.nothingFound)
+                return GridView.count(
+                  padding: const EdgeInsets.only(top: 20),
+                  physics: new BouncingScrollPhysics(),
+                  // Create a grid with 2 columns. If you change the scrollDirection to
+                  // horizontal, this produces 2 rows.
+                  crossAxisCount: 2,
+                  childAspectRatio: (itemWidth / itemHeight),
+                  // Generate 100 widgets that display their index in the List.
+                  children: List.generate(products.length, (index) {
+                    String img;
+                    if (images == null || images.length == 0)
+                      img = "a";
+                    else if (images[index] == null)
+                      img = "a";
+                    else
+                      img = images[index].url;
+                    return Padding(
                       padding: const EdgeInsets.fromLTRB(5, 0, 5, 15),
                       child: ProductGridItem(
-                        text1: "Martine Rose",
-                        text2: "Colorblock Pants",
-                        text3: "1350.0",
-                        image:
-                            "https://www.rebeccataylor.com/dw/image/v2/ABBY_PRD/on/demandware.static/-/Sites-master-catalog-rebeccataylor/default/dw78a1f271/hi-res/large/220600p416_multi_combo_front.jpg?sw=1218&sh=1848&sm=fit",
+                        redirectCode: products[index].code,
+                        image: img,
+                        text1: stores[index].name,
+                        text2: products[index].name,
+                        text3: products[index].price.toString(),
                         isFavorite: false,
                         favorite: new Favorite(
-                            id: 10, product: 95, user: 14, code: "aakakakkak"),
-                        redirectCode: "A",
-                      ));
-                }),
-              ),
-            )
+                            product: this.products[index].id,
+                            user: this.idUser),
+                      ),
+                    );
+                  }),
+                );
+              else {
+                return ErrorMsgWidget(title: this.titleMsg, message: this.msg);
+              }
+            }())
           ],
         ),
       ),
