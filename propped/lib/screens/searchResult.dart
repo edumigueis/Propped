@@ -30,7 +30,7 @@ class MySearchResult extends StatefulWidget {
 class _SearchResult extends State<MySearchResult> {
   Category cat;
   Subcategory subCat;
-  Sorting _character = Sorting.Recommended;
+  Sorting _sorting = Sorting.Recommended;
   List filterItems = ["Color", "Sizes", "Price Range", "Occasion"];
   FiltersCollection filters = new FiltersCollection();
 
@@ -53,120 +53,125 @@ class _SearchResult extends State<MySearchResult> {
                               Container(
                                 height: 300.0,
                                 margin: EdgeInsets.symmetric(horizontal: 15),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 10),
-                                      child: Text("Order by",
-                                          style: TextStyle(
-                                              fontSize: 20.0,
-                                              fontFamily: 'Ubuntu',
-                                              fontWeight: FontWeight.w600,
-                                              color: Color.fromRGBO(
-                                                  40, 40, 40, 1))),
-                                    ),
-                                    Container(
-                                      decoration: new BoxDecoration(
-                                          border: Border(
-                                              bottom: BorderSide(
-                                                  width: 1.0,
-                                                  style: BorderStyle.solid,
-                                                  color: Colors.black26))),
-                                      child: ListTile(
-                                          title: const Text('Recommended'),
-                                          leading: Transform.scale(
-                                            scale: 1.4,
-                                            child: Radio(
-                                              activeColor:
-                                                  Color.fromRGBO(30, 30, 30, 1),
-                                              value: Sorting.Recommended,
-                                              groupValue: _character,
-                                              onChanged: (Sorting value) {
-                                                setState(() {
-                                                  _character = value;
-                                                });
-                                              },
-                                            ),
-                                          )),
-                                    ),
-                                    Container(
-                                      decoration: new BoxDecoration(
-                                          border: Border(
-                                              bottom: BorderSide(
-                                                  width: 1.0,
-                                                  style: BorderStyle.solid,
-                                                  color: Colors.black26))),
-                                      child: ListTile(
-                                          title: const Text('Most Recent'),
-                                          leading: Transform.scale(
-                                            scale: 1.4,
-                                            child: Radio(
-                                              activeColor:
-                                                  Color.fromRGBO(30, 30, 30, 1),
-                                              value: Sorting.Recent,
-                                              groupValue: _character,
-                                              onChanged: (Sorting value) {
-                                                setState(() {
-                                                  _character = value;
-                                                });
-                                              },
-                                            ),
-                                          )),
-                                    ),
-                                    Container(
-                                      decoration: new BoxDecoration(
-                                          border: Border(
-                                              bottom: BorderSide(
-                                                  width: 1.0,
-                                                  style: BorderStyle.solid,
-                                                  color: Colors.black26))),
-                                      child: ListTile(
-                                          title:
-                                              const Text('Price (low to high)'),
-                                          leading: Transform.scale(
-                                            scale: 1.4,
-                                            child: Radio(
-                                              activeColor:
-                                                  Color.fromRGBO(30, 30, 30, 1),
-                                              value: Sorting.Price,
-                                              groupValue: _character,
-                                              onChanged: (Sorting value) {
-                                                setState(() {
-                                                  _character = value;
-                                                });
-                                              },
-                                            ),
-                                          )),
-                                    ),
-                                    Container(
-                                      decoration: new BoxDecoration(
-                                          border: Border(
-                                              bottom: BorderSide(
-                                                  width: 1.0,
-                                                  style: BorderStyle.solid,
-                                                  color: Colors.black26))),
-                                      child: ListTile(
-                                          title:
-                                              const Text('Price (high to low)'),
-                                          leading: Transform.scale(
-                                            scale: 1.4,
-                                            child: Radio(
-                                              activeColor:
-                                                  Color.fromRGBO(30, 30, 30, 1),
-                                              value: Sorting.Prices,
-                                              groupValue: _character,
-                                              onChanged: (Sorting value) {
-                                                setState(() {
-                                                  _character = value;
-                                                });
-                                              },
-                                            ),
-                                          )),
-                                    ),
-                                  ],
-                                ),
+                                child: StatefulBuilder(builder:
+                                    (BuildContext context,
+                                        StateSetter setState) {
+                                  return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(vertical: 10),
+                                        child: Text("Order by",
+                                            style: TextStyle(
+                                                fontSize: 20.0,
+                                                fontFamily: 'Ubuntu',
+                                                fontWeight: FontWeight.w600,
+                                                color: Color.fromRGBO(
+                                                    40, 40, 40, 1))),
+                                      ),
+                                      Container(
+                                        decoration: new BoxDecoration(
+                                            border: Border(
+                                                bottom: BorderSide(
+                                                    width: 1.0,
+                                                    style: BorderStyle.solid,
+                                                    color: Colors.black26))),
+                                        child: ListTile(
+                                            title: const Text('Recommended'),
+                                            leading: Transform.scale(
+                                              scale: 1.4,
+                                              child: Radio(
+                                                activeColor: Color.fromRGBO(
+                                                    30, 30, 30, 1),
+                                                value: Sorting.Recommended,
+                                                groupValue: _sorting,
+                                                onChanged: (Sorting value) {
+                                                  setState(() {
+                                                    _sorting = value;
+                                                  });
+                                                },
+                                              ),
+                                            )),
+                                      ),
+                                      Container(
+                                        decoration: new BoxDecoration(
+                                            border: Border(
+                                                bottom: BorderSide(
+                                                    width: 1.0,
+                                                    style: BorderStyle.solid,
+                                                    color: Colors.black26))),
+                                        child: ListTile(
+                                            title: const Text('Most Recent'),
+                                            leading: Transform.scale(
+                                              scale: 1.4,
+                                              child: Radio(
+                                                activeColor: Color.fromRGBO(
+                                                    30, 30, 30, 1),
+                                                value: Sorting.Recent,
+                                                groupValue: _sorting,
+                                                onChanged: (Sorting value) {
+                                                  setState(() {
+                                                    _sorting = value;
+                                                  });
+                                                },
+                                              ),
+                                            )),
+                                      ),
+                                      Container(
+                                        decoration: new BoxDecoration(
+                                            border: Border(
+                                                bottom: BorderSide(
+                                                    width: 1.0,
+                                                    style: BorderStyle.solid,
+                                                    color: Colors.black26))),
+                                        child: ListTile(
+                                            title: const Text(
+                                                'Price (low to high)'),
+                                            leading: Transform.scale(
+                                              scale: 1.4,
+                                              child: Radio(
+                                                activeColor: Color.fromRGBO(
+                                                    30, 30, 30, 1),
+                                                value: Sorting.Price,
+                                                groupValue: _sorting,
+                                                onChanged: (Sorting value) {
+                                                  setState(() {
+                                                    _sorting = value;
+                                                  });
+                                                },
+                                              ),
+                                            )),
+                                      ),
+                                      Container(
+                                        decoration: new BoxDecoration(
+                                            border: Border(
+                                                bottom: BorderSide(
+                                                    width: 1.0,
+                                                    style: BorderStyle.solid,
+                                                    color: Colors.black26))),
+                                        child: ListTile(
+                                            title: const Text(
+                                                'Price (high to low)'),
+                                            leading: Transform.scale(
+                                              scale: 1.4,
+                                              child: Radio(
+                                                activeColor: Color.fromRGBO(
+                                                    30, 30, 30, 1),
+                                                value: Sorting.Prices,
+                                                groupValue: _sorting,
+                                                onChanged: (Sorting value) {
+                                                  setState(() {
+                                                    _sorting = value;
+                                                  });
+                                                },
+                                              ),
+                                            )),
+                                      ),
+                                    ],
+                                  );
+                                }),
                               ),
                               Padding(
                                 padding: EdgeInsets.symmetric(
@@ -248,7 +253,37 @@ class _SearchResult extends State<MySearchResult> {
                                   height: 50,
                                   child: RaisedButton(
                                       onPressed: () {
-                                        //fetchResults(cat.id, subCat.id, color, range, occ, size)
+                                        if(filters.getPriceRange() != null)
+                                        {
+                                          fetchResults(
+                                              -1,
+                                              -1,
+                                              this.filters.getColor(),
+                                              this
+                                                  .filters
+                                                  .getPriceRange()
+                                                  .getStart()
+                                                  .toString() +
+                                                  "-" +
+                                                  this
+                                                      .filters
+                                                      .getPriceRange()
+                                                      .getEnd()
+                                                      .toString(),
+                                              this.filters.getOccasion(),
+                                              this.filters.getSize());
+                                        }
+                                        else{
+                                          fetchResults(
+                                              -1,
+                                              -1,
+                                              this.filters.getColor(),
+                                              "0-1000000",
+                                              this.filters.getOccasion(),
+                                              this.filters.getSize());
+                                        }
+                                        sortResults();
+                                        //Navigator.pop(context);
                                       },
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
@@ -273,15 +308,12 @@ class _SearchResult extends State<MySearchResult> {
   }
 
   void retrieveNonNulls(FiltersCollection value) {
-    //VARIOS AJUSTES
-    debugPrint("-------------------------");
-    debugPrint(filters.getColor().toString());
-    debugPrint(filters.getPriceRange().toString());
-    debugPrint(filters.getSize().toString());
-
-    if (value.size != null) this.filters.size = value.getSize();
-    if (value.color != null) this.filters.color = value.getColor();
-    if (value.occasion != null) this.filters.occasion = value.getOccasion();
+    if (value.size != null)
+      this.filters.size = value.getSize();
+    if (value.color != null)
+      this.filters.color = value.getColor();
+    if (value.occasion != null)
+      this.filters.occasion = value.getOccasion();
     if (value.getPriceRange() != null)
       this.filters.setPriceRange(value.getPriceRange());
 
@@ -289,10 +321,28 @@ class _SearchResult extends State<MySearchResult> {
     debugPrint(filters.getColor().toString());
     debugPrint(filters.getPriceRange().toString());
     debugPrint(filters.getSize().toString());
+    debugPrint(filters.getOccasion().toString());
+  }
+
+  void sortResults() {
+    if (this._sorting == Sorting.Recommended)
+      return;
+    else if (this._sorting == Sorting.Recent)
+      debugPrint("Recent");
+    else if (this._sorting == Sorting.Price)
+      debugPrint("Price(low to high)");
+    else if (this._sorting == Sorting.Prices) debugPrint("Price(high to low)");
   }
 
   Future<List<Product>> fetchResults(int cat, int subCat, String color,
       String range, String occ, String size) async {
+    if(occ == null)
+      occ = "";
+    if(size == null)
+      size = "";
+    if(color == null)
+      color = "";
+
     final http.Response response = await http.post(
       'http://' + Constants.serverIP + '/users',
       headers: <String, String>{
