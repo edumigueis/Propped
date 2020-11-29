@@ -25,11 +25,11 @@ class _Me extends State<Me> {
     "Partners",
     "Guides"
   ];
-  String codeUser = "4CN5M7Y897Y9834NMU085";
+  String idUser = "25";
 
   Future<User> fetchUser() async {
     final response = await http
-        .get('http://' + Constants.serverIP + '/users/' + this.codeUser);
+        .get('http://' + Constants.serverIP + '/users/id/' + this.idUser);
 
     if (response.statusCode == 200) {
       // If the call to the server was successful, parse the JSON
