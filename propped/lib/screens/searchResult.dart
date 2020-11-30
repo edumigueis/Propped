@@ -338,6 +338,15 @@ class _SearchResult extends State<MySearchResult> {
     if (size == null) size = "";
     if (color == null) color = "";
 
+    if (color != null && color != "") color = "#" + color.toLowerCase() + "#";
+    if (size != null && size != "") size = "#" + size.toLowerCase() + "#";
+
+    debugPrint("-----------------------aaa-");
+    debugPrint(occ);
+    debugPrint(color);
+    debugPrint(size);
+    debugPrint(range);
+
     final http.Response response = await http.post(
       'http://' + Constants.serverIP + '/products/search',
       headers: <String, String>{
