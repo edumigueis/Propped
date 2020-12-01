@@ -25,6 +25,7 @@ class Favorite {
         'id_product_favorite': fav.product.toString(),
       }),
     );
+    debugPrint(response.statusCode.toString());
     if (response.statusCode == 201) {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.

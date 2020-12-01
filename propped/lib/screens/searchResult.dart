@@ -334,6 +334,10 @@ class _SearchResult extends State<MySearchResult> {
 
   Future<List<Product>> fetchResults(int cat, int subCat, String color,
       String range, String occ, String size) async {
+    this.products.clear();
+    this.stores.clear();
+    this.images.clear();
+
     if (occ == null) occ = "";
     if (size == null) size = "";
     if (color == null) color = "";
@@ -363,6 +367,7 @@ class _SearchResult extends State<MySearchResult> {
     if (response.statusCode == 200) {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
+      this.nothingFound = false;
       debugPrint(response.body.toString());
       List<dynamic> values = new List<dynamic>();
       values = json.decode(response.body);

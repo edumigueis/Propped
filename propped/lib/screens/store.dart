@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:propped/models/Favorite.dart';
 import 'package:propped/models/Image.dart';
 import 'package:propped/models/Product.dart';
 import 'package:propped/models/Store.dart';
@@ -28,6 +29,7 @@ class MyStore extends StatefulWidget {
 
 class _MyStoreState extends State<MyStore> {
   Store store = new Store(name: "", country: "", city: "");
+  int idUser = 25;
 
   @override
   void initState() {
@@ -336,12 +338,15 @@ class _MyStoreState extends State<MyStore> {
                   else
                     img = images[index].url;
                   return ProductGridItem(
-                      redirectCode: productsDesigner[index].code,
-                      image: img,
-                      text1: this.store.name,
-                      text2: productsDesigner[index].name,
-                      text3: productsDesigner[index].price.toString(),
-                      isFavorite: false);
+                    redirectCode: productsDesigner[index].code,
+                    image: img,
+                    text1: this.store.name,
+                    text2: productsDesigner[index].name,
+                    text3: productsDesigner[index].price.toString(),
+                    isFavorite: false,
+                    favorite: new Favorite(
+                        user: this.idUser, product: productsDesigner[index].id),
+                  );
                 }),
               ),
             ],
