@@ -7,6 +7,7 @@ class Product {
   final double weight;
   final int price;
   final int stock;
+  final String sizes;
   final List<String> images;
 
   Product(
@@ -17,7 +18,7 @@ class Product {
       this.description,
       this.weight,
       this.price,
-      this.stock, this.images});
+      this.stock, this.images, this.sizes});
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
@@ -28,6 +29,7 @@ class Product {
         description: json['description_product'],
         weight: json['weight_product'],
         price: json['price_product'],
-        stock: json['stock_product']);
+        stock: json['stock_product'],
+        sizes: json['size_product']);
   }
 }

@@ -47,6 +47,7 @@ class _MyProductState extends State<MyProduct> {
   Store store = new Store(name: "Couldn't load store");
 
   List<ImageObj> images = new List<ImageObj>();
+  List<String> sizes = new List<String>();
 
   Future<Product> fetchProducts() async {
     final response = await http
@@ -62,6 +63,7 @@ class _MyProductState extends State<MyProduct> {
           this.product = Product.fromJson(map);
         }
       }
+      getAvailableSizes();
       await fetchStore(this.product.store);
       //await fetchImages(this.product.code);
       if (this.mounted) setState(() {});
@@ -143,6 +145,19 @@ class _MyProductState extends State<MyProduct> {
     return images;
   }
 
+  void getAvailableSizes(){
+    this.sizes = ["XXS", "XS", "S", "M", "L", "XL", "XXL", "XXXL", "XXXL"];
+    if(this.product.sizes != null)
+    {
+      var temp = this.product.sizes.split("#");
+      temp.removeLast();
+      temp.removeAt(0);
+      setState(() {
+        this.sizes = temp;
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -153,43 +168,7 @@ class _MyProductState extends State<MyProduct> {
     Navigator.of(context).pop();
 
     setState(() {
-      switch (index) {
-        case 0:
-          {
-            sizeOption = "XXS";
-          }
-          break;
-        case 1:
-          {
-            sizeOption = "XS";
-          }
-          break;
-        case 2:
-          {
-            sizeOption = "S";
-          }
-          break;
-        case 3:
-          {
-            sizeOption = "M";
-          }
-          break;
-        case 4:
-          {
-            sizeOption = "L";
-          }
-          break;
-        case 5:
-          {
-            sizeOption = "XL";
-          }
-          break;
-        case 6:
-          {
-            sizeOption = "XXL";
-          }
-          break;
-      }
+      sizeOption = sizes[index];
       _availableSizeColor = Color.fromRGBO(30, 30, 30, 1);
     });
   }
@@ -204,43 +183,13 @@ class _MyProductState extends State<MyProduct> {
               top: false,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  ListTile(
-                    title: Text('XXS'),
+                children: List.generate(this.sizes.length, (index) {
+                  return ListTile(
+                    title: Text(this.sizes[index]),
                     contentPadding: EdgeInsets.symmetric(horizontal: 30),
-                    onTap: () => _closeModal(0),
-                  ),
-                  ListTile(
-                    title: Text('XS'),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 30),
-                    onTap: () => _closeModal(1),
-                  ),
-                  ListTile(
-                    title: Text('S'),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 30),
-                    onTap: () => _closeModal(2),
-                  ),
-                  ListTile(
-                    title: Text('M'),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 30),
-                    onTap: () => _closeModal(3),
-                  ),
-                  ListTile(
-                    title: Text('L'),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 30),
-                    onTap: () => _closeModal(4),
-                  ),
-                  ListTile(
-                    title: Text('XL'),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 30),
-                    onTap: () => _closeModal(5),
-                  ),
-                  ListTile(
-                    title: Text('XXL'),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 30),
-                    onTap: () => _closeModal(6),
-                  )
-                ],
+                    onTap: () => _closeModal(index),
+                  );
+                }),
               ),
             )));
   }
@@ -251,21 +200,21 @@ class _MyProductState extends State<MyProduct> {
       floatingActionButton: RawMaterialButton(
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
         onPressed: () => {
-          if(this.productExists){
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => MyShoppingBag(
-                    bagitem: new BagItem(
-                        product: this.product,
-                        quantity: 1,
-                        size: this.sizeOption),
-                  )),
-            )
-          }
-          else{
-            Navigator.pop(context)
-          }
+          if (this.productExists)
+            {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => MyShoppingBag(
+                          bagitem: new BagItem(
+                              product: this.product,
+                              quantity: 1,
+                              size: this.sizeOption),
+                        )),
+              )
+            }
+          else
+            {Navigator.pop(context)}
         },
         child: Container(
             decoration: new BoxDecoration(
@@ -276,13 +225,12 @@ class _MyProductState extends State<MyProduct> {
             width: MediaQuery.of(context).size.width - 60,
             child: Center(
               child: Text(
-                  (){
-                    if(this.productExists){
-                      return "ADD TO BAG";
-                    }
-                    else
-                      return "GO BACK";
-                  }(),
+                () {
+                  if (this.productExists) {
+                    return "ADD TO BAG";
+                  } else
+                    return "GO BACK";
+                }(),
                 style: new TextStyle(
                     fontSize: 15,
                     fontFamily: 'Ubuntu',
@@ -558,7 +506,7 @@ class _MyProductState extends State<MyProduct> {
                                                   alignment:
                                                       Alignment.centerLeft,
                                                   child: Text(
-                                                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed iaculis, risus in porta accumsan, augue sem vulputate diam, pretium pretium massa ligula id ante. Mauris laoreet mattis mauris, vitae feugiat justo ultrices et. Curabitur lacinia leo vitae leo laoreet, vitae consequat sapien tincidunt.",
+                                                      this.store.description,
                                                     //here store description will be added
                                                     style: new TextStyle(
                                                         fontSize: 17.0,
