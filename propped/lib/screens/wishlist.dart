@@ -22,7 +22,7 @@ class MyWishlist extends StatefulWidget {
 }
 
 class _MyWishlistState extends State<MyWishlist> {
-  final idUser = 14;
+  final idUser = 25;
   bool nothingFound = false;
 
   Future<List<Favorite>> fetchFavorites() async {
@@ -35,6 +35,7 @@ class _MyWishlistState extends State<MyWishlist> {
       // If the call to the server was successful, parse the JSON
       List<dynamic> values = new List<dynamic>();
       values = json.decode(response.body);
+      debugPrint(values.toString());
       if (values.length > 0) {
         for (int i = 0; i < values.length; i++) {
           if (values[i] != null) {
@@ -168,6 +169,7 @@ class _MyWishlistState extends State<MyWishlist> {
   @override
   void initState() {
     super.initState();
+    this.nothingFound = false;
     fetchFavorites();
   }
 

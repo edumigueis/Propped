@@ -219,9 +219,10 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
   }
 
   Future<int> fetchCountOfProducts() async {
-    String userId = await FlutterSession().get("id").toString();
+    //String userId = await FlutterSession().get("id").toString();
+    String userId = "25";
     final response = await http
-        .get('http://' + Constants.serverIP + '/products/count/' + userId);
+        .get('http://' + Constants.serverIP + '/carts/products/count/' + userId);
 
     if (response.statusCode == 200) {
       // If the call to the server was successful, parse the JSON
@@ -233,6 +234,7 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
           Map<String, dynamic> map = values[0];
           setState(() {
             Constants.spBagItems = map['count'];
+            debugPrint("items:" + Constants.spBagItems.toString());
           });
         }
       }
