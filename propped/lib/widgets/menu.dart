@@ -88,6 +88,7 @@ class MyMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     ctx = context;
     return BottomNavigationBar(
+      backgroundColor: Colors.white,
       unselectedItemColor: Color.fromRGBO(35, 35, 35, 1),
       type: BottomNavigationBarType.fixed,
       items: <BottomNavigationBarItem>[

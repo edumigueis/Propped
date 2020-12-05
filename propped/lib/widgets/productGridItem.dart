@@ -5,7 +5,6 @@ import 'package:propped/screens/product.dart';
 import 'package:propped/utils/Constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
-import 'dart:convert';
 
 class ProductGridItem extends StatefulWidget {
   ProductGridItem({Key key,
@@ -87,7 +86,14 @@ class ProductGridItemState extends State<ProductGridItem> {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        fit: BoxFit.cover, image: NetworkImage(widget.image)),
+                        fit: BoxFit.cover, image: NetworkImage(() {
+                      if (this.widget.image != null) {
+                        if (this.widget.image.contains("http") &&
+                            this.widget.image.trim() != "")
+                          return this.widget.image;
+                      }
+                      return "https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/109852763/original/e9f05328b042adf5ef076bf637296a484a609342/create-trendy-abstract-geometric-pattern-on-light-background.jpg";
+                    }())),
                   ),
                 ),
                 Positioned(
@@ -131,7 +137,12 @@ class ProductGridItemState extends State<ProductGridItem> {
               fontWeight: FontWeight.w500,
               color: Color.fromRGBO(120, 120, 120, 1)),
           textAlign: TextAlign.center),
-      Text(this.widget.text2,
+      Text((){
+        if(this.widget.text2.length > 15)
+          return this.widget.text2.substring(0, 16) + "...";
+        else
+          return this.widget.text2;
+    }(),
           style: TextStyle(
               fontSize: 19.0,
               fontFamily: 'Ubuntu',
