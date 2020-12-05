@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_session/flutter_session.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:propped/models/Category.dart';
 import 'package:propped/models/Favorite.dart';
@@ -74,6 +75,7 @@ class _SearchCategoryResultState extends State<SearchCategoryResult> {
 
   Future<List<Product>> fetchResults(int cat, int subCat, String color,
       String range, String occ, String size) async {
+    this.idUser = await FlutterSession().get("id");
     this.products.clear();
     this.stores.clear();
     this.images.clear();

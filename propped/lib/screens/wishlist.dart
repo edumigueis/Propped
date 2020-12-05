@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_session/flutter_session.dart';
 import 'package:propped/models/Favorite.dart';
 import 'package:propped/models/Image.dart';
 import 'package:propped/models/Product.dart';
@@ -22,10 +23,12 @@ class MyWishlist extends StatefulWidget {
 }
 
 class _MyWishlistState extends State<MyWishlist> {
-  final idUser = 25;
+  int idUser = 25;
   bool nothingFound = false;
 
   Future<List<Favorite>> fetchFavorites() async {
+    this.idUser = await FlutterSession().get("id");
+    debugPrint(idUser.toString());
     final response = await http.get('http://' +
         Constants.serverIP +
         '/favorites/user/' +

@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_session/flutter_session.dart';
+import 'package:propped/screens/landing.dart';
 import 'package:propped/utils/Constants.dart';
 import 'package:propped/widgets/customAppBar.dart';
 import 'package:propped/widgets/footer.dart';
@@ -25,11 +27,12 @@ class _Me extends State<Me> {
     "Partners",
     "Guides"
   ];
-  String idUser = "25";
+  int idUser = 25;
 
   Future<User> fetchUser() async {
-    final response = await http
-        .get('http://' + Constants.serverIP + '/users/id/' + this.idUser);
+    this.idUser = await FlutterSession().get("id");
+    final response = await http.get(
+        'http://' + Constants.serverIP + '/users/id/' + this.idUser.toString());
 
     if (response.statusCode == 200) {
       // If the call to the server was successful, parse the JSON
@@ -121,8 +124,15 @@ class _Me extends State<Me> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(60)),
                           image: DecorationImage(
-                              image: NetworkImage(
-                                  "https://images.pexels.com/photos/2101839/pexels-photo-2101839.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"))),
+                              fit: BoxFit.cover,
+                              image: NetworkImage(() {
+                                if (this.user.image != null) {
+                                  if (this.user.image.contains("http") &&
+                                      this.user.image.trim() != "")
+                                    return this.user.image;
+                                }
+                                return "https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/109852763/original/e9f05328b042adf5ef076bf637296a484a609342/create-trendy-abstract-geometric-pattern-on-light-background.jpg";
+                              }()))),
                     ),
                     Container(
                       margin: EdgeInsets.symmetric(vertical: 20),
@@ -357,7 +367,30 @@ class _Me extends State<Me> {
                   ],
                 ),
               ),
-              Footer()
+              Footer(),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(15.0, 20.0, 15.0, 20.0),
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 50,
+                  child: RaisedButton(
+                      onPressed: () {
+                        var session = FlutterSession();
+                        session.set("id", -1).then((value) => {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => MyLanding()))
+                        });
+                      },
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6)),
+                      color: Color.fromARGB(255, 30, 30, 30),
+                      child: Text('SIGN OUT',
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontFamily: 'Ubuntu',
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromRGBO(240, 240, 240, 1)))),
+                ),
+              )
             ],
           )),
       bottomNavigationBar: MyMenu(
