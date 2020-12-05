@@ -24,17 +24,16 @@ class _MyLoginState extends State<MyLogin> {
   TextEditingController emailController = new TextEditingController();
   TextEditingController passController = new TextEditingController();
 
-  bool isLoginValid(String email, String pass) {
+  Future<bool> isLoginValid(String email, String pass) async {
     if (email.trim() == "" || pass.trim() == "")
-      return false;
+      return Future<bool>.value(false);
     else {
-      loginVerified();
-      if (this.login == true) {
-        debugPrint("aaaaaaaaaaaaaaaaaaa");
-        return true;
-      }
+      await verifyLogin().then((isValid) => {
+            this.login = isValid,
+          });
+      debugPrint(this.login.toString() + "aaaaaaaa");
+      return Future<bool>.value(this.login);
     }
-    return false;
   }
 
   bool isEmpty() {
@@ -50,12 +49,8 @@ class _MyLoginState extends State<MyLogin> {
     return isButtonEnabled;
   }
 
-  void loginVerified() async {
-    await verifyLogin().then((isValid) => {this.login = isValid});
-  }
-
   Future<bool> verifyLogin() async {
-    /*final response = await http.get('http://' +
+    final response = await http.get('http://' +
         Constants.serverIP +
         '/users/login/' +
         this.emailController.text +
@@ -64,28 +59,20 @@ class _MyLoginState extends State<MyLogin> {
 
     if (response.statusCode == 200) {
       int id;
-      List<dynamic> values = new List<dynamic>();
-      values = json.decode(response.body);
-      if (values.length > 0) {
-        if (values[0] != null) {
-          Map<String, dynamic> map = values[0];
-          id = map['id_user'];
-          debugPrint(id.toString());
-          var session = FlutterSession();
-          await session.set("id", id);
-          this.login = true;
-          return Future<bool>.value(true);
-        }
+      id = int.parse(response.body);
+      if (id != null && id > -1) {
+        var session = FlutterSession();
+        await session.set("id", id);
+        this.login = true;
+        return Future<bool>.value(true);
+      } else {
+        this.login = false;
+        return Future<bool>.value(false);
       }
-      this.login = false;
-      return Future<bool>.value(false);
     } else {
       this.login = false;
       return Future<bool>.value(false);
-    }*/
-
-    this.login = true;
-    return Future<bool>.value(true);
+    }
   }
 
   @override
@@ -199,19 +186,26 @@ class _MyLoginState extends State<MyLogin> {
               child: RaisedButton(
                   onPressed: () {
                     if (isButtonEnabled == true) {
-                      bool loginRes = isLoginValid(
-                          emailController.text, passController.text);
-                      if (!loginRes) {
-                        debugPrint("hey boo");
-                        setState(() {
-                          this.msg = "The email or password aren't correct.";
-                        });
-                      } else if (loginRes) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => MyHome()),
-                        );
-                      }
+                      isLoginValid(emailController.text, passController.text)
+                          .then((value) => {
+                                debugPrint("value:" + value.toString()),
+                                if (!value)
+                                  {
+                                    debugPrint("hey boo"),
+                                    setState(() {
+                                      this.msg =
+                                          "The email or password aren't correct.";
+                                    }),
+                                  }
+                                else if (value == true)
+                                  {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => MyHome()),
+                                    )
+                                  }
+                              });
                     } else
                       return;
                   },

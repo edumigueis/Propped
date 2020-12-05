@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_session/flutter_session.dart';
 import 'package:propped/utils/Constants.dart';
 import 'package:propped/models/User.dart';
 import 'package:http/http.dart' as http;
@@ -33,17 +34,26 @@ class _MyPreferenceState extends State<MyPreference> {
         'birth_date_user': '1/1/1999',
         'registry_user': 'Not Informed',
         'phone_user': 'Not Informed',
-        'image_user': 'aaaaaaa',
+        'image_user': 'https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/109852763/original/e9f05328b042adf5ef076bf637296a484a609342/create-trendy-abstract-geometric-pattern-on-light-background.jpg',
         'preference_user': preference,
       }),
     );
     if (response.statusCode == 201) {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
-      /*debugPrint(response.body.toString());
-      debugPrint(jsonDecode(response.body));*/
+      User user;
+      List<dynamic> values = new List<dynamic>();
+      values = json.decode(response.body);
+      if (values.length > 0) {
+        if (values[0] != null) {
+          Map<String, dynamic> map = values[0];
+          user = User.fromJson(map);
+        }
+      }
+      var session = FlutterSession();
+      await session.set("id", user.id);
       redirectToHome(ctx);
-      return new User();
+      return user;
     } else {
       // If the server did not return a 201 CREATED response,
       // then throw an exception.
