@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_session/flutter_session.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:propped/models/Favorite.dart';
 import 'package:propped/models/Image.dart';
@@ -61,7 +62,7 @@ class _MyStoreState extends State<MyStore> {
                             color: Color.fromRGBO(30, 30, 30, 1))),
                     ListTile(
                       title: Text(
-                          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras fermentum eros et nisi iaculis ornare. Ut condimentum sollicitudin felis a mattis. Praesent dignissim tellus ligula, non egestas odio fermentum non. Phasellus volutpat purus at leo tristique, nec lobortis erat viverra."),
+                           this.store.description),
                       contentPadding: EdgeInsets.symmetric(vertical: 7),
                     ),
                     Text("Phone",
@@ -110,6 +111,7 @@ class _MyStoreState extends State<MyStore> {
   }
 
   Future<Store> fetchStore(int code) async {
+    this.idUser = await FlutterSession().get("id");
     final response = await http
         .get('http://' + Constants.serverIP + '/stores/' + code.toString());
 

@@ -315,12 +315,6 @@ class _SearchResult extends State<MySearchResult> {
     if (value.occasion != null) this.filters.occasion = value.getOccasion();
     if (value.getPriceRange() != null)
       this.filters.setPriceRange(value.getPriceRange());
-
-    debugPrint("-------------------------");
-    debugPrint(filters.getColor().toString());
-    debugPrint(filters.getPriceRange().toString());
-    debugPrint(filters.getSize().toString());
-    debugPrint(filters.getOccasion().toString());
   }
 
   void sortResults() {
@@ -352,6 +346,7 @@ class _SearchResult extends State<MySearchResult> {
     debugPrint(color);
     debugPrint(size);
     debugPrint(range);
+    debugPrint(this.widget.keyword);
 
     final http.Response response = await http.post(
       'http://' + Constants.serverIP + '/products/search',

@@ -31,7 +31,9 @@ class MyDesignersState extends State<MyDesigners> {
           }
         }
       }
-      if (this.mounted) setState(() {});
+      if (this.mounted) setState(() {
+        designers.sort((a, b) => a.name.compareTo(b.name));
+      });
       return designers;
     } else {
       // If that call was not successful, throw an error.
@@ -172,6 +174,58 @@ class MyDesignersState extends State<MyDesigners> {
                           ],
                         );
                       }
+                    }
+                    else if(index == 0){
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 70,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 30),
+                              child: Text(
+                                designers[0].getName()[0],
+                                style: TextStyle(
+                                    fontSize: 21.0,
+                                    fontFamily: 'Ubuntu',
+                                    fontWeight: FontWeight.w600,
+                                    color: Color.fromRGBO(40, 40, 40, 1)),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            height: 70,
+                            decoration: new BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                        width: 1.0,
+                                        style: BorderStyle.solid,
+                                        color: Colors.black26))),
+                            child: Padding(
+                              padding:
+                              const EdgeInsets.symmetric(vertical: 0.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Text(
+                                    designers[index].getName(),
+                                    style: TextStyle(
+                                        fontSize: 21.0,
+                                        fontFamily: 'Ubuntu',
+                                        fontWeight: FontWeight.w600,
+                                        color: Color.fromRGBO(40, 40, 40, 1)),
+                                  ),
+                                  Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: Color.fromRGBO(30, 30, 30, 1),
+                                  )
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      );
                     }
                     return Container(
                       height: 70,

@@ -14,7 +14,7 @@ class Favorite {
 
   Favorite({this.id, this.code, this.user, this.product});
 
-  static Future<Favorite> save(Favorite fav) async{
+  static Future<Favorite> save(Favorite fav) async {
     final http.Response response = await http.post(
       'http://' + Constants.serverIP + '/favorites',
       headers: <String, String>{
@@ -39,24 +39,28 @@ class Favorite {
     }
   }
 
-  static Future<Response> delete(Favorite toBeDeleted) async{
+  static Future<Response> delete(Favorite toBeDeleted) async {
+    final http.Response response = await http.delete(
+      'http://' +
+          Constants.serverIP +
+          '/favorites/' +
+          toBeDeleted.user.toString() +
+          '/' +
+          toBeDeleted.product.toString(),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
 
-      final http.Response response = await http.delete(
-        'http://' + Constants.serverIP + '/favorites/'+toBeDeleted.user.toString()+'/' + toBeDeleted.product.toString(),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-      );
-
-      return response;
+    return response;
   }
 
   factory Favorite.fromJson(Map<String, dynamic> json) {
     return Favorite(
-        id: json['id_favorite'],
-        code: json['code_favorite'],
-        user: json['id_user_favorite'],
-        product: json['id_product_favorite'],
+      id: json['id_favorite'],
+      code: json['code_favorite'],
+      user: json['id_user_favorite'],
+      product: json['id_product_favorite'],
     );
   }
 }

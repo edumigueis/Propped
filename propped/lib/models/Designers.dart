@@ -1,4 +1,4 @@
-class Designers{
+class Designers extends Comparable<Designers>{
   int id;
   String code;
   String name;
@@ -25,4 +25,7 @@ class Designers{
     return Designers(json['id_store'], json['code_store'].toString(), json['name_store'].toString());
   }
 
+  int compareTo(Designers other){
+    return this.name.compareTo(other.name);
+  }
 }
