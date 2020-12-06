@@ -28,13 +28,11 @@ class MyShoppingBag extends StatefulWidget {
 class _MyShoppingBagState extends State<MyShoppingBag> {
   List<BagItem> bagItems = new List<BagItem>();
 
-  int idCart = 6;
+  int idCart;
+  int idUser;
   bool cartIsEmpty = false;
 
   Future<bool> setUserAndCart() async {
-    int idUser = 25;
-    int test = await FlutterSession().get("id");
-    debugPrint(test.toString());
     final response = await http.get(
         'http://' + Constants.serverIP + '/carts/user/' + idUser.toString());
 
@@ -68,6 +66,7 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
         'id_product_productsshoppingcart': widget.bagitem.product.id.toString(),
         'id_shoppingcart_productsshoppingcart': this.idCart.toString(),
         'amount_productsshoppingcart': widget.bagitem.quantity.toString(),
+        'id_user_shoppingcart': this.idUser.toString()
       }),
     );
     if (response.statusCode == 201) {
@@ -94,9 +93,11 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
           if (values[i] != null) {
             Map<String, dynamic> map = values[i];
             debugPrint(i.toString());
-            bagItems.insert(i, new BagItem(
-                product: Product.fromJson(map),
-                quantity: map['amount_productsshoppingcart']));
+            bagItems.insert(
+                i,
+                new BagItem(
+                    product: Product.fromJson(map),
+                    quantity: map['amount_productsshoppingcart']));
             debugPrint("length:" + bagItems.length.toString());
           }
         }
@@ -218,36 +219,9 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
     return images;
   }
 
-  Future<int> fetchCountOfProducts() async {
-    //String userId = await FlutterSession().get("id").toString();
-    String userId = "25";
-    final response = await http
-        .get('http://' + Constants.serverIP + '/carts/products/count/' + userId);
-
-    if (response.statusCode == 200) {
-      // If the call to the server was successful, parse the JSON
-      List<dynamic> values = new List<dynamic>();
-      values = json.decode(response.body);
-
-      if (values.length > 0) {
-        if (values[0] != null) {
-          Map<String, dynamic> map = values[0];
-          setState(() {
-            Constants.spBagItems = map['count'];
-            debugPrint("items:" + Constants.spBagItems.toString());
-          });
-        }
-      }
-    } else {
-      setState(() {
-        Constants.spBagItems = 0;
-      });
-    }
-  }
-
   Future<bool> initAll() async {
     await setUserAndCart().then((value) => {
-          if (value == true) {fetchProductsByCart(), fetchCountOfProducts()}
+          if (value == true) {fetchProductsByCart()}
         });
   }
 
@@ -255,12 +229,20 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
   void initState() {
     super.initState();
     if (this.widget.bagitem != null) {
-      debugPrint("inittttt");
-      addItem(this.widget.bagitem).then((BagItem b) {
-        initAll();
-      });
+      FlutterSession().get("id").then((value) => {
+            idUser = value,
+            setUserAndCart().then((value) => {
+                  addItem(this.widget.bagitem).then((BagItem b) {
+                    initAll();
+                  })
+                }),
+          });
     } else {
-      initAll();
+      FlutterSession().get("id").then((value) =>
+      {
+        idUser = value,
+        initAll()
+      });
     }
   }
 

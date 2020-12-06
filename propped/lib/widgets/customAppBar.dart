@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_session/flutter_session.dart';
 import 'package:propped/screens/cart.dart';
-import 'package:propped/screens/preference.dart';
-import 'package:propped/screens/store.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 import 'package:propped/utils/Constants.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -28,6 +30,33 @@ class _CustomAppBarState extends State<CustomAppBar> {
   @override
   void initState(){
     super.initState();
+    fetchCount();
+  }
+
+  Future<int> fetchCount() async {
+    int idUser = await FlutterSession().get("id");
+    final response = await http.get(
+        'http://' + Constants.serverIP + '/carts/products/count/' + idUser.toString());
+
+    if (response.statusCode == 200) {
+      // If the call to the server was successful, parse the JSON
+      List<dynamic> values = new List<dynamic>();
+      values = json.decode(response.body);
+
+      if (values.length > 0) {
+        if (values[0] != null) {
+          Map<String, dynamic> map = values[0];
+          setState(() {
+            Constants.spBagItems = map['count'];
+            debugPrint("items:" + Constants.spBagItems.toString());
+          });
+        }
+      }
+    } else {
+      setState(() {
+        Constants.spBagItems = 0;
+      });
+    }
   }
 
   @override

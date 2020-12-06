@@ -28,7 +28,6 @@ class _MyWishlistState extends State<MyWishlist> {
 
   Future<List<Favorite>> fetchFavorites() async {
     this.idUser = await FlutterSession().get("id");
-    debugPrint(idUser.toString());
     final response = await http.get('http://' +
         Constants.serverIP +
         '/favorites/user/' +

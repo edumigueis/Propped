@@ -348,6 +348,12 @@ class _SearchResult extends State<MySearchResult> {
     debugPrint(range);
     debugPrint(this.widget.keyword);
 
+    if(color == "#all#")
+      color = "";
+
+    if(size == "#all#")
+      size = "";
+
     final http.Response response = await http.post(
       'http://' + Constants.serverIP + '/products/search',
       headers: <String, String>{
