@@ -70,6 +70,7 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
       }),
     );
     if (response.statusCode == 201) {
+      cartIsEmpty = false;
       return new BagItem();
     } else {
       // If the server did not return a 201 CREATED response,
@@ -287,7 +288,7 @@ class _MyShoppingBagState extends State<MyShoppingBag> {
       body: Column(
         children: <Widget>[
           Expanded(child: () {
-            if (!this.cartIsEmpty && bagItems != null) {
+            if (/*!this.cartIsEmpty &&*/ bagItems != null) {
               return ListView.builder(
                 padding: EdgeInsets.symmetric(horizontal: 15),
                 physics: new BouncingScrollPhysics(),
