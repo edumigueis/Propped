@@ -281,4 +281,4 @@ Licensed under the AGPL-3.0 license. Stock images not included. Images created b
 
 [product-screenshot]: propped/src/header2.png
 
-[product-logo]: propped/assets/Propped-Red.png
+[product-logo]: propped/assets/images/Propped-Red.png
