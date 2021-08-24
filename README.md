@@ -1,5 +1,5 @@
 
-# Collorizer
+# Propped
 
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
@@ -17,7 +17,7 @@
 
   
 
-<h3 align="center">Collorizer</h3>
+<h3 align="center">Propped</h3>
 
   
 
@@ -279,6 +279,6 @@ Licensed under the AGPL-3.0 license. Stock images not included. Images created b
 
 [linkedin-url]: https://www.linkedin.com/in/edumigueis/
 
-[product-screenshot]: collorizer/src/header2.png
+[product-screenshot]: propped/src/header2.png
 
 [product-logo]: propped/assets/Propped-Red.png
