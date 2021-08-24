@@ -11,7 +11,7 @@
 
 <a  href="https://github.com/edumigueis/Propped">
 
-<img src="propped/assets/images/Propped-Red.png" width="160" >
+<img src="propped/assets/images/Propped-Red.png" width="220" >
 
 </a>
 
