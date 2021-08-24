@@ -11,7 +11,7 @@
 
 <a  href="https://github.com/edumigueis/Propped">
 
-[![Product Name Screen Shot][product-logo]](https://github.com/edumigueis/Propped)
+<img src="propped/assets/images/Propped-Red.png" width="160" >
 
 </a>
 
@@ -280,5 +280,3 @@ Licensed under the AGPL-3.0 license. Stock images not included. Images created b
 [linkedin-url]: https://www.linkedin.com/in/edumigueis/
 
 [product-screenshot]: propped/src/header2.png
-
-[product-logo]: propped/assets/images/Propped-Red.png
