@@ -72,10 +72,6 @@ A fictional e-commerce app and design study developed as a technical school proj
 
 </li>
 
-<li><a  href="#usage">Usage</a></li>
-
-<li><a  href="#roadmap">Roadmap</a></li>
-
 <li><a  href="#contributing">Contributing</a></li>
 
 <li><a  href="#license">License</a></li>
@@ -98,7 +94,10 @@ A fictional e-commerce app and design study developed as a technical school proj
 
   
 
-[![Product Name Screen Shot][product-screenshot]](https://github.com/edumigueis/Propped)
+<p float="left">
+  <img src="/images/i1.png" width="300" />
+  <img src="/images/12.png" width="300" /> 
+</p>
 
   
 
