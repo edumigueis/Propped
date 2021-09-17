@@ -96,7 +96,7 @@ A fictional e-commerce app and design study developed as a technical school proj
 
 <p float="left">
   <img src="/images/i1.png" width="300" />
-  <img src="/images/12.png" width="300" /> 
+  <img src="/images/i2.png" width="300" /> 
 </p>
 
   
